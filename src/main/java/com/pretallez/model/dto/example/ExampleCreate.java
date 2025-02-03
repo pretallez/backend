@@ -18,6 +18,15 @@ public class ExampleCreate {
         @NotNull
         private String nickname;
 
+        private Request(String name, String nickname) {
+            this.name = name;
+            this.nickname = nickname;
+        }
+
+        public static Request of(String name, String nickname) {
+            return new Request(name, nickname);
+        }
+
     }
 
 }

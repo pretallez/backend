@@ -29,14 +29,14 @@ public class Example {
     @Column(name = "created_at",nullable = false)
     private LocalDateTime createdAt;
 
-    private Example(ExampleCreate.Request request) {
-        this.name = request.getName();
-        this.nickname = request.getNickname();
+    private Example(ExampleCreate.Request exampleCreateRequest) {
+        this.name = exampleCreateRequest.getName();
+        this.nickname = exampleCreateRequest.getNickname();
         this.createdAt = LocalDateTime.now();
     }
 
-    public static Example create(ExampleCreate.Request request) {
-        return new Example(request);
+    public static Example create(ExampleCreate.Request exampleCreateRequest) {
+        return new Example(exampleCreateRequest);
     }
 
 }
