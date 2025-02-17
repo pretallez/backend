@@ -18,11 +18,13 @@ public class VotePost {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "board_id", nullable = false)
-    private Long boardId;
+    @JoinColumn(name = "board_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Board board;
 
-    @Column(name = "fencing_club_id", nullable = false)
-    private Long fencingClubId;
+    @JoinColumn(name = "fencing_club_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private FencingClub fencingClubId;
 
     @Column(name = "max_capacity", nullable = false)
     private Integer maxCapacity;

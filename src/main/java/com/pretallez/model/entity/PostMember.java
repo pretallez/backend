@@ -16,11 +16,13 @@ public class PostMember {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "member_id", nullable = false, unique = true)
-    private Long memberId;
+    @JoinColumn(name = "member_id", nullable = false, unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
-    @Column(name = "votepost_id", nullable = false)
-    private Long votePostId;
+    @JoinColumn(name = "votepost_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private VotePost votePost;
 
     @Column(name = "paid_points", nullable = false)
     private Integer paidPoints;

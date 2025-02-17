@@ -16,10 +16,12 @@ public class MemberRole {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "member_id", nullable = false)
-    private Long memberId;
+    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
-    @Column(name = "role_id", nullable = false)
-    private Long roleId;
+    @JoinColumn(name = "role_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Role role;
 
 }

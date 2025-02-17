@@ -19,8 +19,9 @@ public class Board {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "member_id", nullable = false)
-    private Long memberId;
+    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
     @Column(name = "title", nullable = false, length = 30)
     private String title;

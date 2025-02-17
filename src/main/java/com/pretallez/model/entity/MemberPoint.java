@@ -19,8 +19,9 @@ public class MemberPoint {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "member_id", nullable = false)
-    private Long memberId;
+    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
     @Column(name = "point_type", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)

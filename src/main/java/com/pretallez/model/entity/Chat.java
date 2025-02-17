@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.awt.*;
 import java.sql.Timestamp;
 
 @Getter
@@ -20,13 +19,14 @@ public class Chat {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "member_chatroom_id", nullable = false)
-    private Long memberChatroomId;
+    @JoinColumn(name = "member_chatroom_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private MemberChatroom memberChatroom;
 
     @Column(name = "content", nullable = false, length = 500)
     private String content;
 
-    @Column(name = "message_type", nullable = false,length = 30)
+    @Column(name = "message_type", nullable = false, length = 30)
     private MessageType messageType;
 
     @Column(name = "created_at", nullable = false)

@@ -18,8 +18,9 @@ public class Chatroom {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "votepost_id", nullable = false)
-    private Long votePostId;
+    @JoinColumn(name = "votepost_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private VotePost votePost;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;

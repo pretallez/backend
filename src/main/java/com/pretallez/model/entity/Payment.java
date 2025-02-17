@@ -17,8 +17,9 @@ public class Payment {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "member_id", nullable = false)
-    private Long memberId;
+    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
     @Column(name = "status", nullable = false, length = 30)
     private PaymentStatus status;
