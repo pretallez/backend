@@ -5,6 +5,5 @@ spring:
     active: dev
 #    active: release
 
-server:
-  port: 8080
+
 
