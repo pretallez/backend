@@ -116,6 +116,6 @@ class ChatroomControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isInternalServerError()); // 서비스에서 409에러로 예외처리 후 변경
+                .andExpect(status().isConflict());
     }
 }

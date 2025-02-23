@@ -5,5 +5,5 @@ import com.pretallez.model.entity.Chatroom;
 public interface ChatroomRepository {
 
     Chatroom save(Chatroom chatroom);
-
+    boolean existsByVotePostId(Long votePostId);
 }

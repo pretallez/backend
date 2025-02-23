@@ -5,7 +5,6 @@ import com.pretallez.repository.VotePostRepository;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
@@ -24,7 +23,7 @@ public class FakeVotePostRepository implements VotePostRepository {
     }
 
     @Override
-    public VotePost findById(Long id) {
-        return entities.get(id);
+    public Optional<VotePost> findById(Long id) {
+        return Optional.of(entities.get(id));
     }
 }

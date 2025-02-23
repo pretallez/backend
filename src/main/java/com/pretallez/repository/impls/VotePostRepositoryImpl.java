@@ -22,11 +22,7 @@ public class VotePostRepositoryImpl implements VotePostRepository {
     }
 
     @Override
-    public VotePost findById(Long id) {
-        return votePostJpaRepository.findById(id)
-                .orElseThrow(() -> new CustomApiException(
-                        ResErrorCode.NOT_FOUND,
-                        String.format("ID [%d]에 해당하는 투표 게시글을 찾을 수 없습니다.", id)
-                ));
+    public Optional<VotePost> findById(Long id) {
+        return votePostJpaRepository.findById(id);
     }
 }

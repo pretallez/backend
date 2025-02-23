@@ -28,4 +28,10 @@ public class FakeChatroomRepository implements ChatroomRepository {
         entities.put(id, chatroom);
         return chatroom;
     }
+
+    @Override
+    public boolean existsByVotePostId(Long votePostId) {
+        return entities.values().stream()
+                .anyMatch(chatroom -> chatroom.getVotePost().getId().equals(votePostId));
+    }
 }

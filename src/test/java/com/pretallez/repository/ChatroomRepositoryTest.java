@@ -71,5 +71,4 @@ class ChatroomRepositoryTest {
             chatroomRepository.save(Fixture.chatroom(savedVotePost));
         });
     }
-
 }
