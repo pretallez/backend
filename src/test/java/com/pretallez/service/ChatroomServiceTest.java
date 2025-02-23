@@ -1,9 +1,11 @@
 package com.pretallez.service;
 
 import com.pretallez.common.fixture.Fixture;
-import com.pretallez.common.repository.FakeChatroomRepository;
-import com.pretallez.common.repository.FakeVotePostRepository;
+import com.pretallez.common.repository.*;
 import com.pretallez.model.dto.chatroom.ChatroomCreate;
+import com.pretallez.model.entity.Board;
+import com.pretallez.model.entity.FencingClub;
+import com.pretallez.model.entity.Member;
 import com.pretallez.model.entity.VotePost;
 import com.pretallez.service.impls.ChatroomServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -23,13 +25,16 @@ class ChatroomServiceTest {
     void setUp() {
         FakeChatroomRepository chatroomRepository = new FakeChatroomRepository();
         FakeVotePostRepository votePostRepository = new FakeVotePostRepository();
+        FakeBoardRepository boardRepository = new FakeBoardRepository();
+        FakeFencingClubRepository fencingClubRepository = new FakeFencingClubRepository();
+        FakeMemberRepository memberRepository = new FakeMemberRepository();
+
         chatroomService = new ChatroomServiceImpl(chatroomRepository, votePostRepository);
 
-        VotePost votePost = Fixture.votePost(
-                Fixture.board(Fixture.member()),
-                Fixture.fencingClub()
-        );
-        savedVotePost = votePostRepository.save(votePost);
+        Member savedMember = memberRepository.save(Fixture.member());
+        Board savedBoard = boardRepository.save(Fixture.board(savedMember));
+        FencingClub savedFencingClub = fencingClubRepository.save(Fixture.fencingClub());
+        savedVotePost = votePostRepository.save(Fixture.votePost(savedBoard, savedFencingClub));
     }
 
     @Test

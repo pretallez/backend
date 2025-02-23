@@ -5,9 +5,6 @@ import com.pretallez.model.dto.example.ExampleCreate;
 import com.pretallez.model.entity.*;
 import com.pretallez.model.enums.BoardType;
 import com.pretallez.model.enums.MannerLevel;
-import com.pretallez.repository.ChatroomRepository;
-import com.pretallez.repository.MemberRepository;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 

@@ -1,7 +1,5 @@
 package com.pretallez.service.impls;
 
-import com.pretallez.common.exception.CustomApiException;
-import com.pretallez.common.response.ResErrorCode;
 import com.pretallez.model.dto.chatroom.ChatroomCreate;
 import com.pretallez.model.entity.Chatroom;
 import com.pretallez.model.entity.VotePost;
