@@ -1,5 +1,6 @@
 package com.pretallez.common.fixture;
 
+import com.pretallez.model.dto.chatroom.ChatroomCreate;
 import com.pretallez.model.dto.example.ExampleCreate;
 import com.pretallez.model.entity.*;
 import com.pretallez.model.enums.BoardType;
@@ -56,5 +57,9 @@ public class Fixture {
         String gender = "M";
         Integer point = 0;
         return Member.of(email, nickname, name, mannerLevel, phone, gender, point);
+    }
+
+    public static ChatroomCreate.Request chatroomCreateRequest(Long votePostId) {
+        return ChatroomCreate.Request.of(votePostId);
     }
 }
