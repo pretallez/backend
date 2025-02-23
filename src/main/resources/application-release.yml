@@ -1,0 +1,20 @@
+server:
+  port: ${PORT}
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: ${URL}
+    username: ${USER}
+    password: ${PASSWORD}
+
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: true
