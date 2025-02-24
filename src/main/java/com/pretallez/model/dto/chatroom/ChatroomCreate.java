@@ -2,6 +2,7 @@ package com.pretallez.model.dto.chatroom;
 
 import com.pretallez.model.entity.Chatroom;
 import com.pretallez.model.entity.VotePost;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,8 @@ public class ChatroomCreate {
     @Getter
     @NoArgsConstructor
     public static class Request {
+
+        @NotNull(message = "votePostId는 필수 값입니다.")
         private Long votePostId;
 
         private Request(Long votePostId) {

@@ -85,6 +85,20 @@ class ChatroomControllerTest {
     }
 
     @Test
+    @DisplayName("votePostID가 없으면 채팅방 생성에 실패합니다.")
+    void createChatroom_invalid() throws Exception {
+        // Given
+        String requestBody = objectMapper.writeValueAsString(Map.of("id", votePostId));
+
+        // When & Then
+        mockMvc.perform(post("/v1/api/chatroom")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     @DisplayName("존재하지 않는 votePostId로 채팅방을 생성하면 실패합니다.")
     void createChatroom_conflict() throws Exception {
         // Given
