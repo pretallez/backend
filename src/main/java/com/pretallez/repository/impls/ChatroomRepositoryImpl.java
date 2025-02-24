@@ -17,8 +17,4 @@ public class ChatroomRepositoryImpl implements ChatroomRepository {
         return chatroomJpaRepository.save(chatroom);
     }
 
-    @Override
-    public boolean existsByVotePostId(Long votePostId) {
-        return chatroomJpaRepository.existsByVotePostId(votePostId);
-    }
 }

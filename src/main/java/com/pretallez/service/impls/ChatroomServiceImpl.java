@@ -25,11 +25,11 @@ public class ChatroomServiceImpl implements ChatroomService {
         VotePost foundVotePost = votePostRepository.findById(chatroomCreateRequest.getVotePostId())
                 .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%d]에 해당하는 투표 게시글을 찾을 수 없습니다.", chatroomCreateRequest.getVotePostId())));
 
-        if (chatroomRepository.existsByVotePostId(foundVotePost.getId())) {
-            throw new DataIntegrityViolationException(String.format("ID [%d]에 해당하는 채팅방이 이미 존재합니다.", foundVotePost.getId()));
+        try {
+            Chatroom savedChatroom = chatroomRepository.save(Chatroom.of(foundVotePost));
+            return ChatroomCreate.Response.fromEntity(savedChatroom);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException(String.format("ID [%d]에 해당하는 채팅방이 이미 존재합니다.", foundVotePost.getId()), e);
         }
-
-        Chatroom savedChatroom = chatroomRepository.save(Chatroom.of(foundVotePost));
-        return ChatroomCreate.Response.fromEntity(savedChatroom);
     }
 }
