@@ -2,44 +2,39 @@ package com.pretallez.repository;
 
 import com.pretallez.common.fixture.Fixture;
 import com.pretallez.model.entity.*;
-import com.pretallez.repository.jpa.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@ComponentScan("com.pretallez.repository.impls")
 @ActiveProfiles("dev")
 class ChatroomRepositoryTest {
 
-    private final ChatroomJpaRepository chatroomRepository;
-    private final VotePostJpaRepository votePostRepository;
-    private final BoardJpaRepository boardRepository;
-    private final FencingClubJpaRepository fencingClubRepository;
-    private final MemberJpaRepository memberRepository;
-
-    private VotePost savedVotePost;
+    @Autowired
+    private  ChatroomRepository chatroomRepository;
 
     @Autowired
-    private ChatroomRepositoryTest(
-            ChatroomJpaRepository chatroomRepository,
-            VotePostJpaRepository votePostRepository,
-            BoardJpaRepository boardRepository,
-            FencingClubJpaRepository fencingClubRepository,
-            MemberJpaRepository memberRepository
-    ) {
-        this.chatroomRepository =chatroomRepository;
-        this.votePostRepository = votePostRepository;
-        this.boardRepository = boardRepository;
-        this.fencingClubRepository = fencingClubRepository;
-        this.memberRepository = memberRepository;
-    }
+    private VotePostRepository votePostRepository;
+
+    @Autowired
+    private BoardRepository boardRepository;
+
+    @Autowired
+    private FencingClubRepository fencingClubRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+    private VotePost savedVotePost;
 
     @BeforeEach
     void setUp() {
