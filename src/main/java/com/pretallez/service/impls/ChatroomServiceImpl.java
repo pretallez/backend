@@ -1,6 +1,7 @@
 package com.pretallez.service.impls;
 
 import com.pretallez.common.exception.CustomApiException;
+import com.pretallez.common.exception.EntityNotFoundException;
 import com.pretallez.common.response.ResErrorCode;
 import com.pretallez.model.dto.chatroom.ChatroomCreate;
 import com.pretallez.model.entity.Chatroom;
@@ -22,7 +23,7 @@ public class ChatroomServiceImpl implements ChatroomService {
     @Override
     public ChatroomCreate.Response addChatroom(ChatroomCreate.Request chatroomCreateRequest) {
         VotePost foundVotePost = votePostRepository.findById(chatroomCreateRequest.getVotePostId())
-                .orElseThrow(() -> new CustomApiException(ResErrorCode.NOT_FOUND, String.format("ID [%d]에 해당하는 투표 게시글을 찾을 수 없습니다.", chatroomCreateRequest.getVotePostId())));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%d]에 해당하는 투표 게시글을 찾을 수 없습니다.", chatroomCreateRequest.getVotePostId())));
 
         if (chatroomRepository.existsByVotePostId(foundVotePost.getId())) {
             throw new DataIntegrityViolationException(String.format("ID [%d]에 해당하는 채팅방이 이미 존재합니다.", foundVotePost.getId()));

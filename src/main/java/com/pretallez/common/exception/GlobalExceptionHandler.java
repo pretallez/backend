@@ -26,12 +26,22 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<CustomApiResponse<Void>> handleDataIntegrityViolation(DataIntegrityViolationException e) {
+    public ResponseEntity<CustomApiResponse<Void>> handleDataIntegrityViolation(DataIntegrityViolationException exception) {
 
-        log.error("DataIntegrityViolation exception occurred: {}", e.getMessage(), e);
+        log.error("DataIntegrityViolation exception occurred: {}", exception.getMessage(), exception);
 
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
-                .body(CustomApiResponse.ERROR(ResErrorCode.CONFLICT, e.getMessage()));
+                .body(CustomApiResponse.ERROR(ResErrorCode.CONFLICT, exception.getMessage()));
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<CustomApiResponse<Void>> handleEntityNotFoundException(EntityNotFoundException exception) {
+
+        log.error("EntityNotFoundException exception occurred: {}", exception.getMessage(), exception);
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(CustomApiResponse.ERROR(ResErrorCode.NOT_FOUND, exception.getMessage()));
     }
 }
