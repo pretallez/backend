@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @ComponentScan("com.pretallez.repository.impls")
-@ActiveProfiles("dev")
+@ActiveProfiles("local")
 class ChatroomRepositoryTest {
 
     @Autowired

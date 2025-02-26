@@ -59,4 +59,8 @@ public class Fixture {
     public static ChatroomCreate.Request chatroomCreateRequest(Long votePostId) {
         return ChatroomCreate.Request.of(votePostId);
     }
+
+    public static ChatroomCreate.Response chatroomCreateResponse(Long id, Long votePostId) {
+        return ChatroomCreate.Response.of(id, votePostId);
+    }
 }
