@@ -3,25 +3,33 @@ package com.pretallez.controller.api;
 import com.pretallez.common.response.CustomApiResponse;
 import com.pretallez.common.response.ResSuccessCode;
 import com.pretallez.model.dto.chatroom.ChatroomCreate;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.service.ChatroomService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.*;
 
+@Log4j2
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/api/chatroom")
+@RequestMapping("/v1/api/chatrooms")
 public class ChatroomController {
 
     private final ChatroomService chatroomService;
 
+    /** 채팅방 생성 */
     @PostMapping
-    public CustomApiResponse<ChatroomCreate.Response> addChatroom(@Valid @RequestBody ChatroomCreate.Request params) {
-        ChatroomCreate.Response response = chatroomService.addChatroom(params);
-        return CustomApiResponse.OK(ResSuccessCode.CREATED, response);
+    public CustomApiResponse<ChatroomCreate.Response> addChatroom(@Valid @RequestBody ChatroomCreate.Request chatroomCreateRequest) {
+        ChatroomCreate.Response chatroomCreateResponse = chatroomService.addChatroom(chatroomCreateRequest);
+        return CustomApiResponse.OK(ResSuccessCode.CREATED, chatroomCreateResponse);
+    }
+
+    /** 채팅방 참가 */
+    @PostMapping("/members")
+    public CustomApiResponse<MemberChatroomCreate.Response> addMemberToChatroom(@Valid @RequestBody MemberChatroomCreate.Request memberChatroomCreateRequest) {
+        MemberChatroomCreate.Response memberChatroomCreateResponse = chatroomService.addMemberToChatroom(memberChatroomCreateRequest);
+        return CustomApiResponse.OK(ResSuccessCode.CREATED, memberChatroomCreateResponse);
     }
 
 }
