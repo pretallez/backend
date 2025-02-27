@@ -6,6 +6,8 @@ import com.pretallez.repository.jpa.ChatroomJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class ChatroomRepositoryImpl implements ChatroomRepository {
@@ -17,4 +19,8 @@ public class ChatroomRepositoryImpl implements ChatroomRepository {
         return chatroomJpaRepository.save(chatroom);
     }
 
+    @Override
+    public Optional<Chatroom> findById(Long id) {
+        return chatroomJpaRepository.findById(id);
+    }
 }

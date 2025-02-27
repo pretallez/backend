@@ -7,6 +7,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class FakeMemberRepository implements MemberRepository {
@@ -27,5 +28,10 @@ public class FakeMemberRepository implements MemberRepository {
         ReflectionTestUtils.setField(member, "id", id);
         entities.put(id, member);
         return member;
+    }
+
+    @Override
+    public Optional<Member> findById(Long id) {
+        return Optional.of(entities.get(id));
     }
 }

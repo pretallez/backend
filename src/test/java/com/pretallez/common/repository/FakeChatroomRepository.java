@@ -7,6 +7,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class FakeChatroomRepository implements ChatroomRepository {
@@ -27,5 +28,10 @@ public class FakeChatroomRepository implements ChatroomRepository {
         ReflectionTestUtils.setField(chatroom, "id", id);
         entities.put(id, chatroom);
         return chatroom;
+    }
+
+    @Override
+    public Optional<Chatroom> findById(Long id) {
+        return Optional.of(entities.get(id));
     }
 }

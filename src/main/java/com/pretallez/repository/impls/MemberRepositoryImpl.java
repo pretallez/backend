@@ -6,6 +6,8 @@ import com.pretallez.repository.jpa.MemberJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class MemberRepositoryImpl implements MemberRepository {
@@ -15,5 +17,10 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public Member save(Member member) {
         return memberJpaRepository.save(member);
+    }
+
+    @Override
+    public Optional<Member> findById(Long id) {
+        return memberJpaRepository.findById(id);
     }
 }
