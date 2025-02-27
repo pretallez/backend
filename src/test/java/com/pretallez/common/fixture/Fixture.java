@@ -56,6 +56,10 @@ public class Fixture {
         return Member.of(email, nickname, name, mannerLevel, phone, gender, point);
     }
 
+    public static MemberChatroom memberChatroom(Member member, Chatroom chatroom) {
+        return MemberChatroom.of(member, chatroom);
+    }
+
     public static ChatroomCreate.Request chatroomCreateRequest(Long votePostId) {
         return ChatroomCreate.Request.of(votePostId);
     }
