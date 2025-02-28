@@ -3,12 +3,9 @@ package com.pretallez.model.dto.board;
 import com.pretallez.model.entity.Board;
 import com.pretallez.model.entity.Member;
 import com.pretallez.model.enums.BoardType;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 public class BoardCreate {
 

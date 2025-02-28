@@ -18,7 +18,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/boards")
-    public CustomApiResponse<BoardCreate.Response> createBoard(@RequestBody BoardCreate.Request boardCreateRequest,
+    public CustomApiResponse<BoardCreate.Response> createBoard(@RequestBody BoardCreate.Request boardCreateRequest
                                                                ) {
         Long memberId =1L;
         BoardCreate.Response response = boardService.addBoard(boardCreateRequest, memberId);

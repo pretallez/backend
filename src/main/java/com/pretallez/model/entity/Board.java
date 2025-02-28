@@ -3,11 +3,9 @@ package com.pretallez.model.entity;
 import com.pretallez.model.enums.BoardType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.time.LocalDateTime;
 
 @Getter
@@ -44,7 +42,7 @@ public class Board {
     @Enumerated(EnumType.STRING)
     private BoardType boardType;
 
-    private Board(Member member, String title, String content,BoardType boardType) {
+    private Board(Member member, String title, String content, BoardType boardType) {
         this.member = member;
         this.title = title;
         this.content = content;
