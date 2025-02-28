@@ -2,9 +2,10 @@ spring:
   application:
     name: pretallez
   profiles:
-    active: dev
-#    active: release
+#    active: prod
+#    active: dev
+    active: local
 
-server:
-  port: 8080
+
+
 

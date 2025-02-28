@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,11 +18,19 @@ public class Chatroom {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @JoinColumn(name = "votepost_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "votepost_id", unique = true, nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
     private VotePost votePost;
 
     @Column(name = "created_at", nullable = false)
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
+    private Chatroom(VotePost votePost) {
+        this.votePost = votePost;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public static Chatroom of(VotePost votePost) {
+        return new Chatroom(votePost);
+    }
 }

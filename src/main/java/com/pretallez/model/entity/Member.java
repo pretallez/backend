@@ -6,7 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -42,12 +42,26 @@ public class Member {
     private Integer point;
 
     @Column(name = "created_at", nullable = false)
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at")
-    private Timestamp deletedAt;
+    private LocalDateTime deletedAt;
 
+    private Member(String email, String nickname, String name, MannerLevel mannerLevel, String phoneNum, String gender, Integer point) {
+        this.email = email;
+        this.nickname = nickname;
+        this.name = name;
+        this.mannerLevel = mannerLevel;
+        this.phoneNum = phoneNum;
+        this.gender = gender;
+        this.point = point;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public static Member of(String email, String nickname, String name, MannerLevel mannerLevel, String phoneNum, String gender, Integer point) {
+        return new Member(email, nickname, name, mannerLevel, phoneNum, gender, point);
+    }
 }

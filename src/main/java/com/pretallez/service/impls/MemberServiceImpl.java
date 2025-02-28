@@ -1,0 +1,21 @@
+package com.pretallez.service.impls;
+
+import com.pretallez.common.exception.EntityNotFoundException;
+import com.pretallez.model.entity.Member;
+import com.pretallez.repository.MemberRepository;
+import com.pretallez.service.MemberService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class MemberServiceImpl implements MemberService {
+
+    private final MemberRepository memberRepository;
+
+    @Override
+    public Member getMemberOrThrow(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%d]에 해당하는 회원을 찾을 수 없습니다.", memberId)));
+    }
+}

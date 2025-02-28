@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,7 +24,7 @@ public class VotePost {
 
     @JoinColumn(name = "fencing_club_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    private FencingClub fencingClubId;
+    private FencingClub fencingClub;
 
     @Column(name = "max_capacity", nullable = false)
     private Integer maxCapacity;
@@ -36,6 +36,18 @@ public class VotePost {
     private Integer totalAmount;
 
     @Column(name = "training_date", nullable = false)
-    private Timestamp trainingDate;
+    private LocalDateTime trainingDate;
 
+    private VotePost(Board board, FencingClub fencingClub, Integer maxCapacity, Integer minCapacity, Integer totalAmount, LocalDateTime trainingDate) {
+        this.board = board;
+        this.fencingClub = fencingClub;
+        this.maxCapacity = maxCapacity;
+        this.minCapacity = minCapacity;
+        this.totalAmount = totalAmount;
+        this.trainingDate = trainingDate;
+    }
+
+    public static VotePost of(Board board, FencingClub fencingClub, Integer maxCapacity, Integer minCapacity, Integer totalAmount, LocalDateTime trainingDate) {
+        return new VotePost(board, fencingClub, maxCapacity, minCapacity, totalAmount, trainingDate);
+    }
 }

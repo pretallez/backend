@@ -32,4 +32,15 @@ public class FencingClub {
     @Column(name = "gear_exist_yn", length = 1, nullable = false)
     private String gearExist; // 'Y' -> true, 'N' -> false
 
+    private FencingClub(String type, String contact, String address, String description, String gearExist) {
+        this.type = type;
+        this.contact = contact;
+        this.address = address;
+        this.description = description;
+        this.gearExist = gearExist;
+    }
+
+    public static FencingClub of(String type, String contact, String address, String description, String gearExist) {
+        return new FencingClub(type, contact, address, description, gearExist);
+    }
 }
