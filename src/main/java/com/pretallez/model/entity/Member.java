@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
 @Table(name = "Member")
 public class Member {

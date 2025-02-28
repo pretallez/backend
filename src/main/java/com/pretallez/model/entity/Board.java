@@ -3,10 +3,12 @@ package com.pretallez.model.entity;
 import com.pretallez.model.enums.BoardType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,7 +21,7 @@ public class Board {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "writer_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
@@ -30,16 +32,28 @@ public class Board {
     private String content;
 
     @Column(name = "created_at", nullable = false)
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at")
-    private Timestamp deletedAt;
+    private LocalDateTime deletedAt;
 
     @Column(name = "board_type", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private BoardType boardType;
+
+    private Board(Member member, String title, String content,BoardType boardType) {
+        this.member = member;
+        this.title = title;
+        this.content = content;
+        this.boardType = boardType;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public static Board of(Member member, String title, String content, BoardType boardType) {
+        return new Board(member, title, content, boardType);
+    }
 
 }

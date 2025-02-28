@@ -1,4 +1,4 @@
-package com.pretallez.util.repository;
+package com.pretallez.common.repository;
 
 import com.pretallez.model.entity.Example;
 import com.pretallez.repository.ExampleRepository;

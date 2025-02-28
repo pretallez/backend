@@ -2,8 +2,8 @@ package com.pretallez.service.impls;
 
 import com.pretallez.model.entity.Example;
 import com.pretallez.service.ExampleService;
-import com.pretallez.util.fixture.Fixture;
-import com.pretallez.util.repository.FakeExampleRepository;
+import com.pretallez.common.fixture.Fixture;
+import com.pretallez.common.repository.FakeExampleRepository;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;

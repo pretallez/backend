@@ -1,4 +1,4 @@
-package com.pretallez.util.fixture;
+package com.pretallez.common.fixture;
 
 import com.pretallez.model.dto.example.ExampleCreate;
 import com.pretallez.model.entity.Example;
