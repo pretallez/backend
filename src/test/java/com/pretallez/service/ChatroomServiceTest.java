@@ -44,14 +44,14 @@ class ChatroomServiceTest {
     @Autowired
     private VotePostService votePostService;
 
-    private ChatroomService chatroomService;
+    @Autowired
+    private ChatroomServiceImpl chatroomService;
+
     private VotePost savedVotePost;
     private Member savedMember;
 
     @BeforeEach
     void setUp() {
-        chatroomService = new ChatroomServiceImpl(votePostService, chatroomRepository);
-
         savedMember = memberRepository.save(Fixture.member());
         Board savedBoard = boardRepository.save(Fixture.board(savedMember));
         FencingClub savedFencingClub = fencingClubRepository.save(Fixture.fencingClub());
