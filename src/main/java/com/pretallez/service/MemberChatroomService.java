@@ -18,9 +18,8 @@ public interface MemberChatroomService {
     /**
      * 회원을 채팅방에서 퇴장시킵니다.
      * @param memberChatroomDeleteRequest 회원 채팅방 퇴장 요청 데이터
-     * @return 정상 퇴장일 시 true, 아닐 시 false 반환
      */
-    boolean removeMemberFromChatroom(MemberChatroomDelete.Request memberChatroomDeleteRequest);
+    void removeMemberFromChatroom(MemberChatroomDelete.Request memberChatroomDeleteRequest);
 
     /**
      * MemberChatroom 엔티티가 존재하면 반환, 존재하지 않으면 예외를 던집니다.

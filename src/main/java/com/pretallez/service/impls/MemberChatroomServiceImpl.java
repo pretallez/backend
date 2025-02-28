@@ -42,14 +42,12 @@ public class MemberChatroomServiceImpl implements MemberChatroomService {
 
     @Override
     @Transactional
-    public boolean removeMemberFromChatroom(MemberChatroomDelete.Request memberChatroomDeleteRequest) {
+    public void removeMemberFromChatroom(MemberChatroomDelete.Request memberChatroomDeleteRequest) {
         Member foundMember = memberService.getMemberOrThrow(memberChatroomDeleteRequest.getMemberId());
         Chatroom foundChatroom = chatroomService.getChatroomOrThrow(memberChatroomDeleteRequest.getChatroomId());
 
         MemberChatroom foundMemberChatroom = getMemberChatroomOrThrow(foundMember, foundChatroom);
         memberChatroomRepository.delete(foundMemberChatroom);
-
-        return true;
     }
 
     @Override

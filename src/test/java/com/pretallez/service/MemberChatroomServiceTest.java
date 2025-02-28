@@ -6,8 +6,6 @@ import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
 import com.pretallez.model.entity.*;
 import com.pretallez.repository.*;
-import com.pretallez.service.impls.MemberChatroomServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +15,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
 @ComponentScan("com.pretallez.repository.impls")
@@ -94,7 +94,7 @@ class MemberChatroomServiceTest {
     }
 
     @Test
-    @DisplayName("참가되어 있는 채팅방 퇴장 시, 정상적으로 퇴장되면 true를 반환한다.")
+    @DisplayName("참가되어 있는 채팅방 퇴장 시, 정상적으로 채팅방에서 퇴장된다.")
     void removeMemberFromChatroom_WhenMemberChatroomExists_ThenReturnTrue() {
         // Given
         MemberChatroomCreate.Request memberChatroomCreateRequest = Fixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom.getId());
@@ -103,10 +103,11 @@ class MemberChatroomServiceTest {
         MemberChatroomDelete.Request memberChatroomDeleteRequest = Fixture.memberChatroomDeleteRequest(savedMember.getId(), savedChatroom.getId());
 
         // When
-        boolean isDeleted = memberChatroomService.removeMemberFromChatroom(memberChatroomDeleteRequest);
+        memberChatroomService.removeMemberFromChatroom(memberChatroomDeleteRequest);
 
         // Then
-        assertThat(isDeleted).isTrue();
+        Optional<MemberChatroom> existingMemberChatroom = memberChatroomRepository.findByMemberAndChatroom(savedMember, savedChatroom);
+        assertThat(existingMemberChatroom).isEmpty();
     }
 
     @Test
