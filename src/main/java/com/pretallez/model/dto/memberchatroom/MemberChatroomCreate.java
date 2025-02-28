@@ -38,7 +38,7 @@ public class MemberChatroomCreate {
     public static class Response {
         private Long id;
         private Long memberId;
-        private long chatroomId;
+        private Long chatroomId;
 
         private Response(Long id, Long memberId, Long chatroomId) {
             this.id = id;
