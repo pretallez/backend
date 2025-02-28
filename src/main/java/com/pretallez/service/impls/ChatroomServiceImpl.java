@@ -5,8 +5,8 @@ import com.pretallez.model.dto.chatroom.ChatroomCreate;
 import com.pretallez.model.entity.Chatroom;
 import com.pretallez.model.entity.VotePost;
 import com.pretallez.repository.ChatroomRepository;
-import com.pretallez.repository.VotePostRepository;
 import com.pretallez.service.ChatroomService;
+import com.pretallez.service.VotePostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -15,12 +15,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ChatroomServiceImpl implements ChatroomService {
 
+    private final VotePostService votePostService;
+
     private final ChatroomRepository chatroomRepository;
-    private final VotePostRepository votePostRepository;
 
     @Override
     public ChatroomCreate.Response addChatroom(ChatroomCreate.Request chatroomCreateRequest) {
-        VotePost foundVotePost = getVotePostOrThrow(chatroomCreateRequest.getVotePostId());
+        VotePost foundVotePost = votePostService.getVotePostOrThrow(chatroomCreateRequest.getVotePostId());
 
         try {
             Chatroom savedChatroom = chatroomRepository.save(Chatroom.of(foundVotePost));
@@ -30,8 +31,9 @@ public class ChatroomServiceImpl implements ChatroomService {
         }
     }
 
-    private VotePost getVotePostOrThrow(Long votePostId) {
-        return votePostRepository.findById(votePostId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%d]에 해당하는 투표 게시글을 찾을 수 없습니다.", votePostId)));
+    @Override
+    public Chatroom getChatroomOrThrow(Long chatroomId) {
+        return chatroomRepository.findById(chatroomId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%d]에 해당하는 채팅방을 찾을 수 없습니다.", chatroomId)));
     }
 }

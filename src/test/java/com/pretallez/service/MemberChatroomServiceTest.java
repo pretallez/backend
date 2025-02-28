@@ -1,13 +1,10 @@
 package com.pretallez.service;
 
 import com.pretallez.common.fixture.Fixture;
-import com.pretallez.model.dto.chatroom.ChatroomCreate;
-import com.pretallez.model.entity.Board;
-import com.pretallez.model.entity.FencingClub;
-import com.pretallez.model.entity.Member;
-import com.pretallez.model.entity.VotePost;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
+import com.pretallez.model.entity.*;
 import com.pretallez.repository.*;
-import com.pretallez.service.impls.ChatroomServiceImpl;
+import com.pretallez.service.impls.MemberChatroomServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ComponentScan("com.pretallez.repository.impls")
 @ComponentScan("com.pretallez.service.impls")
 @ActiveProfiles("local")
-class ChatroomServiceTest {
+class MemberChatroomServiceTest {
 
     @Autowired
     private  ChatroomRepository chatroomRepository;
@@ -42,48 +39,53 @@ class ChatroomServiceTest {
     private MemberRepository memberRepository;
 
     @Autowired
-    private VotePostService votePostService;
+    private MemberChatroomRepository memberChatroomRepository;
 
+    @Autowired
     private ChatroomService chatroomService;
-    private VotePost savedVotePost;
+
+    @Autowired
+    private MemberService memberService;
+
+    private MemberChatroomService memberChatroomService;
     private Member savedMember;
+    private Chatroom savedChatroom;
 
     @BeforeEach
     void setUp() {
-        chatroomService = new ChatroomServiceImpl(votePostService, chatroomRepository);
+        memberChatroomService = new MemberChatroomServiceImpl(chatroomService, memberService, memberChatroomRepository);
 
         savedMember = memberRepository.save(Fixture.member());
         Board savedBoard = boardRepository.save(Fixture.board(savedMember));
         FencingClub savedFencingClub = fencingClubRepository.save(Fixture.fencingClub());
-        savedVotePost = votePostRepository.save(Fixture.votePost(savedBoard, savedFencingClub));
+        VotePost savedVotePost = votePostRepository.save(Fixture.votePost(savedBoard, savedFencingClub));
+        savedChatroom = chatroomRepository.save(Fixture.chatroom(savedVotePost));
     }
 
     @Test
-    @DisplayName("채팅방 생성 시 정상적으로 저장됩니다.")
-    void addChatroom() {
+    @DisplayName("회원이 채팅방에 정상적으로 참가합니다.")
+    void addMemberToChatroom() {
         // Given
-        ChatroomCreate.Request request = Fixture.chatroomCreateRequest(savedVotePost.getId());
+        MemberChatroomCreate.Request request = Fixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom.getId());
 
         // When
-        ChatroomCreate.Response response = chatroomService.addChatroom(request);
+        MemberChatroomCreate.Response response = memberChatroomService.addMemberToChatroom(request);
 
-        // Then
+        // Given
         assertThat(response.getId()).isNotNull();
-        assertThat(response.getVotePostId()).isEqualTo(savedVotePost.getId());
+        assertThat(response.getMemberId()).isEqualTo(savedMember.getId());
+        assertThat(response.getChatroomId()).isEqualTo(savedChatroom.getId());
     }
 
     @Test
-    @DisplayName("같은 VotePost를 가진 ChatroomCreateRequest를 저장하면 예외가 발생합니다.")
-    void addChatroom_duplication() {
-        // Given
-        ChatroomCreate.Request request = Fixture.chatroomCreateRequest(savedVotePost.getId());
-
+    @DisplayName("회원이 이미 참가한 채팅방에 참가 시 예외가 발생합니다.")
+    void addMemberToChatroom_duplication() {
         // When
-        chatroomService.addChatroom(request);
+        memberChatroomRepository.save(Fixture.memberChatroom(savedMember, savedChatroom));
 
         // Then
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
-            chatroomService.addChatroom(request);
+            memberChatroomRepository.save(Fixture.memberChatroom(savedMember, savedChatroom));
         });
     }
 }

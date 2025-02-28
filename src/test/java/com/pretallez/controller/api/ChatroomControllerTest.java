@@ -32,35 +32,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("local")
 class ChatroomControllerTest {
 
-    private final MockMvc mockMvc;
-    private final VotePostRepository votePostRepository;
-    private final BoardRepository boardRepository;
-    private final FencingClubRepository fencingClubRepository;
-    private final MemberRepository memberRepository;
-    private final ObjectMapper objectMapper;
-
-    private Long votePostId;
+    @Autowired
+    private MockMvc mockMvc;
 
     @Autowired
-    private ChatroomControllerTest(
-            MockMvc mockMvc,
-            VotePostRepository votePostRepository,
-            BoardRepository boardRepository,
-            FencingClubRepository fencingClubRepository,
-            MemberRepository memberRepository,
-            ObjectMapper objectMapper
-    ) {
-        this.mockMvc = mockMvc;
-        this.votePostRepository = votePostRepository;
-        this.boardRepository = boardRepository;
-        this.fencingClubRepository = fencingClubRepository;
-        this.memberRepository = memberRepository;
-        this.objectMapper = objectMapper;
-    }
+    private VotePostRepository votePostRepository;
+
+    @Autowired
+    private BoardRepository boardRepository;
+
+    @Autowired
+    private FencingClubRepository fencingClubRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private Long votePostId;
+    private Member savedMember;
 
     @BeforeEach
     void setUp() {
-        Member savedMember = memberRepository.save(Fixture.member());
+        savedMember = memberRepository.save(Fixture.member());
         Board savedBoard = boardRepository.save(Fixture.board(savedMember));
         FencingClub savedFencingClub = fencingClubRepository.save(Fixture.fencingClub());
         VotePost votePost = votePostRepository.save(Fixture.votePost(savedBoard, savedFencingClub));
@@ -75,7 +70,7 @@ class ChatroomControllerTest {
         String requestBody = objectMapper.writeValueAsString(Map.of("votePostId", votePostId));
 
         // When & Then
-        mockMvc.perform(post("/v1/api/chatroom")
+        mockMvc.perform(post("/v1/api/chatrooms")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(MockMvcResultHandlers.print())
@@ -91,7 +86,7 @@ class ChatroomControllerTest {
         String requestBody = objectMapper.writeValueAsString(Map.of("id", votePostId));
 
         // When & Then
-        mockMvc.perform(post("/v1/api/chatroom")
+        mockMvc.perform(post("/v1/api/chatrooms")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(MockMvcResultHandlers.print())
@@ -100,13 +95,13 @@ class ChatroomControllerTest {
 
     @Test
     @DisplayName("존재하지 않는 votePostId로 채팅방을 생성하면 실패합니다.")
-    void createChatroom_conflict() throws Exception {
+    void createChatroom_notFound() throws Exception {
         // Given
         Long votePostId = -1L;
         String requestBody = objectMapper.writeValueAsString(Map.of("votePostId", votePostId));
 
         // When & Then
-        mockMvc.perform(post("/v1/api/chatroom")
+        mockMvc.perform(post("/v1/api/chatrooms")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(MockMvcResultHandlers.print())
@@ -115,18 +110,18 @@ class ChatroomControllerTest {
 
     @Test
     @DisplayName("이미 존재하는 votePostId로 채팅방을 생성하면 실패합니다.")
-    void createChatroom_notFound() throws Exception {
+    void createChatroom_conflict() throws Exception {
         // Given
         String requestBody = objectMapper.writeValueAsString(Map.of("votePostId", votePostId));
 
-        mockMvc.perform(post("/v1/api/chatroom")
+        mockMvc.perform(post("/v1/api/chatrooms")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
 
         // When & Then
-        mockMvc.perform(post("/v1/api/chatroom")
+        mockMvc.perform(post("/v1/api/chatrooms")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(MockMvcResultHandlers.print())

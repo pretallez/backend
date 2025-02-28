@@ -19,7 +19,7 @@ public class Chatroom {
     private Long id;
 
     @JoinColumn(name = "votepost_id", unique = true, nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private VotePost votePost;
 
     @Column(name = "created_at", nullable = false)
