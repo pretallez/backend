@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -60,5 +62,38 @@ class MemberChatroomRepositoryTest {
         assertThat(savedMemberChatroom.getId()).isNotNull();
         assertThat(savedMemberChatroom.getMember()).isEqualTo(savedMember);
         assertThat(savedMemberChatroom.getChatroom()).isEqualTo(savedChatroom);
+    }
+
+    @Test
+    @DisplayName("MemberChatroom 삭제 시, 정상적으로 삭제된다.")
+    void delete_whenDeleted_ThenMemberChatroomIsRemoved() {
+        // Given
+        MemberChatroom memberChatroom = Fixture.memberChatroom(savedMember, savedChatroom);
+        MemberChatroom savedMemberChatroom = memberChatroomRepository.save(memberChatroom);
+
+        // When
+        memberChatroomRepository.delete(savedMemberChatroom);
+
+        // Then
+        Optional<MemberChatroom> foundMemberChatroom = memberChatroomRepository.findById(savedMemberChatroom.getId());
+        assertThat(foundMemberChatroom).isEmpty();
+    }
+
+    @Test
+    @DisplayName("MemberChatroom 삭제 시, Member와 Chatroom은 유지된다.")
+    void delete_whenDeleted_ThenMemberAndChatroomRemain() {
+        // Given
+        MemberChatroom memberChatroom = Fixture.memberChatroom(savedMember, savedChatroom);
+        MemberChatroom savedMemberChatroom = memberChatroomRepository.save(memberChatroom);
+
+        // When
+        memberChatroomRepository.delete(savedMemberChatroom);
+
+        // Then
+        Optional<Member> existingMember = memberRepository.findById(savedMember.getId());
+        Optional<Chatroom> existingChatroom = chatroomRepository.findById(savedChatroom.getId());
+
+        assertThat(existingMember).isPresent();
+        assertThat(existingChatroom).isPresent();
     }
 }
