@@ -3,6 +3,7 @@ package com.pretallez.model.dto.board;
 import com.pretallez.model.entity.Board;
 import com.pretallez.model.entity.Member;
 import com.pretallez.model.enums.BoardType;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,13 @@ public class BoardCreate {
     @AllArgsConstructor
     public static class Request {
 
+        @NotNull(message = "title은 필수 입력 값입니다.")
         private String title;
+
+        @NotNull(message = "content는 필수 입력 값입니다.")
         private String content;
+
+        @NotNull(message = "boardType은 필수 입력 값입니다.")
         private BoardType boardType;
 
         public static Board toEntity(Request request, Member member) {

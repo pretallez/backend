@@ -4,6 +4,7 @@ import com.pretallez.common.response.CustomApiResponse;
 import com.pretallez.common.response.ResSuccessCode;
 import com.pretallez.model.dto.board.BoardCreate;
 import com.pretallez.service.BoardService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,8 +19,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/boards")
-    public CustomApiResponse<BoardCreate.Response> createBoard(@RequestBody BoardCreate.Request boardCreateRequest
-                                                               ) {
+    public CustomApiResponse<BoardCreate.Response> createBoard(@RequestBody @Valid BoardCreate.Request boardCreateRequest) {
         Long memberId =1L;
         BoardCreate.Response response = boardService.addBoard(boardCreateRequest, memberId);
         return CustomApiResponse.OK(ResSuccessCode.CREATED,response);

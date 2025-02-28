@@ -1,0 +1,11 @@
+= API Documentation
+:toc: left
+
+== Board
+
+=== create
+
+include::build/generated-snippets/boards/create-board/http-request.adoc[]
+include::build/generated-snippets/boards/create-board/request-fields.adoc[]
+include::build/generated-snippets/boards/create-board/http-response.adoc[]
+include::build/generated-snippets/boards/create-board/response-fields.adoc[]
