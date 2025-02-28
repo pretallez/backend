@@ -1,5 +1,7 @@
 package com.pretallez.repository.impls;
 
+import com.pretallez.model.entity.Chatroom;
+import com.pretallez.model.entity.Member;
 import com.pretallez.model.entity.MemberChatroom;
 import com.pretallez.repository.MemberChatroomRepository;
 import com.pretallez.repository.jpa.MemberChatroomJpaRepository;
@@ -27,5 +29,10 @@ public class MemberChatroomRepositoryImpl implements MemberChatroomRepository {
     @Override
     public Optional<MemberChatroom> findById(Long id) {
         return memberChatroomJpaRepository.findById(id);
+    }
+
+    @Override
+    public Optional<MemberChatroom> findByMemberAndChatroom(Member member, Chatroom chatroom) {
+        return memberChatroomJpaRepository.findByMemberAndChatroom(member, chatroom);
     }
 }
