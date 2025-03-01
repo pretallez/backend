@@ -14,8 +14,33 @@ public class VotePostServiceimpl implements VotePostService {
     private final VotePostRepository votePostRepository;
 
     @Override
-    public VotePost getVotePostOrThrow(Long votePostId) {
+    public VotePost getVotePost(Long votePostId) {
         return votePostRepository.findById(votePostId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%d]에 해당하는 투표 게시글을 찾을 수 없습니다.", votePostId)));
+    }
+
+    @Override
+    public void addVotePost() {
+
+    }
+
+    @Override
+    public void modifyVotePost() {
+
+    }
+
+    @Override
+    public void removeVotePost() {
+
+    }
+
+    @Override
+    public void getVotePostsWithPaging() {
+
+    }
+
+    @Override
+    public void getVotePostDetails() {
+
     }
 }

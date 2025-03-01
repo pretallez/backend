@@ -8,24 +8,18 @@ import com.pretallez.model.entity.MemberChatroom;
 
 public interface MemberChatroomService {
 
-    /**
-     * 회원을 채팅방에 참가시킵니다.
-     * @param memberChatroomCreateRequest 회원 채팅방 참가 요청 데이터
-     * @return 회원 채팅방 참가 결과 데이터
-     */
+    /** MemberChatroom 엔티티가 존재하면 반환, 존재하지 않으면 예외를 던집니다. */
+    MemberChatroom getMemberChatroom(Member member, Chatroom chatroom);
+
+    /** 회원을 채팅방에 참가시킵니다. */
     MemberChatroomCreate.Response addMemberToChatroom(MemberChatroomCreate.Request memberChatroomCreateRequest);
 
-    /**
-     * 회원을 채팅방에서 퇴장시킵니다.
-     * @param memberChatroomDeleteRequest 회원 채팅방 퇴장 요청 데이터
-     */
+    /** 회원을 채팅방에서 퇴장시킵니다. */
     void removeMemberFromChatroom(MemberChatroomDelete.Request memberChatroomDeleteRequest);
 
-    /**
-     * MemberChatroom 엔티티가 존재하면 반환, 존재하지 않으면 예외를 던집니다.
-     * @param member Member 엔티티
-     * @param chatroom Chatroom 엔티티
-     * @return MemberChatroom 엔티티
-     */
-    MemberChatroom getMemberChatroomOrThrow(Member member, Chatroom chatroom);
+    /** 회원의 채팅방을 모두 조회합니다. */
+    void getChatrooms();
+
+    /** 현재 채팅방의 모든 회원을 조회합니다. */
+    void getMembers();
 }

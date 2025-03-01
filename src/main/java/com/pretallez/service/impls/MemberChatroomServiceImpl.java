@@ -27,8 +27,8 @@ public class MemberChatroomServiceImpl implements MemberChatroomService {
     @Override
     @Transactional
     public MemberChatroomCreate.Response addMemberToChatroom(MemberChatroomCreate.Request memberChatroomCreateRequest) {
-        Member foundMember = memberService.getMemberOrThrow(memberChatroomCreateRequest.getMemberId());
-        Chatroom foundChatroom = chatroomService.getChatroomOrThrow(memberChatroomCreateRequest.getChatroomId());
+        Member foundMember = memberService.getMember(memberChatroomCreateRequest.getMemberId());
+        Chatroom foundChatroom = chatroomService.getChatroom(memberChatroomCreateRequest.getChatroomId());
 
         MemberChatroom memberChatroom = MemberChatroomCreate.Request.toEntity(foundMember, foundChatroom);
 
@@ -43,16 +43,26 @@ public class MemberChatroomServiceImpl implements MemberChatroomService {
     @Override
     @Transactional
     public void removeMemberFromChatroom(MemberChatroomDelete.Request memberChatroomDeleteRequest) {
-        Member foundMember = memberService.getMemberOrThrow(memberChatroomDeleteRequest.getMemberId());
-        Chatroom foundChatroom = chatroomService.getChatroomOrThrow(memberChatroomDeleteRequest.getChatroomId());
+        Member foundMember = memberService.getMember(memberChatroomDeleteRequest.getMemberId());
+        Chatroom foundChatroom = chatroomService.getChatroom(memberChatroomDeleteRequest.getChatroomId());
 
-        MemberChatroom foundMemberChatroom = getMemberChatroomOrThrow(foundMember, foundChatroom);
+        MemberChatroom foundMemberChatroom = getMemberChatroom(foundMember, foundChatroom);
         memberChatroomRepository.delete(foundMemberChatroom);
     }
 
     @Override
-    public MemberChatroom getMemberChatroomOrThrow(Member member, Chatroom chatroom) {
+    public MemberChatroom getMemberChatroom(Member member, Chatroom chatroom) {
         return memberChatroomRepository.findByMemberAndChatroom(member, chatroom)
                 .orElseThrow(() -> new EntityNotFoundException( String.format("회원[%d]은 채팅방[%d]에 존재하지 않습니다.", member.getId(), chatroom.getId())));
+    }
+
+    @Override
+    public void getChatrooms() {
+
+    }
+
+    @Override
+    public void getMembers() {
+
     }
 }
