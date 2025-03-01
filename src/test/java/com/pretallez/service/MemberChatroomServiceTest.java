@@ -66,7 +66,7 @@ class MemberChatroomServiceTest {
     }
 
     @Test
-    @DisplayName("참가되어 있지않은 채팅방 참가 시, 정상적으로 채팅방에 참가된다.")
+    @DisplayName("채팅방 참가 시, 성공")
     void addMemberToChatroom_WhenMemberChatroomNotExists_ThenMemberChatroomIsCreated() {
         // Given
         MemberChatroomCreate.Request memberChatroomCreateRequest = Fixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom.getId());

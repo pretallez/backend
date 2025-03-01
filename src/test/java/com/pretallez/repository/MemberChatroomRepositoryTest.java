@@ -50,8 +50,8 @@ class MemberChatroomRepositoryTest {
     }
 
     @Test
-    @DisplayName("MemberChatroom을 저장합니다.")
-    void save() {
+    @DisplayName("MemberChatroom 저장 시, 성공")
+    void save_WhenCreateMemberChatroom_ThenReturnSuccess() {
         // Given
         MemberChatroom memberChatroom = Fixture.memberChatroom(savedMember, savedChatroom);
 
@@ -65,8 +65,8 @@ class MemberChatroomRepositoryTest {
     }
 
     @Test
-    @DisplayName("MemberChatroom 삭제 시, 정상적으로 삭제된다.")
-    void delete_whenDeleted_ThenMemberChatroomIsRemoved() {
+    @DisplayName("MemberChatroom 삭제 시, 성공")
+    void delete_whenDeletedMemberChatroom_ThenReturnSuccess() {
         // Given
         MemberChatroom memberChatroom = Fixture.memberChatroom(savedMember, savedChatroom);
         MemberChatroom savedMemberChatroom = memberChatroomRepository.save(memberChatroom);
@@ -80,8 +80,8 @@ class MemberChatroomRepositoryTest {
     }
 
     @Test
-    @DisplayName("MemberChatroom 삭제 시, Member와 Chatroom은 유지된다.")
-    void delete_whenDeleted_ThenMemberAndChatroomRemain() {
+    @DisplayName("MemberChatroom 삭제 시, Member와 Chatroom 유지")
+    void delete_WhenDeleteMemberChatroom_ThenRemainMemberAndChatroom() {
         // Given
         MemberChatroom memberChatroom = Fixture.memberChatroom(savedMember, savedChatroom);
         MemberChatroom savedMemberChatroom = memberChatroomRepository.save(memberChatroom);

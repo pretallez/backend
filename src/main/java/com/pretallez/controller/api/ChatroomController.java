@@ -20,7 +20,6 @@ public class ChatroomController {
 
     private final ChatroomService chatroomService;
 
-    /** 채팅방 생성 */
     @PostMapping
     public CustomApiResponse<ChatroomCreate.Response> addChatroom(@Valid @RequestBody ChatroomCreate.Request chatroomCreateRequest) {
         ChatroomCreate.Response chatroomCreateResponse = chatroomService.addChatroom(chatroomCreateRequest);

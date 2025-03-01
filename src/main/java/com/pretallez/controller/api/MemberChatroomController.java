@@ -16,14 +16,12 @@ public class MemberChatroomController {
 
     private final MemberChatroomService memberChatroomService;
 
-    /** 채팅방 참가 */
     @PostMapping
     public CustomApiResponse<MemberChatroomCreate.Response> addMemberToChatroom(@Valid @RequestBody MemberChatroomCreate.Request memberChatroomCreateRequest) {
         MemberChatroomCreate.Response memberChatroomCreateResponse = memberChatroomService.addMemberToChatroom(memberChatroomCreateRequest);
         return CustomApiResponse.OK(ResSuccessCode.CREATED, memberChatroomCreateResponse);
     }
 
-    /** 채팅방 퇴장 */
     @DeleteMapping
     public CustomApiResponse<Void> removeMemberFromChatroom(@Valid @RequestBody MemberChatroomDelete.Request memberChatroomDeleteRequest) {
         memberChatroomService.removeMemberFromChatroom(memberChatroomDeleteRequest);

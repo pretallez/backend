@@ -59,8 +59,8 @@ class ChatroomServiceTest {
     }
 
     @Test
-    @DisplayName("채팅방 생성 시 정상적으로 저장됩니다.")
-    void addChatroom() {
+    @DisplayName("채팅방 생성 시, 성공")
+    void addChatroom_WhenCreateChatroom_ThenReturnSuccess() {
         // Given
         ChatroomCreate.Request request = Fixture.chatroomCreateRequest(savedVotePost.getId());
 
@@ -73,8 +73,8 @@ class ChatroomServiceTest {
     }
 
     @Test
-    @DisplayName("같은 VotePost를 가진 ChatroomCreateRequest를 저장하면 예외가 발생합니다.")
-    void addChatroom_duplication() {
+    @DisplayName("이미 생성된 투표글ID로 채팅방 생성 시, DataIntegrityVioltation 예외 발생")
+    void addChatroom_WhenCreateWithAlreadyCreatedVotePost_ThenReturnFail_DataIntegrityViolation() {
         // Given
         ChatroomCreate.Request request = Fixture.chatroomCreateRequest(savedVotePost.getId());
 

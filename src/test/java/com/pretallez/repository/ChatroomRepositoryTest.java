@@ -45,8 +45,8 @@ class ChatroomRepositoryTest {
     }
 
     @Test
-    @DisplayName("Chatroom을 저장합니다.")
-    void save() {
+    @DisplayName("Chatroom 저장 시 성공")
+    void save_WhenCreateChatroom_ThenReturnSuccess() {
         // Given &  When
         Chatroom savedChatroom = chatroomRepository.save(Fixture.chatroom(savedVotePost));
 
@@ -56,8 +56,8 @@ class ChatroomRepositoryTest {
     }
 
     @Test
-    @DisplayName("같은 VotePost를 가진 Chatroom을 저장하면 예외가 발생합니다.")
-    void save_duplication() {
+    @DisplayName("이미 생성된 VotePost로 Chatroom을 저장 시, DataIntegrityViolation 예외 발생")
+    void save_WhenCreateChatroomWithAlreadyCreatedVotePost_ThenReturnFail_DataIntegrityViolationException() {
         // Given
         chatroomRepository.save(Fixture.chatroom(savedVotePost));
 

@@ -3,6 +3,7 @@ package com.pretallez.controller.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pretallez.common.fixture.Fixture;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
 import com.pretallez.service.MemberChatroomService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,8 +42,8 @@ class MemberChatroomControllerUnitTest {
     }
 
     @Test
-    @DisplayName("채팅방 참가 API가 정상적으로 실행됩니다.")
-    void addMemberToChatroom() throws Exception {
+    @DisplayName("채팅방 참가 요청 시, 성공 및 200 응답")
+    void WhenEnterRequest_ThenReturnSuccess_200() throws Exception {
         // Given
         Long id = 1L;
         Long memberId = 1L;
@@ -66,4 +68,24 @@ class MemberChatroomControllerUnitTest {
         verify(MemberChatroomService, times(1)).addMemberToChatroom(any());
     }
 
+    @Test
+    @DisplayName("채팅방 퇴장 요청 시, 성공 및 200 응답")
+    void WhenExitRequest_ThenReturnSuccess_200() throws Exception {
+        // Given
+        Long id = 1L;
+        Long memberId = 1L;
+        Long chatroomId = 1L;
+        MemberChatroomDelete.Request request = Fixture.memberChatroomDeleteRequest(memberId, chatroomId);
+
+        String requestBody = objectMapper.writeValueAsString(request);
+
+        // When & Then
+        mockMvc.perform(delete("/v1/api/chatrooms/members")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
+
+        verify(MemberChatroomService, times(1)).removeMemberFromChatroom(any());
+    }
 }

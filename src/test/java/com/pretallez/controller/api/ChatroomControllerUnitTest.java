@@ -40,8 +40,8 @@ class ChatroomControllerUnitTest {
     }
 
     @Test
-    @DisplayName("채팅방 생성 API가 정상적으로 실행됩니다.")
-    void createChatroom() throws Exception {
+    @DisplayName("채팅방 생성 요청 시, 성공 및 200 응답")
+    void WhenCreateRequest_ThenReturnSuccess_200() throws Exception {
         // Given
         Long id = 1L;
         Long votePostId = 1L;
