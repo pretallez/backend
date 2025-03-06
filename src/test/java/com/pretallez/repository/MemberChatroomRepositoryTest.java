@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -48,8 +50,8 @@ class MemberChatroomRepositoryTest {
     }
 
     @Test
-    @DisplayName("MemberChatroom을 저장합니다.")
-    void save() {
+    @DisplayName("MemberChatroom 저장 시, 성공")
+    void save_WhenCreateMemberChatroom_ThenReturnSuccess() {
         // Given
         MemberChatroom memberChatroom = Fixture.memberChatroom(savedMember, savedChatroom);
 
@@ -60,5 +62,38 @@ class MemberChatroomRepositoryTest {
         assertThat(savedMemberChatroom.getId()).isNotNull();
         assertThat(savedMemberChatroom.getMember()).isEqualTo(savedMember);
         assertThat(savedMemberChatroom.getChatroom()).isEqualTo(savedChatroom);
+    }
+
+    @Test
+    @DisplayName("MemberChatroom 삭제 시, 성공")
+    void delete_whenDeletedMemberChatroom_ThenReturnSuccess() {
+        // Given
+        MemberChatroom memberChatroom = Fixture.memberChatroom(savedMember, savedChatroom);
+        MemberChatroom savedMemberChatroom = memberChatroomRepository.save(memberChatroom);
+
+        // When
+        memberChatroomRepository.delete(savedMemberChatroom);
+
+        // Then
+        Optional<MemberChatroom> foundMemberChatroom = memberChatroomRepository.findById(savedMemberChatroom.getId());
+        assertThat(foundMemberChatroom).isEmpty();
+    }
+
+    @Test
+    @DisplayName("MemberChatroom 삭제 시, Member와 Chatroom 유지")
+    void delete_WhenDeleteMemberChatroom_ThenRemainMemberAndChatroom() {
+        // Given
+        MemberChatroom memberChatroom = Fixture.memberChatroom(savedMember, savedChatroom);
+        MemberChatroom savedMemberChatroom = memberChatroomRepository.save(memberChatroom);
+
+        // When
+        memberChatroomRepository.delete(savedMemberChatroom);
+
+        // Then
+        Optional<Member> existingMember = memberRepository.findById(savedMember.getId());
+        Optional<Chatroom> existingChatroom = chatroomRepository.findById(savedChatroom.getId());
+
+        assertThat(existingMember).isPresent();
+        assertThat(existingChatroom).isPresent();
     }
 }

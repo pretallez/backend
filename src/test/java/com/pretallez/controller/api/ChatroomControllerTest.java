@@ -64,8 +64,8 @@ class ChatroomControllerTest {
     }
 
     @Test
-    @DisplayName("채팅방 생성 요청을 하면 채팅방이 정상적으로 생성됩니다.")
-    void createChatroom() throws Exception {
+    @DisplayName("채팅방 생성 요청 시, 성공 및 200 응답")
+    void WhenCreateRequest_ThenReturnSuccess_200() throws Exception {
         // Given
         String requestBody = objectMapper.writeValueAsString(Map.of("votePostId", votePostId));
 
@@ -80,8 +80,8 @@ class ChatroomControllerTest {
     }
 
     @Test
-    @DisplayName("votePostID가 없으면 채팅방 생성에 실패합니다.")
-    void createChatroom_invalid() throws Exception {
+    @DisplayName("투표글ID 없이 채팅방 생성 요청 시, 실패 및 400 응답")
+    void WhenCreateRequestWithoutVotePostId_ThenReturnFail_400() throws Exception {
         // Given
         String requestBody = objectMapper.writeValueAsString(Map.of("id", votePostId));
 
@@ -94,7 +94,7 @@ class ChatroomControllerTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 votePostId로 채팅방을 생성하면 실패합니다.")
+    @DisplayName("생성되지 않은 투표글ID로 채팅방 생성 요청 시, 실패 및 404 응답")
     void createChatroom_notFound() throws Exception {
         // Given
         Long votePostId = -1L;
@@ -109,7 +109,7 @@ class ChatroomControllerTest {
     }
 
     @Test
-    @DisplayName("이미 존재하는 votePostId로 채팅방을 생성하면 실패합니다.")
+    @DisplayName("이미 생성된 채팅방 ID로 채팅방 생성 요청 시, 실패 및 409 응답")
     void createChatroom_conflict() throws Exception {
         // Given
         String requestBody = objectMapper.writeValueAsString(Map.of("votePostId", votePostId));

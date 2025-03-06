@@ -5,17 +5,12 @@ import com.pretallez.model.entity.Chatroom;
 
 public interface ChatroomService {
 
-    /**
-     * Chatroom 엔티티가 존재하면 반환, 존재하지 않으면 예외를 던집니다.
-     * @param chatroomId Chatroom ID
-     * @return Chatroom 엔티티
-     */
-    Chatroom getChatroomOrThrow(Long chatroomId);
+    /** Chatroom 엔티티가 존재하면 반환, 존재하지 않으면 예외를 던집니다. */
+    Chatroom getChatroom(Long chatroomId);
 
-    /**
-     * 채팅방을 생성합니다.
-     * @param chatroomCreateRequest 채팅방 생성 요청 데이터
-     * @return 채팅방 생성 결과 데이터
-     */
+    /** 채팅방을 생성합니다. */
     ChatroomCreate.Response addChatroom(ChatroomCreate.Request chatroomCreateRequest);
+
+    /** 채팅방을 삭제합니다. */
+    void removeChatroom();
 }

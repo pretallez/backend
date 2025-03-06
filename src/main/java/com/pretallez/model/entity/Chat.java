@@ -19,9 +19,13 @@ public class Chat {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @JoinColumn(name = "member_chatroom_id", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    private MemberChatroom memberChatroom;
+    private Member member;
+
+    @JoinColumn(name = "chatroom_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Chatroom chatroom;
 
     @Column(name = "content", nullable = false, length = 500)
     private String content;
@@ -31,5 +35,4 @@ public class Chat {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
-
 }

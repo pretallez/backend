@@ -21,7 +21,7 @@ public class ChatroomServiceImpl implements ChatroomService {
 
     @Override
     public ChatroomCreate.Response addChatroom(ChatroomCreate.Request chatroomCreateRequest) {
-        VotePost foundVotePost = votePostService.getVotePostOrThrow(chatroomCreateRequest.getVotePostId());
+        VotePost foundVotePost = votePostService.getVotePost(chatroomCreateRequest.getVotePostId());
 
         try {
             Chatroom savedChatroom = chatroomRepository.save(Chatroom.of(foundVotePost));
@@ -32,8 +32,13 @@ public class ChatroomServiceImpl implements ChatroomService {
     }
 
     @Override
-    public Chatroom getChatroomOrThrow(Long chatroomId) {
+    public Chatroom getChatroom(Long chatroomId) {
         return chatroomRepository.findById(chatroomId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%d]에 해당하는 채팅방을 찾을 수 없습니다.", chatroomId)));
+    }
+
+    @Override
+    public void removeChatroom() {
+
     }
 }
