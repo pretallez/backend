@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.Map;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -64,8 +65,8 @@ class MemberChatroomControllerTest {
     }
 
     @Test
-    @DisplayName("채팅방 참가 요청을 하면 채팅방에 정상적으로 참가합니다.")
-    void addMemberToChatroom() throws Exception {
+    @DisplayName("채팅방 참가 요청 시, 성공 및 200 응답")
+    void WhenJoinRequest_ThenReturnSuccess_200() throws Exception {
         // Given
         String createChatroomRequest = objectMapper.writeValueAsString(Map.of("votePostId", votePostId));
 
@@ -96,8 +97,8 @@ class MemberChatroomControllerTest {
     }
 
     @Test
-    @DisplayName("memberId가 없으면 채팅방 참가에 실패합니다.")
-    void addMemberToChatroom_invalid_memberId() throws Exception {
+    @DisplayName("회원ID 없이 채팅방 참가 요청 시, 실패 및 400 응답")
+    void WhenJoinRequestWithoutMemberId_ThenReturnFail_400() throws Exception {
         // Given
         String createChatroomRequest = objectMapper.writeValueAsString(Map.of("votePostId", votePostId));
 
@@ -124,8 +125,8 @@ class MemberChatroomControllerTest {
     }
 
     @Test
-    @DisplayName("chatroomId가 없으면 채팅방 참가에 실패합니다.")
-    void addMemberToChatroom_invalid_chatroomId() throws Exception {
+    @DisplayName("채팅방ID 없이 채팅방 참가 요청 시, 실패 및 400 응답")
+    void WhenJoinRequestWithoutChatroomId_ThenReturnFail_400() throws Exception {
         // Given
         String createChatroomRequest = objectMapper.writeValueAsString(Map.of("votePostId", votePostId));
 
@@ -152,9 +153,8 @@ class MemberChatroomControllerTest {
     }
 
     @Test
-    @DisplayName("이미 참가한 채팅방에 중복 참가하면 실패합니다.")
-    void addMemberToChatroom_conflict() throws Exception {
-        // Given
+    @DisplayName("이미 참가되어 있는 채팅방 참가 요청 시, 실패 및 409 응답")
+    void WhenJoinRequestAlreadyJoined_ThenReturnFail_409() throws Exception {
         String createChatroomRequest = objectMapper.writeValueAsString(Map.of("votePostId", votePostId));
 
         String response = mockMvc.perform(post("/v1/api/chatrooms")
@@ -187,5 +187,72 @@ class MemberChatroomControllerTest {
                         .content(requestBody))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isConflict());
+    }
+
+    @Test
+    @DisplayName("채팅방 퇴장 요청 시, 성공 및 200 응답")
+    void WhenExitRequest_ThenReturnSuccess_200() throws Exception {
+        // Given whenCreateAndJoinChatroom_ThenExitSuccessfully()
+        String createChatroomRequest = objectMapper.writeValueAsString(Map.of("votePostId", votePostId));
+
+        String response = mockMvc.perform(post("/v1/api/chatrooms")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(createChatroomRequest))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Long chatroomId = objectMapper.readTree(response).get("data").get("id").asLong();
+
+        String requestBody = objectMapper.writeValueAsString(Map.of(
+                "memberId", savedMember.getId(),
+                "chatroomId", chatroomId
+        ));
+
+        mockMvc.perform(post("/v1/api/chatrooms/members")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id").exists())
+                .andExpect(jsonPath("$.data.memberId").value(savedMember.getId()))
+                .andExpect(jsonPath("$.data.chatroomId").value(chatroomId));
+
+        // When & Then
+        mockMvc.perform(delete("/v1/api/chatrooms/members")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("참가하지 않은 채팅방 퇴장 요청 시, 실패 및 404 응답")
+    void WhenExitRequestWithoutJoining_ThenReturnFail_404() throws Exception {
+        // Given
+        String createChatroomRequest = objectMapper.writeValueAsString(Map.of("votePostId", votePostId));
+
+        String response = mockMvc.perform(post("/v1/api/chatrooms")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(createChatroomRequest))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Long chatroomId = objectMapper.readTree(response).get("data").get("id").asLong();
+
+        String requestBody = objectMapper.writeValueAsString(Map.of(
+                "memberId", savedMember.getId(),
+                "chatroomId", chatroomId
+        ));
+
+        // When & Then
+        mockMvc.perform(delete("/v1/api/chatrooms/members")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isNotFound());
     }
 }

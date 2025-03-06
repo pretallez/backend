@@ -1,11 +1,11 @@
 package com.pretallez.service;
 
+import com.pretallez.common.exception.EntityNotFoundException;
 import com.pretallez.common.fixture.Fixture;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
 import com.pretallez.model.entity.*;
 import com.pretallez.repository.*;
-import com.pretallez.service.impls.MemberChatroomServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
 @ComponentScan("com.pretallez.repository.impls")
@@ -24,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MemberChatroomServiceTest {
 
     @Autowired
-    private  ChatroomRepository chatroomRepository;
+    private ChatroomRepository chatroomRepository;
 
     @Autowired
     private VotePostRepository votePostRepository;
@@ -47,14 +50,14 @@ class MemberChatroomServiceTest {
     @Autowired
     private MemberService memberService;
 
+    @Autowired
     private MemberChatroomService memberChatroomService;
+
     private Member savedMember;
     private Chatroom savedChatroom;
 
     @BeforeEach
     void setUp() {
-        memberChatroomService = new MemberChatroomServiceImpl(chatroomService, memberService, memberChatroomRepository);
-
         savedMember = memberRepository.save(Fixture.member());
         Board savedBoard = boardRepository.save(Fixture.board(savedMember));
         FencingClub savedFencingClub = fencingClubRepository.save(Fixture.fencingClub());
@@ -63,29 +66,59 @@ class MemberChatroomServiceTest {
     }
 
     @Test
-    @DisplayName("회원이 채팅방에 정상적으로 참가합니다.")
-    void addMemberToChatroom() {
+    @DisplayName("채팅방 참가 시, 성공")
+    void addMemberToChatroom_WhenMemberChatroomNotExists_ThenMemberChatroomIsCreated() {
         // Given
-        MemberChatroomCreate.Request request = Fixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom.getId());
+        MemberChatroomCreate.Request memberChatroomCreateRequest = Fixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom.getId());
 
         // When
-        MemberChatroomCreate.Response response = memberChatroomService.addMemberToChatroom(request);
+        MemberChatroomCreate.Response memberChatroomCreateResponse =  memberChatroomService.addMemberToChatroom(memberChatroomCreateRequest);
 
         // Given
-        assertThat(response.getId()).isNotNull();
-        assertThat(response.getMemberId()).isEqualTo(savedMember.getId());
-        assertThat(response.getChatroomId()).isEqualTo(savedChatroom.getId());
+        assertThat(memberChatroomCreateResponse.getId()).isNotNull();
+        assertThat(memberChatroomCreateResponse.getMemberId()).isEqualTo(savedMember.getId());
+        assertThat(memberChatroomCreateResponse.getChatroomId()).isEqualTo(savedChatroom.getId());
     }
 
     @Test
-    @DisplayName("회원이 이미 참가한 채팅방에 참가 시 예외가 발생합니다.")
-    void addMemberToChatroom_duplication() {
+    @DisplayName("참가되어 있는 채팅방 참가 시, 참가가 실패되고 DataIntegrityViolation 예외가 발생한다.")
+    void addMemberToChatroom_WhenMemberChatroomExists_ThenThrowDataintegrityViolation() {
         // When
-        memberChatroomRepository.save(Fixture.memberChatroom(savedMember, savedChatroom));
+        MemberChatroomCreate.Request memberChatroomCreateRequest = Fixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom.getId());
+        memberChatroomService.addMemberToChatroom(memberChatroomCreateRequest);
 
         // Then
-        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
-            memberChatroomRepository.save(Fixture.memberChatroom(savedMember, savedChatroom));
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            memberChatroomService.addMemberToChatroom(memberChatroomCreateRequest);
+        });
+    }
+
+    @Test
+    @DisplayName("참가되어 있는 채팅방 퇴장 시, 정상적으로 채팅방에서 퇴장된다.")
+    void removeMemberFromChatroom_WhenMemberChatroomExists_ThenReturnTrue() {
+        // Given
+        MemberChatroomCreate.Request memberChatroomCreateRequest = Fixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom.getId());
+        memberChatroomService.addMemberToChatroom(memberChatroomCreateRequest);
+
+        MemberChatroomDelete.Request memberChatroomDeleteRequest = Fixture.memberChatroomDeleteRequest(savedMember.getId(), savedChatroom.getId());
+
+        // When
+        memberChatroomService.removeMemberFromChatroom(memberChatroomDeleteRequest);
+
+        // Then
+        Optional<MemberChatroom> existingMemberChatroom = memberChatroomRepository.findByMemberAndChatroom(savedMember, savedChatroom);
+        assertThat(existingMemberChatroom).isEmpty();
+    }
+
+    @Test
+    @DisplayName("참가되어 있지않은 채팅방 퇴장 시, 퇴장이 실패되고 EntityNotFound 예외가 발생한다.")
+    void removeMemberFromChatroom_WhenMemberChatroomNotExists_ThenThrowEntityNotFound() {
+        // Given
+        MemberChatroomDelete.Request memberChatroomDeleteRequest = Fixture.memberChatroomDeleteRequest(savedMember.getId(), savedChatroom.getId());
+
+        // When & Then
+        assertThrows(EntityNotFoundException.class, () -> {
+            memberChatroomService.removeMemberFromChatroom(memberChatroomDeleteRequest);
         });
     }
 }
