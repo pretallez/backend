@@ -64,23 +64,23 @@ public class Fixture {
     }
 
     public static ChatroomCreate.Request chatroomCreateRequest(Long votePostId) {
-        return ChatroomCreate.Request.of(votePostId);
+        return new ChatroomCreate.Request(votePostId);
     }
 
     public static ChatroomCreate.Response chatroomCreateResponse(Long id, Long votePostId) {
-        return ChatroomCreate.Response.of(id, votePostId);
+        return new ChatroomCreate.Response(id, votePostId);
     }
 
     public static MemberChatroomCreate.Request memberChatroomCreateRequest(Long memberId, Long chatroomId) {
-        return MemberChatroomCreate.Request.of(memberId, chatroomId);
+        return new MemberChatroomCreate.Request(memberId, chatroomId);
     }
 
     public static MemberChatroomCreate.Response memberChatroomCreateResponse(Long id, Long memberId, Long chatroomId) {
-        return MemberChatroomCreate.Response.of(id, memberId, chatroomId);
+        return new MemberChatroomCreate.Response(id, memberId, chatroomId);
     }
 
     public static MemberChatroomDelete.Request memberChatroomDeleteRequest(Long memberId, Long chatroomId) {
-        return MemberChatroomDelete.Request.of(memberId, chatroomId);
+        return new MemberChatroomDelete.Request(memberId, chatroomId);
     }
 
     public static MemberChatroomRead.Request memberChatroomReadRequest(Long memberId) {
