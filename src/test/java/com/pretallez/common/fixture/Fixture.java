@@ -9,6 +9,7 @@ import com.pretallez.model.enums.BoardType;
 import com.pretallez.model.enums.MannerLevel;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Fixture {
 
@@ -77,5 +78,12 @@ public class Fixture {
 
     public static MemberChatroomRead.Request memberChatroomReadRequest(Long memberId) {
         return MemberChatroomRead.Request.of(memberId);
+    }
+
+    public static List<MemberChatroomRead.Response> memberChatroomReadResponses() {
+        return List.of(
+                new MemberChatroomRead.Response(1L, 1L, "첫 번째 채팅방의 투표글 제목"),
+                new MemberChatroomRead.Response(2L, 2L, "두 번째 채팅방의 투표글 제목")
+        );
     }
 }
