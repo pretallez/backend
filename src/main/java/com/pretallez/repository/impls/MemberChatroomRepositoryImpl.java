@@ -8,6 +8,7 @@ import com.pretallez.repository.jpa.MemberChatroomJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -34,5 +35,10 @@ public class MemberChatroomRepositoryImpl implements MemberChatroomRepository {
     @Override
     public Optional<MemberChatroom> findByMemberAndChatroom(Member member, Chatroom chatroom) {
         return memberChatroomJpaRepository.findByMemberAndChatroom(member, chatroom);
+    }
+
+    @Override
+    public List<MemberChatroom> findByMember(Member member) {
+        return memberChatroomJpaRepository.findByMember(member);
     }
 }
