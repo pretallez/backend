@@ -1,5 +1,6 @@
 package com.pretallez.service;
 
+import com.pretallez.model.dto.VotePostCreate;
 import com.pretallez.model.entity.VotePost;
 
 public interface VotePostService {
@@ -8,7 +9,7 @@ public interface VotePostService {
     VotePost getVotePost(Long votePostId);
 
     /** 투표글을 생성합니다. */
-    void addVotePost();
+    VotePostCreate.Response addVotePost(Long writerId, VotePostCreate.Request votePostCreateRequest);
 
     /** 투표글을 수정합니다. */
     void modifyVotePost();

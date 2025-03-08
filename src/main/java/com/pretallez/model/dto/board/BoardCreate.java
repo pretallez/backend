@@ -28,7 +28,6 @@ public class BoardCreate {
             return Board.of(member, request.getTitle(), request.getTitle(), request.getBoardType());
         }
 
-
     }
 
     @Getter

@@ -6,6 +6,8 @@ import com.pretallez.repository.jpa.BoardJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class BoardRepositoryImpl implements BoardRepository {
@@ -15,6 +17,11 @@ public class BoardRepositoryImpl implements BoardRepository {
     @Override
     public Board save(Board board) {
         return boardJpaRepository.save(board);
+    }
+
+    @Override
+    public Optional<Board> findById(Long boardId) {
+        return boardJpaRepository.findById(boardId);
     }
 
 }
