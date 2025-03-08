@@ -4,6 +4,7 @@ import com.pretallez.model.dto.chatroom.ChatroomCreate;
 import com.pretallez.model.dto.example.ExampleCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
 import com.pretallez.model.entity.*;
 import com.pretallez.model.enums.BoardType;
 import com.pretallez.model.enums.MannerLevel;
@@ -80,5 +81,9 @@ public class Fixture {
 
     public static MemberChatroomDelete.Request memberChatroomDeleteRequest(Long memberId, Long chatroomId) {
         return MemberChatroomDelete.Request.of(memberId, chatroomId);
+    }
+
+    public static MemberChatroomRead.Request memberChatroomReadRequest(Long memberId) {
+        return MemberChatroomRead.Request.of(memberId);
     }
 }
