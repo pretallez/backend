@@ -6,7 +6,7 @@ import com.pretallez.common.response.ResSuccessCode;
 import com.pretallez.controller.api.MemberChatroomController;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
-import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomsRead;
 import com.pretallez.service.MemberChatroomService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -100,17 +100,13 @@ class MemberChatroomControllerUnitTest {
         // Given
         Long memberId = 1L;
 
-        MemberChatroomRead.Request request = MemberChatroomFixture.memberChatroomReadRequest(memberId);
-        List<MemberChatroomRead.Response> responses = MemberChatroomFixture.memberChatroomReadResponses();
+        List<MemberChatroomsRead.Response> responses = MemberChatroomFixture.memberChatroomReadResponses();
 
-        when(MemberChatroomService.getMembers(any())).thenReturn(responses);
-
-        String requestBody = objectMapper.writeValueAsString(request);
+        when(MemberChatroomService.getMemberChatrooms(any())).thenReturn(responses);
 
         // When & Then
-        mockMvc.perform(get("/v1/api/chatrooms/members")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
+        mockMvc.perform(get("/v1/api/chatrooms/members/" + memberId)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(ResSuccessCode.READ.getCode()))
@@ -124,6 +120,6 @@ class MemberChatroomControllerUnitTest {
                 .andExpect(jsonPath("$.data[1].votePostId").value(2))
                 .andExpect(jsonPath("$.data[1].title").value("두 번째 채팅방의 투표글 제목"));
 
-        verify(MemberChatroomService, times(1)).getMembers(any());
+        verify(MemberChatroomService, times(1)).getMemberChatrooms(any());
     }
 }

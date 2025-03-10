@@ -1,6 +1,6 @@
 package com.pretallez.repository;
 
-import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomsRead;
 import com.pretallez.model.entity.Chatroom;
 import com.pretallez.model.entity.Member;
 import com.pretallez.model.entity.MemberChatroom;
@@ -19,5 +19,5 @@ public interface MemberChatroomRepository {
 
     /** QueryDSL */
     /** QueryDSL을 사용하여 MemberChatroom 엔티티와 관련된 Chatroom, VotePost, Board 테이블을 조인하여 한 번의 쿼리로 데이터를 가져온다. */
-    List<MemberChatroomRead.Response> findByMemberWithChatroomAndBoard(Long memberId);
+    List<MemberChatroomsRead.Response> findByMemberWithChatroomAndBoard(Long memberId);
 }

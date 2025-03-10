@@ -2,7 +2,7 @@ package com.pretallez.common.fixture;
 
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
-import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomsRead;
 import com.pretallez.model.entity.Chatroom;
 import com.pretallez.model.entity.Member;
 import com.pretallez.model.entity.MemberChatroom;
@@ -34,14 +34,14 @@ public class MemberChatroomFixture {
         return new MemberChatroomDelete.Request(memberId, chatroomId);
     }
 
-    public static MemberChatroomRead.Request memberChatroomReadRequest(Long memberId) {
-        return MemberChatroomRead.Request.of(memberId);
+    public static MemberChatroomsRead.Request memberChatroomReadRequest(Long memberId) {
+        return new MemberChatroomsRead.Request(memberId);
     }
 
-    public static List<MemberChatroomRead.Response> memberChatroomReadResponses() {
+    public static List<MemberChatroomsRead.Response> memberChatroomReadResponses() {
         return List.of(
-                new MemberChatroomRead.Response(1L, 1L, "첫 번째 채팅방의 투표글 제목"),
-                new MemberChatroomRead.Response(2L, 2L, "두 번째 채팅방의 투표글 제목")
+                new MemberChatroomsRead.Response(1L, 1L, "첫 번째 채팅방의 투표글 제목"),
+                new MemberChatroomsRead.Response(2L, 2L, "두 번째 채팅방의 투표글 제목")
         );
     }
 }

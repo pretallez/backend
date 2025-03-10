@@ -4,7 +4,7 @@ import com.pretallez.common.exception.EntityNotFoundException;
 import com.pretallez.common.fixture.*;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
-import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomsRead;
 import com.pretallez.model.entity.*;
 import com.pretallez.repository.*;
 import com.pretallez.service.ChatroomService;
@@ -141,18 +141,18 @@ class MemberChatroomServiceIntegrationTest {
 
         // When
         // 회원의 모든 채팅방을 조회
-        List<MemberChatroomRead.Response> response = memberChatroomService.getMembers(MemberChatroomFixture.memberChatroomReadRequest(savedMember.getId()));
+        List<MemberChatroomsRead.Response> response = memberChatroomService.getMemberChatrooms(savedMember.getId());
 
         // Then
         assertThat(response).isNotEmpty();
         assertThat(response).hasSize(2);
 
         assertThat(response)
-                .extracting(MemberChatroomRead.Response::getVotePostId)
+                .extracting(MemberChatroomsRead.Response::getVotePostId)
                 .containsExactlyInAnyOrder(savedChatroom1.getVotePost().getId(), savedChatroom2.getVotePost().getId());
 
         assertThat(response)
-                .extracting(MemberChatroomRead.Response::getTitle)
+                .extracting(MemberChatroomsRead.Response::getTitle)
                 .containsExactlyInAnyOrder(savedChatroom1.getVotePost().getBoard().getTitle(),
                         savedChatroom2.getVotePost().getBoard().getTitle());
     }

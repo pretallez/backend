@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-public class MemberChatroomRead {
+public class MemberChatroomsRead {
 
     @Getter
     @NoArgsConstructor
@@ -18,10 +18,6 @@ public class MemberChatroomRead {
 
         @NotNull(message = "memberId는 필수 값입니다.")
         private Long memberId;
-
-        public static Request of(Long memberId) {
-            return new Request(memberId);
-        }
     }
 
     @Getter

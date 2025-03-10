@@ -1,6 +1,6 @@
 package com.pretallez.repository.impls;
 
-import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomsRead;
 import com.pretallez.model.entity.Chatroom;
 import com.pretallez.model.entity.Member;
 import com.pretallez.model.entity.MemberChatroom;
@@ -47,9 +47,9 @@ public class MemberChatroomRepositoryImpl implements MemberChatroomRepository {
     }
 
     @Override
-    public List<MemberChatroomRead.Response> findByMemberWithChatroomAndBoard(Long memberId) {
+    public List<MemberChatroomsRead.Response> findByMemberWithChatroomAndBoard(Long memberId) {
         return queryFactory
-                .select(Projections.constructor(MemberChatroomRead.Response.class,
+                .select(Projections.constructor(MemberChatroomsRead.Response.class,
                         memberChatroom.id,
                         votePost.id,
                         board.title

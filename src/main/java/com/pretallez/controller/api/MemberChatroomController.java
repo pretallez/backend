@@ -4,7 +4,7 @@ import com.pretallez.common.response.CustomApiResponse;
 import com.pretallez.common.response.ResSuccessCode;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
-import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomsRead;
 import com.pretallez.service.MemberChatroomService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +31,9 @@ public class MemberChatroomController {
         return CustomApiResponse.OK(ResSuccessCode.DELETED);
     }
 
-    @GetMapping
-    public CustomApiResponse<List<MemberChatroomRead.Response>> getMembers(MemberChatroomRead.Request memberChatroomReadReqeust) {
-        List<MemberChatroomRead.Response> memberChatroomReadResponses = memberChatroomService.getMembers(memberChatroomReadReqeust);
+    @GetMapping("/{memberId}")
+    public CustomApiResponse<List<MemberChatroomsRead.Response>> getMemberChatrooms(@PathVariable("memberId") Long memberId) {
+        List<MemberChatroomsRead.Response> memberChatroomReadResponses = memberChatroomService.getMemberChatrooms(memberId);
         return CustomApiResponse.OK(ResSuccessCode.READ, memberChatroomReadResponses);
     }
 }

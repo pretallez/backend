@@ -21,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
+@Transactional
 @DisplayName("대관 게시글 서비스 통합 테스트")
 public class VotePostServiceImplIntegrationTest {
 
