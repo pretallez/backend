@@ -4,6 +4,7 @@ import com.pretallez.common.response.CustomApiResponse;
 import com.pretallez.common.response.ResSuccessCode;
 import com.pretallez.model.dto.VotePostCreate;
 import com.pretallez.service.VotePostService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,7 @@ public class VotePostController {
     private final VotePostService votePostService;
 
     @PostMapping("/vote-posts")
-    public CustomApiResponse<VotePostCreate.Response> createVotePost(@RequestBody VotePostCreate.Request votePostCreateRequest) {
+    public CustomApiResponse<VotePostCreate.Response> createVotePost(@Valid @RequestBody VotePostCreate.Request votePostCreateRequest) {
         Long writerId = 1L;
         VotePostCreate.Response votePostCreateResponse = votePostService.addVotePost(writerId, votePostCreateRequest);
         return CustomApiResponse.OK(ResSuccessCode.CREATED, votePostCreateResponse);
