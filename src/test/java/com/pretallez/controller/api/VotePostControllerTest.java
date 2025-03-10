@@ -7,6 +7,7 @@ import com.pretallez.common.response.CustomApiResponse;
 import com.pretallez.common.response.ResSuccessCode;
 import com.pretallez.model.dto.VotePostCreate;
 import com.pretallez.service.VotePostService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(VotePostController.class)
 @ExtendWith(RestDocumentationExtension.class)
 @AutoConfigureRestDocs(uriScheme = "https", uriHost = "docs.api.com")
+@DisplayName("대관 게시글 컨트롤러 테스트")
 class VotePostControllerTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -39,7 +41,8 @@ class VotePostControllerTest {
     private VotePostService votePostService;
 
     @Test
-    void createBoard_Return200() throws Exception {
+    @DisplayName("대관 신청 게시글 생성 요청 시, 성공 및 200 응답")
+    void createBoard_ThenReturnSuccess_200() throws Exception {
         // Given: 요청 객체 생성
         VotePostCreate.Request votePostCreateRequest = Fixture.votePostCreateRequest(Fixture.fencingClub());
         Long fakeMemberId = 1L;
