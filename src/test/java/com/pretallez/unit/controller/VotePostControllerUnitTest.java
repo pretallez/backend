@@ -1,11 +1,14 @@
-package com.pretallez.controller.api;
+package com.pretallez.unit.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.pretallez.common.fixture.Fixture;
+import com.pretallez.common.fixture.FencingClubFixture;
+import com.pretallez.common.fixture.VotePostFixture;
 import com.pretallez.common.response.CustomApiResponse;
 import com.pretallez.common.response.ResSuccessCode;
+import com.pretallez.controller.api.VotePostController;
 import com.pretallez.model.dto.VotePostCreate;
+import com.pretallez.model.entity.FencingClub;
 import com.pretallez.service.VotePostService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,8 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(VotePostController.class)
 @ExtendWith(RestDocumentationExtension.class)
 @AutoConfigureRestDocs(uriScheme = "https", uriHost = "docs.api.com")
-@DisplayName("대관 게시글 컨트롤러 테스트")
-class VotePostControllerTest {
+@DisplayName("대관 게시글 컨트롤러 단위 테스트")
+class VotePostControllerUnitTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -44,9 +47,10 @@ class VotePostControllerTest {
     @DisplayName("대관 신청 게시글 생성 요청 시, 성공 및 200 응답")
     void createBoard_ThenReturnSuccess_200() throws Exception {
         // Given: 요청 객체 생성
-        VotePostCreate.Request votePostCreateRequest = Fixture.votePostCreateRequest(Fixture.fencingClub());
+        FencingClub fencingClub = FencingClubFixture.fakeFencingClub(1L);
+        VotePostCreate.Request votePostCreateRequest = VotePostFixture.votePostCreateRequest(fencingClub);
         Long fakeMemberId = 1L;
-        VotePostCreate.Response votePostCreateResponse = Fixture.votePostCreateResponse();
+        VotePostCreate.Response votePostCreateResponse = VotePostFixture.votePostCreateResponse(1L);
         CustomApiResponse<VotePostCreate.Response> responseCustomApiResponse = CustomApiResponse.OK(ResSuccessCode.CREATED, votePostCreateResponse);
         objectMapper.registerModule(new JavaTimeModule());
         given(votePostService.addVotePost(eq(fakeMemberId), any(VotePostCreate.Request.class)))

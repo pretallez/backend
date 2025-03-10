@@ -1,6 +1,7 @@
-package com.pretallez.service.integration.impls;
+package com.pretallez.integration.service;
 
-import com.pretallez.common.fixture.Fixture;
+import com.pretallez.common.fixture.BoardFixture;
+import com.pretallez.common.fixture.MemberFixture;
 import com.pretallez.model.dto.board.BoardCreate;
 import com.pretallez.model.entity.Board;
 import com.pretallez.model.entity.Member;
@@ -12,8 +13,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
+@ActiveProfiles("local")
+@DisplayName("게시글 서비스 통합 테스트")
 public class BoardServiceImplIntegrationTest {
 
     @Autowired
@@ -25,8 +29,8 @@ public class BoardServiceImplIntegrationTest {
     private Member savedMember ;
 
     @BeforeEach()
-    public void setUp() throws NoSuchFieldException, IllegalAccessException {
-        savedMember = memberRepository.save(Fixture.member());
+    public void setUp() {
+        savedMember = memberRepository.save(MemberFixture.member());
     }
 
 
@@ -34,7 +38,7 @@ public class BoardServiceImplIntegrationTest {
     @DisplayName("게시글 작성 시 ,성공적으로 Board 엔티티 생성되고 필드 값이 제대로 저장되었는지 확인")
     public void addBoard() {
         //given
-        BoardCreate.Request boardCreateRequest = Fixture.boardCreateRequest();
+        BoardCreate.Request boardCreateRequest = BoardFixture.boardCreateRequest();
         Long writerId = savedMember.getId();
 
         //when
@@ -45,9 +49,5 @@ public class BoardServiceImplIntegrationTest {
         Assertions.assertEquals(board.getTitle(), boardCreateRequest.getTitle());
         Assertions.assertEquals(board.getBoardType(), boardCreateRequest.getBoardType());
         Assertions.assertEquals(board.getContent(), boardCreateRequest.getContent());
-
     }
-
-
-
 }

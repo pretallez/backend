@@ -1,7 +1,8 @@
-package com.pretallez.controller.api;
+package com.pretallez.unit.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pretallez.common.fixture.Fixture;
+import com.pretallez.common.fixture.ChatroomFixture;
+import com.pretallez.controller.api.ChatroomController;
 import com.pretallez.model.dto.chatroom.ChatroomCreate;
 import com.pretallez.service.ChatroomService;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,9 +24,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("채팅방 컨트롤러 단위 테스트")
 class ChatroomControllerUnitTest {
 
     private MockMvc mockMvc;
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Mock
@@ -45,8 +48,8 @@ class ChatroomControllerUnitTest {
         // Given
         Long id = 1L;
         Long votePostId = 1L;
-        ChatroomCreate.Request request = Fixture.chatroomCreateRequest(votePostId);
-        ChatroomCreate.Response response = Fixture.chatroomCreateResponse(id, votePostId);
+        ChatroomCreate.Request request = ChatroomFixture.chatroomCreateRequest(votePostId);
+        ChatroomCreate.Response response = ChatroomFixture.chatroomCreateResponse(id, votePostId);
 
         String requestBody = objectMapper.writeValueAsString(request);
 

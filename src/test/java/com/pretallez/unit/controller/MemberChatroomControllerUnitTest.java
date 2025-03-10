@@ -1,8 +1,9 @@
-package com.pretallez.controller.api;
+package com.pretallez.unit.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pretallez.common.fixture.Fixture;
+import com.pretallez.common.fixture.MemberChatroomFixture;
 import com.pretallez.common.response.ResSuccessCode;
+import com.pretallez.controller.api.MemberChatroomController;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
@@ -28,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("회원 채팅방 컨트롤러 단위 테스트")
 class MemberChatroomControllerUnitTest {
 
     private MockMvc mockMvc;
@@ -51,8 +53,8 @@ class MemberChatroomControllerUnitTest {
         Long id = 1L;
         Long memberId = 1L;
         Long chatroomId = 1L;
-        MemberChatroomCreate.Request request = Fixture.memberChatroomCreateRequest(memberId, chatroomId);
-        MemberChatroomCreate.Response response = Fixture.memberChatroomCreateResponse(id, memberId, chatroomId);
+        MemberChatroomCreate.Request request = MemberChatroomFixture.memberChatroomCreateRequest(memberId, chatroomId);
+        MemberChatroomCreate.Response response = MemberChatroomFixture.memberChatroomCreateResponse(id, memberId, chatroomId);
 
         String requestBody = objectMapper.writeValueAsString(request);
 
@@ -78,7 +80,7 @@ class MemberChatroomControllerUnitTest {
         Long id = 1L;
         Long memberId = 1L;
         Long chatroomId = 1L;
-        MemberChatroomDelete.Request request = Fixture.memberChatroomDeleteRequest(memberId, chatroomId);
+        MemberChatroomDelete.Request request = MemberChatroomFixture.memberChatroomDeleteRequest(memberId, chatroomId);
 
         String requestBody = objectMapper.writeValueAsString(request);
 
@@ -98,8 +100,8 @@ class MemberChatroomControllerUnitTest {
         // Given
         Long memberId = 1L;
 
-        MemberChatroomRead.Request request = Fixture.memberChatroomReadRequest(memberId);
-        List<MemberChatroomRead.Response> responses = Fixture.memberChatroomReadResponses();
+        MemberChatroomRead.Request request = MemberChatroomFixture.memberChatroomReadRequest(memberId);
+        List<MemberChatroomRead.Response> responses = MemberChatroomFixture.memberChatroomReadResponses();
 
         when(MemberChatroomService.getMembers(any())).thenReturn(responses);
 

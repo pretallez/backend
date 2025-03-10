@@ -1,6 +1,7 @@
-package com.pretallez.service.unit.impls;
+package com.pretallez.unit.service;
 
-import com.pretallez.common.fixture.Fixture;
+import com.pretallez.common.fixture.BoardFixture;
+import com.pretallez.common.fixture.MemberFixture;
 import com.pretallez.model.dto.board.BoardCreate;
 import com.pretallez.model.entity.Board;
 import com.pretallez.model.entity.Member;
@@ -12,10 +13,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.lang.reflect.Field;
 
 @ActiveProfiles("local")
 @DisplayName("게시글 서비스 단위 테스트")
@@ -36,20 +38,20 @@ public class BoardServiceImplUnitTest {
     private Member savedMember;
 
     @BeforeEach
-    public void setUp() throws NoSuchFieldException, IllegalAccessException {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
-        savedMember = Fixture.member();
+        savedMember = MemberFixture.fakeMember(1L);
         Mockito.doReturn(savedMember).when(memberRepository).save(Mockito.any(Member.class));
         Mockito.when(memberService.getMember(Mockito.anyLong())).thenReturn(savedMember);
     }
 
     @Test
     @DisplayName("게시판 생성 시, 정상적으로 생성되고 작성자 정보가 올바르게 저장되는지 확인")
-    public void addBoard_Success() throws NoSuchFieldException, IllegalAccessException {
+    public void addBoard_Success() {
         // given
         Long memberFakeId = 1L;
-        BoardCreate.Request boardCreateRequest = Fixture.boardCreateRequest();
-        Mockito.when(boardRepository.save(Mockito.any())).thenReturn(Fixture.board(savedMember));
+        BoardCreate.Request boardCreateRequest = BoardFixture.boardCreateRequest();
+        Mockito.when(boardRepository.save(Mockito.any())).thenReturn(BoardFixture.fakeBoard(1L, savedMember));
 
         // when
         Board board = boardService.addBoard(boardCreateRequest, memberFakeId);
