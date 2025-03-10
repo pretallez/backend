@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-import static com.pretallez.model.entity.QBoard.board;
 import static com.pretallez.model.entity.QChatroom.chatroom;
 import static com.pretallez.model.entity.QMemberChatroom.memberChatroom;
 import static com.pretallez.model.entity.QVotePost.votePost;
@@ -47,17 +46,16 @@ public class MemberChatroomRepositoryImpl implements MemberChatroomRepository {
     }
 
     @Override
-    public List<MemberChatroomsRead.Response> findByMemberWithChatroomAndBoard(Long memberId) {
+    public List<MemberChatroomsRead.Response> findChatroomsByMemberId(Long memberId) {
         return queryFactory
-                .select(Projections.constructor(MemberChatroomsRead.Response.class,
+                .selectDistinct(Projections.constructor(MemberChatroomsRead.Response.class,
                         memberChatroom.id,
                         votePost.id,
-                        board.title
+                        chatroom.boardTitle
                 ))
                 .from(memberChatroom)
                 .join(memberChatroom.chatroom, chatroom)
                 .join(chatroom.votePost, votePost)
-                .join(votePost.board, board)
                 .where(memberChatroom.member.id.eq(memberId))
                 .fetch();
     }

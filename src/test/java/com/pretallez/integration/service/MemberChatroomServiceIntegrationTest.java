@@ -153,7 +153,7 @@ class MemberChatroomServiceIntegrationTest {
 
         assertThat(response)
                 .extracting(MemberChatroomsRead.Response::getTitle)
-                .containsExactlyInAnyOrder(savedChatroom1.getVotePost().getBoard().getTitle(),
-                        savedChatroom2.getVotePost().getBoard().getTitle());
+                .containsExactlyInAnyOrder(savedChatroom1.getBoardTitle(),
+                        savedChatroom2.getBoardTitle());
     }
 }

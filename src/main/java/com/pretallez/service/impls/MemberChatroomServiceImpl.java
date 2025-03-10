@@ -62,7 +62,7 @@ public class MemberChatroomServiceImpl implements MemberChatroomService {
 
     @Override
     public List<MemberChatroomsRead.Response> getMemberChatrooms(Long memberId) {
-        return memberChatroomRepository.findByMemberWithChatroomAndBoard(memberId);
+        return memberChatroomRepository.findChatroomsByMemberId(memberId);
     }
 
     @Override
