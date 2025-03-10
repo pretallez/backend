@@ -3,6 +3,7 @@ package com.pretallez.service.impls;
 import com.pretallez.common.exception.EntityNotFoundException;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
 import com.pretallez.model.entity.Chatroom;
 import com.pretallez.model.entity.Member;
 import com.pretallez.model.entity.MemberChatroom;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -62,7 +65,9 @@ public class MemberChatroomServiceImpl implements MemberChatroomService {
     }
 
     @Override
-    public void getMembers() {
-
+    @Transactional
+    public List<MemberChatroomRead.Response> getMembers(MemberChatroomRead.Request memberChatroomReadRequest) {
+        Long memberId = memberChatroomReadRequest.getMemberId();
+        return memberChatroomRepository.findByMemberWithChatroomAndBoard(memberId);
     }
 }
