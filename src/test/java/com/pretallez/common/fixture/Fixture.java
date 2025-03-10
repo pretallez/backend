@@ -5,12 +5,14 @@ import com.pretallez.model.dto.board.BoardCreate;
 import com.pretallez.model.dto.chatroom.ChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
 import com.pretallez.model.entity.*;
 import com.pretallez.model.enums.BoardType;
 import com.pretallez.model.enums.MannerLevel;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Fixture {
 
@@ -99,23 +101,34 @@ public class Fixture {
     }
 
     public static ChatroomCreate.Request chatroomCreateRequest(Long votePostId) {
-        return ChatroomCreate.Request.of(votePostId);
+        return new ChatroomCreate.Request(votePostId);
     }
 
     public static ChatroomCreate.Response chatroomCreateResponse(Long id, Long votePostId) {
-        return ChatroomCreate.Response.of(id, votePostId);
+        return new ChatroomCreate.Response(id, votePostId);
     }
 
     public static MemberChatroomCreate.Request memberChatroomCreateRequest(Long memberId, Long chatroomId) {
-        return MemberChatroomCreate.Request.of(memberId, chatroomId);
+        return new MemberChatroomCreate.Request(memberId, chatroomId);
     }
 
     public static MemberChatroomCreate.Response memberChatroomCreateResponse(Long id, Long memberId, Long chatroomId) {
-        return MemberChatroomCreate.Response.of(id, memberId, chatroomId);
+        return new MemberChatroomCreate.Response(id, memberId, chatroomId);
     }
 
     public static MemberChatroomDelete.Request memberChatroomDeleteRequest(Long memberId, Long chatroomId) {
-        return MemberChatroomDelete.Request.of(memberId, chatroomId);
+        return new MemberChatroomDelete.Request(memberId, chatroomId);
+    }
+
+    public static MemberChatroomRead.Request memberChatroomReadRequest(Long memberId) {
+        return MemberChatroomRead.Request.of(memberId);
+    }
+
+    public static List<MemberChatroomRead.Response> memberChatroomReadResponses() {
+        return List.of(
+                new MemberChatroomRead.Response(1L, 1L, "첫 번째 채팅방의 투표글 제목"),
+                new MemberChatroomRead.Response(2L, 2L, "두 번째 채팅방의 투표글 제목")
+        );
     }
 
     public static BoardCreate.Request boardCreateRequest() {

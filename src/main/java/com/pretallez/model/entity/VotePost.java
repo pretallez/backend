@@ -19,7 +19,7 @@ public class VotePost {
     private Long id;
 
     @JoinColumn(name = "board_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private Board board;
 
     @JoinColumn(name = "fencing_club_id", nullable = false)

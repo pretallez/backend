@@ -2,8 +2,10 @@ package com.pretallez.controller.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pretallez.common.fixture.Fixture;
+import com.pretallez.common.response.ResSuccessCode;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
 import com.pretallez.service.MemberChatroomService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,10 +19,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -87,5 +90,38 @@ class MemberChatroomControllerUnitTest {
                 .andExpect(status().isOk());
 
         verify(MemberChatroomService, times(1)).removeMemberFromChatroom(any());
+    }
+
+    @Test
+    @DisplayName("회원의 채팅방 조회 요청 시, 성공 및 200 응답")
+    void WhenReadMemberChatroom_ThenReturnSuccess_200() throws Exception {
+        // Given
+        Long memberId = 1L;
+
+        MemberChatroomRead.Request request = Fixture.memberChatroomReadRequest(memberId);
+        List<MemberChatroomRead.Response> responses = Fixture.memberChatroomReadResponses();
+
+        when(MemberChatroomService.getMembers(any())).thenReturn(responses);
+
+        String requestBody = objectMapper.writeValueAsString(request);
+
+        // When & Then
+        mockMvc.perform(get("/v1/api/chatrooms/members")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(ResSuccessCode.READ.getCode()))
+                .andExpect(jsonPath("$.message").value("Read Successfully"))
+                .andExpect(jsonPath("$.data").isArray())
+                .andExpect(jsonPath("$.data.length()").value(2))
+                .andExpect(jsonPath("$.data[0].id").value(1))
+                .andExpect(jsonPath("$.data[0].votePostId").value(1))
+                .andExpect(jsonPath("$.data[0].title").value("첫 번째 채팅방의 투표글 제목"))
+                .andExpect(jsonPath("$.data[1].id").value(2))
+                .andExpect(jsonPath("$.data[1].votePostId").value(2))
+                .andExpect(jsonPath("$.data[1].title").value("두 번째 채팅방의 투표글 제목"));
+
+        verify(MemberChatroomService, times(1)).getMembers(any());
     }
 }

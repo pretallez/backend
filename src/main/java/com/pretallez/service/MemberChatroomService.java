@@ -2,9 +2,12 @@ package com.pretallez.service;
 
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
 import com.pretallez.model.entity.Chatroom;
 import com.pretallez.model.entity.Member;
 import com.pretallez.model.entity.MemberChatroom;
+
+import java.util.List;
 
 public interface MemberChatroomService {
 
@@ -21,5 +24,5 @@ public interface MemberChatroomService {
     void getChatrooms();
 
     /** 현재 채팅방의 모든 회원을 조회합니다. */
-    void getMembers();
+    List<MemberChatroomRead.Response> getMembers(MemberChatroomRead.Request memberChatroomReadRequest);
 }
