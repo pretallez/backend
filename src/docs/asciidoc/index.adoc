@@ -1,11 +1,11 @@
 = API Documentation
 :toc: left
 
-== Board
+== VotePost
 
 === create
 
-include::build/generated-snippets/boards/create-board/http-request.adoc[]
-include::build/generated-snippets/boards/create-board/request-fields.adoc[]
-include::build/generated-snippets/boards/create-board/http-response.adoc[]
-include::build/generated-snippets/boards/create-board/response-fields.adoc[]
+include::build/generated-snippets/vote-posts/create-vote-posts/http-request.adoc[]
+include::build/generated-snippets/vote-posts/create-vote-posts/request-fields.adoc[]
+include::build/generated-snippets/vote-posts/create-vote-posts/http-response.adoc[]
+include::build/generated-snippets/vote-posts/create-vote-posts/response-fields.adoc[]
