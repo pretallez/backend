@@ -1,12 +1,15 @@
-package com.pretallez.service;
+package com.pretallez.integration.service;
 
 import com.pretallez.common.exception.EntityNotFoundException;
-import com.pretallez.common.fixture.Fixture;
+import com.pretallez.common.fixture.*;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
 import com.pretallez.model.entity.*;
 import com.pretallez.repository.*;
+import com.pretallez.service.ChatroomService;
+import com.pretallez.service.MemberChatroomService;
+import com.pretallez.service.MemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ActiveProfiles("local")
-class MemberChatroomServiceTest {
+@DisplayName("회원 채팅방 서비스 통합 테스트")
+class MemberChatroomServiceIntegrationTest {
 
     @Autowired
     private ChatroomRepository chatroomRepository;
@@ -57,24 +61,24 @@ class MemberChatroomServiceTest {
     private Chatroom savedChatroom2;
 
     @BeforeEach
-    void setUp() throws NoSuchFieldException, IllegalAccessException {
-        savedMember = memberRepository.save(Fixture.member());
-        Board savedBoard1 = boardRepository.save(Fixture.board(savedMember));
-        FencingClub savedFencingClub1 = fencingClubRepository.save(Fixture.fencingClub());
-        VotePost savedVotePost1 = votePostRepository.save(Fixture.votePost(savedBoard1, savedFencingClub1));
-        savedChatroom1 = chatroomRepository.save(Fixture.chatroom(savedVotePost1));
+    void setUp() {
+        savedMember = memberRepository.save(MemberFixture.member());
+        Board savedBoard1 = boardRepository.save(BoardFixture.board(savedMember));
+        FencingClub savedFencingClub1 = fencingClubRepository.save(FencingClubFixture.fencingClub());
+        VotePost savedVotePost1 = votePostRepository.save(VotePostFixture.votePost(savedBoard1, savedFencingClub1));
+        savedChatroom1 = chatroomRepository.save(ChatroomFixture.chatroom(savedVotePost1));
 
-        Board savedBoard2 = boardRepository.save(Fixture.board(savedMember));
-        FencingClub savedFencingClub2 = fencingClubRepository.save(Fixture.fencingClub());
-        VotePost savedVotePost2 = votePostRepository.save(Fixture.votePost(savedBoard2, savedFencingClub2));
-        savedChatroom2 = chatroomRepository.save(Fixture.chatroom(savedVotePost2));
+        Board savedBoard2 = boardRepository.save(BoardFixture.board(savedMember));
+        FencingClub savedFencingClub2 = fencingClubRepository.save(FencingClubFixture.fencingClub());
+        VotePost savedVotePost2 = votePostRepository.save(VotePostFixture.votePost(savedBoard2, savedFencingClub2));
+        savedChatroom2 = chatroomRepository.save(ChatroomFixture.chatroom(savedVotePost2));
     }
 
     @Test
     @DisplayName("채팅방 참가 시, 성공")
     void addMemberToChatroom_WhenMemberChatroomNotExists_ThenMemberChatroomIsCreated() {
         // Given
-        MemberChatroomCreate.Request memberChatroomCreateRequest = Fixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom1.getId());
+        MemberChatroomCreate.Request memberChatroomCreateRequest = MemberChatroomFixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom1.getId());
 
         // When
         MemberChatroomCreate.Response memberChatroomCreateResponse = memberChatroomService.addMemberToChatroom(memberChatroomCreateRequest);
@@ -89,7 +93,7 @@ class MemberChatroomServiceTest {
     @DisplayName("참가되어 있는 채팅방 참가 시, 참가가 실패되고 DataIntegrityViolation 예외가 발생한다.")
     void addMemberToChatroom_WhenMemberChatroomExists_ThenThrowDataintegrityViolation() {
         // When
-        MemberChatroomCreate.Request memberChatroomCreateRequest = Fixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom1.getId());
+        MemberChatroomCreate.Request memberChatroomCreateRequest = MemberChatroomFixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom1.getId());
         memberChatroomService.addMemberToChatroom(memberChatroomCreateRequest);
 
         // Then
@@ -102,10 +106,10 @@ class MemberChatroomServiceTest {
     @DisplayName("참가되어 있는 채팅방 퇴장 시, 정상적으로 채팅방에서 퇴장된다.")
     void removeMemberFromChatroom_WhenMemberChatroomExists_ThenReturnTrue() {
         // Given
-        MemberChatroomCreate.Request memberChatroomCreateRequest = Fixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom1.getId());
+        MemberChatroomCreate.Request memberChatroomCreateRequest = MemberChatroomFixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom1.getId());
         memberChatroomService.addMemberToChatroom(memberChatroomCreateRequest);
 
-        MemberChatroomDelete.Request memberChatroomDeleteRequest = Fixture.memberChatroomDeleteRequest(savedMember.getId(), savedChatroom1.getId());
+        MemberChatroomDelete.Request memberChatroomDeleteRequest = MemberChatroomFixture.memberChatroomDeleteRequest(savedMember.getId(), savedChatroom1.getId());
 
         // When
         memberChatroomService.removeMemberFromChatroom(memberChatroomDeleteRequest);
@@ -119,7 +123,7 @@ class MemberChatroomServiceTest {
     @DisplayName("참가되어 있지않은 채팅방 퇴장 시, 퇴장이 실패되고 EntityNotFound 예외가 발생한다.")
     void removeMemberFromChatroom_WhenMemberChatroomNotExists_ThenThrowEntityNotFound() {
         // Given
-        MemberChatroomDelete.Request memberChatroomDeleteRequest = Fixture.memberChatroomDeleteRequest(savedMember.getId(), savedChatroom1.getId());
+        MemberChatroomDelete.Request memberChatroomDeleteRequest = MemberChatroomFixture.memberChatroomDeleteRequest(savedMember.getId(), savedChatroom1.getId());
 
         // When & Then
         assertThrows(EntityNotFoundException.class, () -> {
@@ -132,12 +136,12 @@ class MemberChatroomServiceTest {
     void getMembers_WhenReadChatrooms_ThenReturnSuccess() {
         // Given
         // 채팅방 참가 요청
-        memberChatroomService.addMemberToChatroom(Fixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom1.getId()));
-        memberChatroomService.addMemberToChatroom(Fixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom2.getId()));
+        memberChatroomService.addMemberToChatroom(MemberChatroomFixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom1.getId()));
+        memberChatroomService.addMemberToChatroom(MemberChatroomFixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom2.getId()));
 
         // When
         // 회원의 모든 채팅방을 조회
-        List<MemberChatroomRead.Response> response = memberChatroomService.getMembers(Fixture.memberChatroomReadRequest(savedMember.getId()));
+        List<MemberChatroomRead.Response> response = memberChatroomService.getMembers(MemberChatroomFixture.memberChatroomReadRequest(savedMember.getId()));
 
         // Then
         assertThat(response).isNotEmpty();

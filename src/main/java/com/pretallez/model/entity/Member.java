@@ -30,6 +30,7 @@ public class Member {
     private String name;
 
     @Column(name = "manner_level", nullable = false, length = 30)
+    @Enumerated(EnumType.STRING)
     private MannerLevel mannerLevel;
 
     @Column(name = "phone_num", nullable = false)
