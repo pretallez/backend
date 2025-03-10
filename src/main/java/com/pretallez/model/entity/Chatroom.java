@@ -22,15 +22,23 @@ public class Chatroom {
     @OneToOne(fetch = FetchType.LAZY)
     private VotePost votePost;
 
+    @Column(name = "notice")
+    private String notice;
+
+    @Column(name = "board_title")
+    private String boardTitle;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    private Chatroom(VotePost votePost) {
+    private Chatroom(VotePost votePost, String notice, String boardTitle) {
         this.votePost = votePost;
+        this.notice = notice;
+        this.boardTitle = boardTitle;
         this.createdAt = LocalDateTime.now();
     }
 
-    public static Chatroom of(VotePost votePost) {
-        return new Chatroom(votePost);
+    public static Chatroom of(VotePost votePost, String notice, String boardTitle) {
+        return new Chatroom(votePost, notice, boardTitle);
     }
 }
