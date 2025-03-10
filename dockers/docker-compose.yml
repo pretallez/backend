@@ -1,0 +1,17 @@
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: pretallez_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pretallezpw
+      MYSQL_DATABASE: pretallez
+      MYSQL_USER: pretallezuser
+      MYSQL_PASSWORD: pretallezpw
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:

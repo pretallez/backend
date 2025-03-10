@@ -19,7 +19,7 @@ public class Board {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "writer_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
@@ -53,4 +53,5 @@ public class Board {
     public static Board of(Member member, String title, String content, BoardType boardType) {
         return new Board(member, title, content, boardType);
     }
+
 }

@@ -11,12 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -60,7 +57,7 @@ class MemberChatroomServiceTest {
     private Chatroom savedChatroom2;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws NoSuchFieldException, IllegalAccessException {
         savedMember = memberRepository.save(Fixture.member());
         Board savedBoard1 = boardRepository.save(Fixture.board(savedMember));
         FencingClub savedFencingClub1 = fencingClubRepository.save(Fixture.fencingClub());
@@ -80,7 +77,7 @@ class MemberChatroomServiceTest {
         MemberChatroomCreate.Request memberChatroomCreateRequest = Fixture.memberChatroomCreateRequest(savedMember.getId(), savedChatroom1.getId());
 
         // When
-        MemberChatroomCreate.Response memberChatroomCreateResponse =  memberChatroomService.addMemberToChatroom(memberChatroomCreateRequest);
+        MemberChatroomCreate.Response memberChatroomCreateResponse = memberChatroomService.addMemberToChatroom(memberChatroomCreateRequest);
 
         // Given
         assertThat(memberChatroomCreateResponse.getId()).isNotNull();

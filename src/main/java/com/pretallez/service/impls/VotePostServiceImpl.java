@@ -1,17 +1,22 @@
 package com.pretallez.service.impls;
 
 import com.pretallez.common.exception.EntityNotFoundException;
+import com.pretallez.model.dto.VotePostCreate;
+import com.pretallez.model.entity.Board;
 import com.pretallez.model.entity.VotePost;
 import com.pretallez.repository.VotePostRepository;
+import com.pretallez.service.BoardService;
 import com.pretallez.service.VotePostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class VotePostServiceimpl implements VotePostService {
+public class VotePostServiceImpl implements VotePostService {
 
     private final VotePostRepository votePostRepository;
+    private final BoardService boardService;
 
     @Override
     public VotePost getVotePost(Long votePostId) {
@@ -20,8 +25,10 @@ public class VotePostServiceimpl implements VotePostService {
     }
 
     @Override
-    public void addVotePost() {
-
+    @Transactional
+    public VotePostCreate.Response addVotePost(Long writerId, VotePostCreate.Request votePostCreateRequest) {
+        Board board = boardService.addBoard(votePostCreateRequest.getBoardCreateRequest(), writerId);
+        return VotePostCreate.Response.fromEntity(votePostRepository.save(votePostCreateRequest.toEntity(board,votePostCreateRequest)));
     }
 
     @Override

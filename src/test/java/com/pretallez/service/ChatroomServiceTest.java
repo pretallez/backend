@@ -13,9 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -26,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ChatroomServiceTest {
 
     @Autowired
-    private  ChatroomRepository chatroomRepository;
+    private ChatroomRepository chatroomRepository;
 
     @Autowired
     private VotePostRepository votePostRepository;
@@ -50,7 +48,7 @@ class ChatroomServiceTest {
     private Member savedMember;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws NoSuchFieldException, IllegalAccessException {
         savedMember = memberRepository.save(Fixture.member());
         Board savedBoard = boardRepository.save(Fixture.board(savedMember));
         FencingClub savedFencingClub = fencingClubRepository.save(Fixture.fencingClub());
