@@ -78,10 +78,7 @@ class MemberChatroomControllerUnitTest {
     @DisplayName("채팅방 퇴장 요청 시, 성공 및 200 응답")
     void WhenExitRequest_ThenReturnSuccess_200() throws Exception {
         // Given
-        Long id = 1L;
-        Long memberId = 1L;
-        Long chatroomId = 1L;
-        MemberChatroomDelete.Request request = MemberChatroomFixture.memberChatroomDeleteRequest(memberId, chatroomId);
+        MemberChatroomDelete.Request request = MemberChatroomFixture.memberChatroomDeleteRequest(1L, 1L);
 
         String requestBody = objectMapper.writeValueAsString(request);
 
@@ -102,7 +99,6 @@ class MemberChatroomControllerUnitTest {
         Long memberId = 1L;
 
         List<MemberChatroomsRead.Response> responses = MemberChatroomFixture.memberChatroomsReadResponses();
-
         when(MemberChatroomService.getMemberChatrooms(any())).thenReturn(responses);
 
         // When & Then
@@ -130,9 +126,7 @@ class MemberChatroomControllerUnitTest {
         // Given
         Long chatroomId = 1L;
 
-        ChatroomMembersRead.Request request = MemberChatroomFixture.chatroomMembersReadRequest(chatroomId);
         List<ChatroomMembersRead.Response> responses = MemberChatroomFixture.chatroomMembersReadResponses();
-
         when(MemberChatroomService.getChatroomMembers(any())).thenReturn(responses);
 
         // When & Then

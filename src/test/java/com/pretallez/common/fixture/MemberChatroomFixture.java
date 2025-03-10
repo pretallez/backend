@@ -35,19 +35,11 @@ public class MemberChatroomFixture {
         return new MemberChatroomDelete.Request(memberId, chatroomId);
     }
 
-    public static MemberChatroomsRead.Request memberChatroomReadRequest(Long memberId) {
-        return new MemberChatroomsRead.Request(memberId);
-    }
-
     public static List<MemberChatroomsRead.Response> memberChatroomsReadResponses() {
         return List.of(
                 new MemberChatroomsRead.Response(1L, 1L, "첫 번째 채팅방의 투표글 제목"),
                 new MemberChatroomsRead.Response(2L, 2L, "두 번째 채팅방의 투표글 제목")
         );
-    }
-
-    public static ChatroomMembersRead.Request chatroomMembersReadRequest(Long chatroomId) {
-        return new ChatroomMembersRead.Request(chatroomId);
     }
 
     public static List<ChatroomMembersRead.Response> chatroomMembersReadResponses() {
