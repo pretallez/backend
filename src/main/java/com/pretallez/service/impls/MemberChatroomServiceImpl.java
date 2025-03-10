@@ -67,7 +67,7 @@ public class MemberChatroomServiceImpl implements MemberChatroomService {
 
     @Override
     @Transactional
-    public List<ChatroomMembersRead.Response> getChatroomMembers(Long memberId) {
-        return null;
+    public List<ChatroomMembersRead.Response> getChatroomMembers(Long chatroomId) {
+        return memberChatroomRepository.findMembersByChatroomId(chatroomId);
     }
 }

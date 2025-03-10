@@ -1,5 +1,6 @@
 package com.pretallez.repository.impls;
 
+import com.pretallez.model.dto.memberchatroom.ChatroomMembersRead;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomsRead;
 import com.pretallez.model.entity.Chatroom;
 import com.pretallez.model.entity.Member;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.pretallez.model.entity.QChatroom.chatroom;
+import static com.pretallez.model.entity.QMember.member;
 import static com.pretallez.model.entity.QMemberChatroom.memberChatroom;
 import static com.pretallez.model.entity.QVotePost.votePost;
 
@@ -57,6 +59,19 @@ public class MemberChatroomRepositoryImpl implements MemberChatroomRepository {
                 .join(memberChatroom.chatroom, chatroom)
                 .join(chatroom.votePost, votePost)
                 .where(memberChatroom.member.id.eq(memberId))
+                .fetch();
+    }
+
+    @Override
+    public List<ChatroomMembersRead.Response> findMembersByChatroomId(Long chatroomId) {
+        return queryFactory
+                .select(Projections.constructor(ChatroomMembersRead.Response.class,
+                        member.id,
+                        member.nickname
+                ))
+                .from(memberChatroom)
+                .join(memberChatroom.member, member)
+                .where(memberChatroom.chatroom.id.eq(chatroomId))
                 .fetch();
     }
 }
