@@ -3,13 +3,11 @@ package com.pretallez.common.fixture;
 import com.pretallez.model.dto.VotePostCreate;
 import com.pretallez.model.dto.board.BoardCreate;
 import com.pretallez.model.dto.chatroom.ChatroomCreate;
-import com.pretallez.model.dto.example.ExampleCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
 import com.pretallez.model.entity.*;
 import com.pretallez.model.enums.BoardType;
 import com.pretallez.model.enums.MannerLevel;
-import jakarta.validation.constraints.NotNull;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
@@ -69,7 +67,7 @@ public class Fixture {
         Field idField = Board.class.getDeclaredField("id");
         idField.setAccessible(true);
         idField.set(board, 1L);
-        return board ;
+        return board;
     }
 
     public static FencingClub fencingClub() {
@@ -89,7 +87,7 @@ public class Fixture {
         String phone = "01012345678";
         String gender = "M";
         Integer point = 0;
-        Member savedMember =Member.of(email, nickname, name, mannerLevel, phone, gender, point);
+        Member savedMember = Member.of(email, nickname, name, mannerLevel, phone, gender, point);
         Field idField = Member.class.getDeclaredField("id");
         idField.setAccessible(true);
         idField.set(savedMember, 1L);
@@ -120,7 +118,7 @@ public class Fixture {
         return MemberChatroomDelete.Request.of(memberId, chatroomId);
     }
 
-    public static BoardCreate.Request boardCreateRequest(){
+    public static BoardCreate.Request boardCreateRequest() {
         String title = "[펜싱그라운드] 재밌게 펜싱하실 분 구해요";
         String content = "안녕하세요! 펜싱을 좋아하시는 분들, 혹은 펜싱에 관심 있으신 분들 모두 환영합니다! \uD83C\uDFAF\n" +
                 "저희는 펜싱을 즐기며 함께 운동하고 싶은 분들을 모집하고 있습니다.\n" +
@@ -160,13 +158,18 @@ public class Fixture {
         return new BoardCreate.Request(title, content, boardType);
     }
 
-    public static VotePostCreate.Request votePostCreateRequest(FencingClub fencingClub){
+    public static VotePostCreate.Request votePostCreateRequest(FencingClub fencingClub) {
         BoardCreate.Request boardCreateRequest = boardCreateRequest();
         Integer maxCapacity = 20;
         Integer minCapacity = 5;
         Integer totalAmount = 70000;
         LocalDateTime trainingDate = LocalDateTime.now().plusMonths(1);
-        return new VotePostCreate.Request(boardCreateRequest,fencingClub,maxCapacity,minCapacity,totalAmount,trainingDate);
+        return new VotePostCreate.Request(boardCreateRequest, fencingClub, maxCapacity, minCapacity, totalAmount, trainingDate);
+    }
+
+    public static VotePostCreate.Response votePostCreateResponse() {
+        Long votePostId = 1L;
+        return new VotePostCreate.Response(votePostId);
     }
 
 }
