@@ -52,12 +52,11 @@ public class MemberChatroomRepositoryImpl implements MemberChatroomRepository {
         return queryFactory
                 .selectDistinct(Projections.constructor(MemberChatroomsRead.Response.class,
                         memberChatroom.id,
-                        votePost.id,
+                        chatroom.votePost.id,
                         chatroom.boardTitle
                 ))
                 .from(memberChatroom)
                 .join(memberChatroom.chatroom, chatroom)
-                .join(chatroom.votePost, votePost)
                 .where(memberChatroom.member.id.eq(memberId))
                 .fetch();
     }
