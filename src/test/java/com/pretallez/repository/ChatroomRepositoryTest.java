@@ -37,7 +37,7 @@ class ChatroomRepositoryTest {
     private VotePost savedVotePost;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws NoSuchFieldException, IllegalAccessException {
         Member savedMember = memberRepository.save(Fixture.member());
         Board savedBoard = boardRepository.save(Fixture.board(savedMember));
         FencingClub savedFencingClub = fencingClubRepository.save(Fixture.fencingClub());

@@ -5,7 +5,9 @@ import com.pretallez.model.dto.board.BoardCreate;
 import com.pretallez.model.entity.Board;
 import com.pretallez.model.entity.Member;
 import com.pretallez.repository.BoardRepository;
+import com.pretallez.repository.MemberRepository;
 import com.pretallez.service.BoardService;
+import com.pretallez.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,11 @@ import org.springframework.stereotype.Service;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+    private final MemberService memberService;
 
     @Override
     public Board addBoard(BoardCreate.Request boardCreateRequest, Long writerId) {
-        Member member = new Member();
+        Member member = memberService.getMember(writerId);
         Board board = BoardCreate.Request.toEntity(boardCreateRequest, member);
         return boardRepository.save(board);
     }

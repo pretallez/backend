@@ -25,7 +25,7 @@ public class BoardCreate {
         private BoardType boardType;
 
         public static Board toEntity(Request request, Member member) {
-            return Board.of(member, request.getTitle(), request.getTitle(), request.getBoardType());
+            return Board.of(member, request.getTitle(), request.getContent(), request.getBoardType());
         }
 
     }
