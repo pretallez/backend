@@ -22,9 +22,12 @@ public class ChatroomServiceImpl implements ChatroomService {
     @Override
     public ChatroomCreate.Response addChatroom(ChatroomCreate.Request chatroomCreateRequest) {
         VotePost foundVotePost = votePostService.getVotePost(chatroomCreateRequest.getVotePostId());
-
         try {
-            Chatroom savedChatroom = chatroomRepository.save(Chatroom.of(foundVotePost));
+            Chatroom savedChatroom = chatroomRepository.save(Chatroom.of(
+                            foundVotePost,
+                            chatroomCreateRequest.getNotice(),
+                            chatroomCreateRequest.getBoardTitle()
+                    ));
             return ChatroomCreate.Response.fromEntity(savedChatroom);
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException (String.format("ID [%d]에 해당하는 채팅방이 이미 존재합니다.", foundVotePost.getId()), e);

@@ -1,9 +1,10 @@
 package com.pretallez.service.impls;
 
 import com.pretallez.common.exception.EntityNotFoundException;
+import com.pretallez.model.dto.memberchatroom.ChatroomMembersRead;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
 import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
-import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomsRead;
 import com.pretallez.model.entity.Chatroom;
 import com.pretallez.model.entity.Member;
 import com.pretallez.model.entity.MemberChatroom;
@@ -60,14 +61,13 @@ public class MemberChatroomServiceImpl implements MemberChatroomService {
     }
 
     @Override
-    public void getChatrooms() {
-
+    public List<MemberChatroomsRead.Response> getMemberChatrooms(Long memberId) {
+        return memberChatroomRepository.findChatroomsByMemberId(memberId);
     }
 
     @Override
     @Transactional
-    public List<MemberChatroomRead.Response> getMembers(MemberChatroomRead.Request memberChatroomReadRequest) {
-        Long memberId = memberChatroomReadRequest.getMemberId();
-        return memberChatroomRepository.findByMemberWithChatroomAndBoard(memberId);
+    public List<ChatroomMembersRead.Response> getChatroomMembers(Long chatroomId) {
+        return memberChatroomRepository.findMembersByChatroomId(chatroomId);
     }
 }

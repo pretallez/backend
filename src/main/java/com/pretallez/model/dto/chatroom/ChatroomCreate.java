@@ -17,8 +17,14 @@ public class ChatroomCreate {
         @NotNull(message = "votePostId는 필수 값입니다.")
         private Long votePostId;
 
-        public static Chatroom toEntity(VotePost votePost) {
-            return Chatroom.of(votePost);
+        @NotNull(message = "notice는 필수 값입니다.")
+        private String notice;
+
+        @NotNull(message = "boardTitle는 필수 값입니다.")
+        private String boardTitle;
+
+        public static Chatroom toEntity(VotePost votePost, Request request) {
+            return Chatroom.of(votePost, request.getNotice(), request.getBoardTitle());
         }
     }
 

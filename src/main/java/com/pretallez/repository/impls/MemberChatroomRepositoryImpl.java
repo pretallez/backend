@@ -1,6 +1,7 @@
 package com.pretallez.repository.impls;
 
-import com.pretallez.model.dto.memberchatroom.MemberChatroomRead;
+import com.pretallez.model.dto.memberchatroom.ChatroomMembersRead;
+import com.pretallez.model.dto.memberchatroom.MemberChatroomsRead;
 import com.pretallez.model.entity.Chatroom;
 import com.pretallez.model.entity.Member;
 import com.pretallez.model.entity.MemberChatroom;
@@ -14,8 +15,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-import static com.pretallez.model.entity.QBoard.board;
 import static com.pretallez.model.entity.QChatroom.chatroom;
+import static com.pretallez.model.entity.QMember.member;
 import static com.pretallez.model.entity.QMemberChatroom.memberChatroom;
 import static com.pretallez.model.entity.QVotePost.votePost;
 
@@ -47,18 +48,29 @@ public class MemberChatroomRepositoryImpl implements MemberChatroomRepository {
     }
 
     @Override
-    public List<MemberChatroomRead.Response> findByMemberWithChatroomAndBoard(Long memberId) {
+    public List<MemberChatroomsRead.Response> findChatroomsByMemberId(Long memberId) {
         return queryFactory
-                .select(Projections.constructor(MemberChatroomRead.Response.class,
+                .selectDistinct(Projections.constructor(MemberChatroomsRead.Response.class,
                         memberChatroom.id,
-                        votePost.id,
-                        board.title
+                        chatroom.votePost.id,
+                        chatroom.boardTitle
                 ))
                 .from(memberChatroom)
                 .join(memberChatroom.chatroom, chatroom)
-                .join(chatroom.votePost, votePost)
-                .join(votePost.board, board)
                 .where(memberChatroom.member.id.eq(memberId))
+                .fetch();
+    }
+
+    @Override
+    public List<ChatroomMembersRead.Response> findMembersByChatroomId(Long chatroomId) {
+        return queryFactory
+                .select(Projections.constructor(ChatroomMembersRead.Response.class,
+                        member.id,
+                        member.nickname
+                ))
+                .from(memberChatroom)
+                .join(memberChatroom.member, member)
+                .where(memberChatroom.chatroom.id.eq(chatroomId))
                 .fetch();
     }
 }
