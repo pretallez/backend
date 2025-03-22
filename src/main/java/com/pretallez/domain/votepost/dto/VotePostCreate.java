@@ -1,4 +1,4 @@
-package com.pretallez.domain.votepost.votepost.model;
+package com.pretallez.domain.votepost.dto;
 
 import com.pretallez.domain.board.dto.BoardCreate;
 import com.pretallez.common.entity.Board;

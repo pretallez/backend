@@ -5,7 +5,8 @@ import com.pretallez.domain.board.dto.BoardCreate;
 import com.pretallez.domain.board.repository.BoardRepository;
 import com.pretallez.common.entity.Board;
 import com.pretallez.common.entity.Member;
-import com.pretallez.member.service.MemberService;
+import com.pretallez.domain.member.service.MemberService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,23 +1,24 @@
 package com.pretallez.domain.memberchatroom.service;
 
-import com.pretallez.common.exception.EntityNotFoundException;
-import com.pretallez.memberchatroom.model.ChatroomMembersRead;
-import com.pretallez.memberchatroom.model.MemberChatroomCreate;
-import com.pretallez.memberchatroom.model.MemberChatroomDelete;
-import com.pretallez.memberchatroom.model.MemberChatroomsRead;
-import com.pretallez.memberchatroom.service.MemberChatroomService;
-import com.pretallez.common.entity.Chatroom;
-import com.pretallez.common.entity.Member;
-import com.pretallez.common.entity.MemberChatroom;
-import com.pretallez.memberchatroom.repository.MemberChatroomRepository;
-import com.pretallez.domain.chatroom.service.ChatroomService;
-import com.pretallez.member.service.MemberService;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.pretallez.common.entity.Chatroom;
+import com.pretallez.common.entity.Member;
+import com.pretallez.common.entity.MemberChatroom;
+import com.pretallez.common.exception.EntityNotFoundException;
+import com.pretallez.domain.chatroom.service.ChatroomService;
+import com.pretallez.domain.member.service.MemberService;
+import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomCreate;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomDelete;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomsRead;
+import com.pretallez.domain.memberchatroom.repository.MemberChatroomRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

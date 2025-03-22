@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pretallez.common.response.CustomApiResponse;
 import com.pretallez.common.response.ResSuccessCode;
-import com.pretallez.memberchatroom.model.ChatroomMembersRead;
-import com.pretallez.memberchatroom.model.MemberChatroomCreate;
-import com.pretallez.memberchatroom.model.MemberChatroomDelete;
-import com.pretallez.memberchatroom.model.MemberChatroomsRead;
-import com.pretallez.memberchatroom.service.MemberChatroomService;
+import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomCreate;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomDelete;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomsRead;
+import com.pretallez.domain.memberchatroom.service.MemberChatroomService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

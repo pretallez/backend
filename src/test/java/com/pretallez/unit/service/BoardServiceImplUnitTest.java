@@ -1,14 +1,5 @@
 package com.pretallez.unit.service;
 
-import com.pretallez.common.fixture.BoardFixture;
-import com.pretallez.common.fixture.MemberFixture;
-import com.pretallez.domain.board.dto.BoardCreate;
-import com.pretallez.common.entity.Board;
-import com.pretallez.common.entity.Member;
-import com.pretallez.domain.board.repository.BoardRepository;
-import com.pretallez.member.repository.MemberRepository;
-import com.pretallez.member.service.MemberService;
-import com.pretallez.domain.board.service.BoardServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +9,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ActiveProfiles;
+
+import com.pretallez.common.entity.Board;
+import com.pretallez.common.entity.Member;
+import com.pretallez.common.fixture.BoardFixture;
+import com.pretallez.common.fixture.MemberFixture;
+import com.pretallez.domain.board.dto.BoardCreate;
+import com.pretallez.domain.board.repository.BoardRepository;
+import com.pretallez.domain.board.service.BoardServiceImpl;
+import com.pretallez.domain.member.repository.MemberRepository;
+import com.pretallez.domain.member.service.MemberService;
 
 @ActiveProfiles("local")
 @DisplayName("게시글 서비스 단위 테스트")

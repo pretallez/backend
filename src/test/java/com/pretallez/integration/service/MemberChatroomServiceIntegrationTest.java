@@ -10,17 +10,18 @@ import com.pretallez.domain.board.repository.BoardRepository;
 import com.pretallez.domain.chatroom.repository.ChatroomRepository;
 import com.pretallez.common.exception.EntityNotFoundException;
 import com.pretallez.common.fixture.*;
-import com.pretallez.fencingclub.repository.FencingClubRepository;
-import com.pretallez.member.repository.MemberRepository;
-import com.pretallez.memberchatroom.repository.MemberChatroomRepository;
-import com.pretallez.memberchatroom.model.ChatroomMembersRead;
-import com.pretallez.memberchatroom.model.MemberChatroomCreate;
-import com.pretallez.memberchatroom.model.MemberChatroomDelete;
-import com.pretallez.memberchatroom.model.MemberChatroomsRead;
+
 import com.pretallez.domain.chatroom.service.ChatroomService;
-import com.pretallez.memberchatroom.service.MemberChatroomService;
-import com.pretallez.member.service.MemberService;
-import com.pretallez.votepost.repository.VotePostRepository;
+import com.pretallez.domain.fencingclub.repository.FencingClubRepository;
+import com.pretallez.domain.member.repository.MemberRepository;
+import com.pretallez.domain.member.service.MemberService;
+import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomCreate;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomDelete;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomsRead;
+import com.pretallez.domain.memberchatroom.repository.MemberChatroomRepository;
+import com.pretallez.domain.memberchatroom.service.MemberChatroomService;
+import com.pretallez.domain.votepost.repository.VotePostRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

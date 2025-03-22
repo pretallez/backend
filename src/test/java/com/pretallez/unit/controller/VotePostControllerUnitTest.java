@@ -7,9 +7,10 @@ import com.pretallez.common.fixture.VotePostFixture;
 import com.pretallez.common.response.CustomApiResponse;
 import com.pretallez.common.response.ResSuccessCode;
 import com.pretallez.controller.VotePostController;
-import com.pretallez.votepost.model.VotePostCreate;
 import com.pretallez.common.entity.FencingClub;
-import com.pretallez.votepost.service.VotePostService;
+import com.pretallez.domain.votepost.dto.VotePostCreate;
+import com.pretallez.domain.votepost.service.VotePostService;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

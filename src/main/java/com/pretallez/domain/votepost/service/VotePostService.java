@@ -1,7 +1,7 @@
-package com.pretallez.domain.votepost.votepost.service;
+package com.pretallez.domain.votepost.service;
 
-import com.pretallez.votepost.model.VotePostCreate;
 import com.pretallez.common.entity.VotePost;
+import com.pretallez.domain.votepost.dto.VotePostCreate;
 
 public interface VotePostService {
 
