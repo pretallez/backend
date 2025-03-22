@@ -1,18 +1,6 @@
 package com.pretallez.integration.service;
 
-import com.pretallez.domain.board.repository.BoardRepository;
-import com.pretallez.domain.chatroom.repository.ChatroomRepository;
-import com.pretallez.common.fixture.*;
-import com.pretallez.domain.chatroom.dto.ChatroomCreate;
-import com.pretallez.common.entity.Board;
-import com.pretallez.common.entity.FencingClub;
-import com.pretallez.common.entity.Member;
-import com.pretallez.common.entity.VotePost;
-import com.pretallez.domain.chatroom.service.ChatroomServiceImpl;
-import com.pretallez.domain.fencingclub.repository.FencingClubRepository;
-import com.pretallez.domain.member.repository.MemberRepository;
-import com.pretallez.domain.votepost.repository.VotePostRepository;
-import com.pretallez.domain.votepost.service.VotePostService;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +11,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.pretallez.common.entity.VotePost;
+import com.pretallez.common.fixture.ChatroomFixture;
+import com.pretallez.common.fixture.TestFixtureFactory;
+import com.pretallez.domain.chatroom.dto.ChatroomCreate;
+import com.pretallez.domain.chatroom.service.ChatroomServiceImpl;
 
 @SpringBootTest
 @ActiveProfiles("local")
@@ -31,35 +23,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ChatroomServiceIntegrationTest {
 
     @Autowired
-    private ChatroomRepository chatroomRepository;
-
-    @Autowired
-    private VotePostRepository votePostRepository;
-
-    @Autowired
-    private BoardRepository boardRepository;
-
-    @Autowired
-    private FencingClubRepository fencingClubRepository;
-
-    @Autowired
-    private MemberRepository memberRepository;
-
-    @Autowired
-    private VotePostService votePostService;
-
-    @Autowired
     private ChatroomServiceImpl chatroomService;
 
+    @Autowired
+    private TestFixtureFactory testFixtureFactory;
+
     private VotePost savedVotePost;
-    private Member savedMember;
 
     @BeforeEach
     void setUp() {
-        savedMember = memberRepository.save(MemberFixture.member());
-        Board savedBoard = boardRepository.save(BoardFixture.board(savedMember));
-        FencingClub savedFencingClub = fencingClubRepository.save(FencingClubFixture.fencingClub());
-        savedVotePost = votePostRepository.save(VotePostFixture.votePost(savedBoard, savedFencingClub));
+        savedVotePost = testFixtureFactory.createVotePost();
     }
 
     @Test

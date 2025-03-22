@@ -1,27 +1,10 @@
 package com.pretallez.integration.service;
 
-import com.pretallez.common.entity.Board;
-import com.pretallez.common.entity.Chatroom;
-import com.pretallez.common.entity.FencingClub;
-import com.pretallez.common.entity.Member;
-import com.pretallez.common.entity.MemberChatroom;
-import com.pretallez.common.entity.VotePost;
-import com.pretallez.domain.board.repository.BoardRepository;
-import com.pretallez.domain.chatroom.repository.ChatroomRepository;
-import com.pretallez.common.exception.EntityNotFoundException;
-import com.pretallez.common.fixture.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import com.pretallez.domain.chatroom.service.ChatroomService;
-import com.pretallez.domain.fencingclub.repository.FencingClubRepository;
-import com.pretallez.domain.member.repository.MemberRepository;
-import com.pretallez.domain.member.service.MemberService;
-import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
-import com.pretallez.domain.memberchatroom.dto.MemberChatroomCreate;
-import com.pretallez.domain.memberchatroom.dto.MemberChatroomDelete;
-import com.pretallez.domain.memberchatroom.dto.MemberChatroomsRead;
-import com.pretallez.domain.memberchatroom.repository.MemberChatroomRepository;
-import com.pretallez.domain.memberchatroom.service.MemberChatroomService;
-import com.pretallez.domain.votepost.repository.VotePostRepository;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,11 +14,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import com.pretallez.common.entity.Chatroom;
+import com.pretallez.common.entity.Member;
+import com.pretallez.common.entity.MemberChatroom;
+import com.pretallez.common.exception.EntityNotFoundException;
+import com.pretallez.common.fixture.MemberChatroomFixture;
+import com.pretallez.common.fixture.TestFixtureFactory;
+import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomCreate;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomDelete;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomsRead;
+import com.pretallez.domain.memberchatroom.repository.MemberChatroomRepository;
+import com.pretallez.domain.memberchatroom.service.MemberChatroomService;
 
 @SpringBootTest
 @ActiveProfiles("local")
@@ -43,31 +33,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class MemberChatroomServiceIntegrationTest {
 
     @Autowired
-    private ChatroomRepository chatroomRepository;
-
-    @Autowired
-    private VotePostRepository votePostRepository;
-
-    @Autowired
-    private BoardRepository boardRepository;
-
-    @Autowired
-    private FencingClubRepository fencingClubRepository;
-
-    @Autowired
-    private MemberRepository memberRepository;
-
-    @Autowired
     private MemberChatroomRepository memberChatroomRepository;
 
     @Autowired
-    private ChatroomService chatroomService;
-
-    @Autowired
-    private MemberService memberService;
-
-    @Autowired
     private MemberChatroomService memberChatroomService;
+
+    @Autowired
+    private TestFixtureFactory testFixtureFactory;
 
     private Member savedMember1;
     private Member savedMember2;
@@ -76,18 +48,11 @@ class MemberChatroomServiceIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        savedMember1 = memberRepository.save(MemberFixture.member());
-        savedMember2 = memberRepository.save(MemberFixture.member());
+        savedMember1 = testFixtureFactory.createMember();
+        savedChatroom1 = testFixtureFactory.createChatroomWithMember(savedMember1);
 
-        Board savedBoard1 = boardRepository.save(BoardFixture.board(savedMember1));
-        FencingClub savedFencingClub1 = fencingClubRepository.save(FencingClubFixture.fencingClub());
-        VotePost savedVotePost1 = votePostRepository.save(VotePostFixture.votePost(savedBoard1, savedFencingClub1));
-        savedChatroom1 = chatroomRepository.save(ChatroomFixture.chatroom(savedVotePost1));
-
-        Board savedBoard2 = boardRepository.save(BoardFixture.board(savedMember1));
-        FencingClub savedFencingClub2 = fencingClubRepository.save(FencingClubFixture.fencingClub());
-        VotePost savedVotePost2 = votePostRepository.save(VotePostFixture.votePost(savedBoard2, savedFencingClub2));
-        savedChatroom2 = chatroomRepository.save(ChatroomFixture.chatroom(savedVotePost2));
+        savedMember2 = testFixtureFactory.createMember();
+        savedChatroom2 = testFixtureFactory.createChatroomWithMember(savedMember2);
     }
 
     @Test
