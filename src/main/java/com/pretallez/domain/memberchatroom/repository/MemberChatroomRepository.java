@@ -21,4 +21,5 @@ public interface MemberChatroomRepository {
     /** QueryDSL */
     List<MemberChatroomsRead.Response> findChatroomsByMemberId(Long memberId);
     List<ChatroomMembersRead.Response> findMembersByChatroomId(Long chatroomId);
+    boolean existsMemberInChatroom(Long memberId, Long chatroomId);
 }

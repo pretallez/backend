@@ -4,6 +4,11 @@ import static com.pretallez.common.entity.QChatroom.*;
 import static com.pretallez.common.entity.QMember.*;
 import static com.pretallez.common.entity.QMemberChatroom.*;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
+
 import com.pretallez.common.entity.Chatroom;
 import com.pretallez.common.entity.Member;
 import com.pretallez.common.entity.MemberChatroom;
@@ -11,11 +16,8 @@ import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
 import com.pretallez.domain.memberchatroom.dto.MemberChatroomsRead;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
@@ -69,5 +71,14 @@ public class MemberChatroomRepositoryImpl implements MemberChatroomRepository {
                 .join(memberChatroom.member, member)
                 .where(memberChatroom.chatroom.id.eq(chatroomId))
                 .fetch();
+    }
+
+    @Override
+    public boolean existsMemberInChatroom(Long memberId, Long chatroomId) {
+        return queryFactory.selectOne()
+            .from(memberChatroom)
+            .where(memberChatroom.member.id.eq(memberId)
+                .and(memberChatroom.chatroom.id.eq(chatroomId)))
+            .fetchFirst() != null;
     }
 }

@@ -26,4 +26,7 @@ public interface MemberChatroomService {
 
     /** 현재 채팅방의 모든 회원을 조회합니다. */
     List<ChatroomMembersRead.Response> getChatroomMembers(Long chatroomId);
+
+    /** 회원이 채팅방에 참가되어있는지 확인합니다. */
+    boolean checkMemberInChatroom(Long memberId, Long chatroomId);
 }
