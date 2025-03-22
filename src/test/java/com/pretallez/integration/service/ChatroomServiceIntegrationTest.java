@@ -1,14 +1,19 @@
 package com.pretallez.integration.service;
 
+import com.pretallez.domain.board.repository.BoardRepository;
+import com.pretallez.domain.chatroom.repository.ChatroomRepository;
 import com.pretallez.common.fixture.*;
-import com.pretallez.model.dto.chatroom.ChatroomCreate;
-import com.pretallez.model.entity.Board;
-import com.pretallez.model.entity.FencingClub;
-import com.pretallez.model.entity.Member;
-import com.pretallez.model.entity.VotePost;
-import com.pretallez.repository.*;
-import com.pretallez.service.VotePostService;
-import com.pretallez.service.impls.ChatroomServiceImpl;
+import com.pretallez.fencingclub.repository.FencingClubRepository;
+import com.pretallez.member.repository.MemberRepository;
+import com.pretallez.domain.chatroom.dto.ChatroomCreate;
+import com.pretallez.common.entity.Board;
+import com.pretallez.common.entity.FencingClub;
+import com.pretallez.common.entity.Member;
+import com.pretallez.common.entity.VotePost;
+import com.pretallez.votepost.service.VotePostService;
+import com.pretallez.domain.chatroom.service.ChatroomServiceImpl;
+import com.pretallez.votepost.repository.VotePostRepository;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

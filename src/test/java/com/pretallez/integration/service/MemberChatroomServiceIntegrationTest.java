@@ -1,16 +1,27 @@
 package com.pretallez.integration.service;
 
+import com.pretallez.common.entity.Board;
+import com.pretallez.common.entity.Chatroom;
+import com.pretallez.common.entity.FencingClub;
+import com.pretallez.common.entity.Member;
+import com.pretallez.common.entity.MemberChatroom;
+import com.pretallez.common.entity.VotePost;
+import com.pretallez.domain.board.repository.BoardRepository;
+import com.pretallez.domain.chatroom.repository.ChatroomRepository;
 import com.pretallez.common.exception.EntityNotFoundException;
 import com.pretallez.common.fixture.*;
-import com.pretallez.model.dto.memberchatroom.ChatroomMembersRead;
-import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
-import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
-import com.pretallez.model.dto.memberchatroom.MemberChatroomsRead;
-import com.pretallez.model.entity.*;
-import com.pretallez.repository.*;
-import com.pretallez.service.ChatroomService;
-import com.pretallez.service.MemberChatroomService;
-import com.pretallez.service.MemberService;
+import com.pretallez.fencingclub.repository.FencingClubRepository;
+import com.pretallez.member.repository.MemberRepository;
+import com.pretallez.memberchatroom.repository.MemberChatroomRepository;
+import com.pretallez.memberchatroom.model.ChatroomMembersRead;
+import com.pretallez.memberchatroom.model.MemberChatroomCreate;
+import com.pretallez.memberchatroom.model.MemberChatroomDelete;
+import com.pretallez.memberchatroom.model.MemberChatroomsRead;
+import com.pretallez.domain.chatroom.service.ChatroomService;
+import com.pretallez.memberchatroom.service.MemberChatroomService;
+import com.pretallez.member.service.MemberService;
+import com.pretallez.votepost.repository.VotePostRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

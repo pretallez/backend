@@ -1,10 +1,10 @@
 package com.pretallez.common.fixture;
 
-import com.pretallez.model.dto.VotePostCreate;
-import com.pretallez.model.dto.board.BoardCreate;
-import com.pretallez.model.entity.Board;
-import com.pretallez.model.entity.FencingClub;
-import com.pretallez.model.entity.VotePost;
+import com.pretallez.votepost.model.VotePostCreate;
+import com.pretallez.domain.board.dto.BoardCreate;
+import com.pretallez.common.entity.Board;
+import com.pretallez.common.entity.FencingClub;
+import com.pretallez.common.entity.VotePost;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;

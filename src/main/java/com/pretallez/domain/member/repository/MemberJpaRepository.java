@@ -1,0 +1,7 @@
+package com.pretallez.domain.member.repository;
+
+import com.pretallez.common.entity.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MemberJpaRepository extends JpaRepository<Member, Long> {
+}

@@ -1,8 +1,8 @@
 package com.pretallez.common.fixture;
 
-import com.pretallez.model.dto.chatroom.ChatroomCreate;
-import com.pretallez.model.entity.Chatroom;
-import com.pretallez.model.entity.VotePost;
+import com.pretallez.domain.chatroom.dto.ChatroomCreate;
+import com.pretallez.common.entity.Chatroom;
+import com.pretallez.common.entity.VotePost;
 import org.springframework.test.util.ReflectionTestUtils;
 
 public class ChatroomFixture {

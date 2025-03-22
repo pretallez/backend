@@ -2,9 +2,9 @@ package com.pretallez.unit.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pretallez.common.fixture.ChatroomFixture;
-import com.pretallez.controller.api.ChatroomController;
-import com.pretallez.model.dto.chatroom.ChatroomCreate;
-import com.pretallez.service.ChatroomService;
+import com.pretallez.controller.ChatroomController;
+import com.pretallez.domain.chatroom.dto.ChatroomCreate;
+import com.pretallez.domain.chatroom.service.ChatroomService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

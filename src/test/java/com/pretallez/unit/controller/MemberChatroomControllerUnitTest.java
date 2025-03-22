@@ -22,12 +22,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pretallez.common.fixture.MemberChatroomFixture;
 import com.pretallez.common.response.ResSuccessCode;
-import com.pretallez.controller.api.MemberChatroomController;
-import com.pretallez.model.dto.memberchatroom.ChatroomMembersRead;
-import com.pretallez.model.dto.memberchatroom.MemberChatroomCreate;
-import com.pretallez.model.dto.memberchatroom.MemberChatroomDelete;
-import com.pretallez.model.dto.memberchatroom.MemberChatroomsRead;
-import com.pretallez.service.MemberChatroomService;
+import com.pretallez.controller.MemberChatroomController;
+import com.pretallez.memberchatroom.model.ChatroomMembersRead;
+import com.pretallez.memberchatroom.model.MemberChatroomCreate;
+import com.pretallez.memberchatroom.model.MemberChatroomDelete;
+import com.pretallez.memberchatroom.model.MemberChatroomsRead;
+import com.pretallez.memberchatroom.service.MemberChatroomService;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("회원 채팅방 컨트롤러 단위 테스트")

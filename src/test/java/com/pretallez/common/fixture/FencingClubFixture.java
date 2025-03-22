@@ -1,6 +1,6 @@
 package com.pretallez.common.fixture;
 
-import com.pretallez.model.entity.FencingClub;
+import com.pretallez.common.entity.FencingClub;
 import org.springframework.test.util.ReflectionTestUtils;
 
 public class FencingClubFixture {

@@ -2,11 +2,11 @@ package com.pretallez.integration.service;
 
 import com.pretallez.common.fixture.BoardFixture;
 import com.pretallez.common.fixture.MemberFixture;
-import com.pretallez.model.dto.board.BoardCreate;
-import com.pretallez.model.entity.Board;
-import com.pretallez.model.entity.Member;
-import com.pretallez.repository.MemberRepository;
-import com.pretallez.service.BoardService;
+import com.pretallez.domain.board.dto.BoardCreate;
+import com.pretallez.common.entity.Board;
+import com.pretallez.common.entity.Member;
+import com.pretallez.member.repository.MemberRepository;
+import com.pretallez.domain.board.service.BoardService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
