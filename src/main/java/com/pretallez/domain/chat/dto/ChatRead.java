@@ -15,23 +15,23 @@ public class ChatRead {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	public static class Response {
+		private Long id;
 		private Long chatroomId;
 		private Long memberId;
 		private String nickname;
 		private String content;
 		private MessageType messageType;
 		private LocalDateTime createdAt;
-		private Long id;
 
 		public static Response from(Chat chat, String nickname) {
 			return new Response(
+				chat.getId(),
 				chat.getChatroomId(),
 				chat.getMemberId(),
 				nickname,
 				chat.getContent(),
 				chat.getMessageType(),
-				chat.getCreatedAt(),
-				chat.getId()
+				chat.getCreatedAt()
 			);
 		}
 	}

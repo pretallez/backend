@@ -25,4 +25,9 @@ public class ChatRepositoryImpl implements ChatRepository{
 	public List<Chat> saveAll(List<Chat> chats) {
 		return chatJpaRepository.saveAll(chats);
 	}
+
+	@Override
+	public List<Chat> findAll() {
+		return chatJpaRepository.findAll();
+	}
 }

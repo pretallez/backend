@@ -33,6 +33,14 @@ public class ChatCreate {
 
 		private LocalDateTime createdAt = LocalDateTime.now();
 
+		public Request(Long memberId, Long chatroomId, String content, MessageType messageType) {
+			this.memberId = memberId;
+			this.chatroomId = chatroomId;
+			this.content = content;
+			this.messageType = messageType;
+			this.createdAt = LocalDateTime.now();
+		}
+
 		public static Chat toEntity(Request request) {
 			return Chat.of(request.getMemberId(), request.getChatroomId(), request.getContent(), request.getMessageType(), request.getCreatedAt());
 		}
