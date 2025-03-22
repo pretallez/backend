@@ -1,9 +1,8 @@
 package com.pretallez.domain.member.service;
 
 import com.pretallez.common.exception.EntityNotFoundException;
-import com.pretallez.member.service.MemberService;
 import com.pretallez.common.entity.Member;
-import com.pretallez.member.repository.MemberRepository;
+import com.pretallez.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

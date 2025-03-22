@@ -1,4 +1,4 @@
-package com.pretallez.domain.votepost.votepost.repository;
+package com.pretallez.domain.votepost.repository;
 
 import com.pretallez.common.entity.VotePost;
 

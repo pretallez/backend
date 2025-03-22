@@ -1,12 +1,14 @@
 package com.pretallez.domain.memberchatroom.repository;
 
-import com.pretallez.memberchatroom.model.ChatroomMembersRead;
-import com.pretallez.memberchatroom.model.MemberChatroomsRead;
-import com.pretallez.memberchatroom.repository.MemberChatroomJpaRepository;
-import com.pretallez.memberchatroom.repository.MemberChatroomRepository;
+import static com.pretallez.common.entity.QChatroom.*;
+import static com.pretallez.common.entity.QMember.*;
+import static com.pretallez.common.entity.QMemberChatroom.*;
+
 import com.pretallez.common.entity.Chatroom;
 import com.pretallez.common.entity.Member;
 import com.pretallez.common.entity.MemberChatroom;
+import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomsRead;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-
-import static com.pretallez.model.entity.QChatroom.chatroom;
-import static com.pretallez.model.entity.QMember.member;
-import static com.pretallez.model.entity.QMemberChatroom.memberChatroom;
 
 @Repository
 @RequiredArgsConstructor

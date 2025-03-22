@@ -1,10 +1,10 @@
 package com.pretallez.domain.memberchatroom.repository;
 
-import com.pretallez.memberchatroom.model.ChatroomMembersRead;
-import com.pretallez.memberchatroom.model.MemberChatroomsRead;
 import com.pretallez.common.entity.Chatroom;
 import com.pretallez.common.entity.Member;
 import com.pretallez.common.entity.MemberChatroom;
+import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomsRead;
 
 import java.util.List;
 import java.util.Optional;

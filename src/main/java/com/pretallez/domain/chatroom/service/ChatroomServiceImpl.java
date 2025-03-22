@@ -5,7 +5,8 @@ import com.pretallez.domain.chatroom.dto.ChatroomCreate;
 import com.pretallez.domain.chatroom.repository.ChatroomRepository;
 import com.pretallez.common.entity.Chatroom;
 import com.pretallez.common.entity.VotePost;
-import com.pretallez.votepost.service.VotePostService;
+import com.pretallez.domain.votepost.service.VotePostService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;

@@ -1,16 +1,16 @@
-package com.pretallez.domain.votepost.votepost.service;
+package com.pretallez.domain.votepost.service;
 
-import com.pretallez.common.exception.EntityNotFoundException;
-import com.pretallez.votepost.model.VotePostCreate;
-import com.pretallez.common.entity.Board;
-import com.pretallez.common.entity.VotePost;
-import com.pretallez.votepost.repository.VotePostRepository;
-import com.pretallez.domain.board.service.BoardService;
-import com.pretallez.votepost.service.VotePostService;
-
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.pretallez.common.entity.Board;
+import com.pretallez.common.entity.VotePost;
+import com.pretallez.common.exception.EntityNotFoundException;
+import com.pretallez.domain.board.service.BoardService;
+import com.pretallez.domain.votepost.dto.VotePostCreate;
+import com.pretallez.domain.votepost.repository.VotePostRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

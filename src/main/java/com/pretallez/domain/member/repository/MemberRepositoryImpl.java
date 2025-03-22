@@ -1,7 +1,5 @@
 package com.pretallez.domain.member.repository;
 
-import com.pretallez.member.repository.MemberJpaRepository;
-import com.pretallez.member.repository.MemberRepository;
 import com.pretallez.common.entity.Member;
 
 import lombok.RequiredArgsConstructor;

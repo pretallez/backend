@@ -1,12 +1,14 @@
 package com.pretallez.common.fixture;
 
-import com.pretallez.memberchatroom.model.ChatroomMembersRead;
-import com.pretallez.memberchatroom.model.MemberChatroomCreate;
-import com.pretallez.memberchatroom.model.MemberChatroomDelete;
-import com.pretallez.memberchatroom.model.MemberChatroomsRead;
+
 import com.pretallez.common.entity.Chatroom;
 import com.pretallez.common.entity.Member;
 import com.pretallez.common.entity.MemberChatroom;
+import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomCreate;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomDelete;
+import com.pretallez.domain.memberchatroom.dto.MemberChatroomsRead;
+
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;

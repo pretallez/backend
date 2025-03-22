@@ -1,13 +1,12 @@
-package com.pretallez.domain.votepost.votepost.repository;
-
-import com.pretallez.common.entity.VotePost;
-import com.pretallez.votepost.repository.VotePostJpaRepository;
-import com.pretallez.votepost.repository.VotePostRepository;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+package com.pretallez.domain.votepost.repository;
 
 import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
+
+import com.pretallez.common.entity.VotePost;
+
+import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
