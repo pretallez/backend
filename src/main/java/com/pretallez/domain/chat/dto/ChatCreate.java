@@ -2,6 +2,7 @@ package com.pretallez.domain.chat.dto;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pretallez.common.entity.Chat;
 import com.pretallez.common.enums.MessageType;
 
@@ -31,6 +32,7 @@ public class ChatCreate {
 		@NotNull(message = "messageType은 필수 입력 값입니다.")
 		private MessageType messageType;
 
+		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 		private LocalDateTime createdAt = LocalDateTime.now();
 
 		public Request(Long memberId, Long chatroomId, String content, MessageType messageType) {

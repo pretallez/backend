@@ -2,6 +2,7 @@ package com.pretallez.domain.chat.dto;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pretallez.common.entity.Chat;
 import com.pretallez.common.enums.MessageType;
 
@@ -21,6 +22,8 @@ public class ChatRead {
 		private String nickname;
 		private String content;
 		private MessageType messageType;
+
+		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 		private LocalDateTime createdAt;
 
 		public static Response from(Chat chat, String nickname) {

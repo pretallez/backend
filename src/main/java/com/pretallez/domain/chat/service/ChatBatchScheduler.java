@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.pretallez.common.entity.Chat;
 import com.pretallez.common.util.ScoreUtil;
 import com.pretallez.domain.chat.dto.ChatCreate;
@@ -31,7 +32,7 @@ public class ChatBatchScheduler {
 	private final MemberService memberService;
 	private final ChatConsumer chatConsumer;
 	private final RedisTemplate<String, Object> redisTemplate;
-	private final ObjectMapper objectMapper;
+	private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
 	@Scheduled(fixedRate = BATCH_PROCESS_INTERVAL_MS)
 	public void processBatch() {
