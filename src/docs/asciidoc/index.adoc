@@ -1,11 +1,31 @@
-= API Documentation
+= Pretallez API 문서
+:doctype: book
 :toc: left
+:toclevels: 2
+:sectnums:
+:source-highlighter: highlightjs
 
-== VotePost
+== 투표 게시글 API
 
-=== create
+=== 투표 게시글 생성 (`POST /vote-posts`)
 
-include::build/generated-snippets/vote-posts/create-vote-posts/http-request.adoc[]
-include::build/generated-snippets/vote-posts/create-vote-posts/request-fields.adoc[]
-include::build/generated-snippets/vote-posts/create-vote-posts/http-response.adoc[]
-include::build/generated-snippets/vote-posts/create-vote-posts/response-fields.adoc[]
+include::build/generated-snippets/vote-post/create-vote-post/http-request.adoc[]
+include::build/generated-snippets/vote-post/create-vote-post/request-fields.adoc[]
+include::build/generated-snippets/vote-post/create-vote-post/http-response.adoc[]
+include::build/generated-snippets/vote-post/create-vote-post/response-fields.adoc[]
+
+== 채팅 API
+
+=== 채팅 생성 (`POST /chats`)
+
+include::build/generated-snippets/chats/create/http-request.adoc[]
+include::build/generated-snippets/chats/create/request-fields.adoc[]
+include::build/generated-snippets/chats/create/http-response.adoc[]
+include::build/generated-snippets/chats/create/response-fields.adoc[]
+
+=== 채팅 조회 (`GET /chats`)
+
+include::build/generated-snippets/chats/read/http-request.adoc[]
+include::build/generated-snippets/chats/read/request-fields.adoc[]
+include::build/generated-snippets/chats/read/http-response.adoc[]
+include::build/generated-snippets/chats/read/response-fields.adoc[]

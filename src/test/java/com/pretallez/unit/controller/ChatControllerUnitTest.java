@@ -3,6 +3,7 @@ package com.pretallez.unit.controller;
 import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.snippet.Attributes.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -72,8 +73,8 @@ class ChatControllerUnitTest {
 					fieldWithPath("memberId").description("회원 ID"),
 					fieldWithPath("chatroomId").description("채팅방 ID"),
 					fieldWithPath("content").description("채팅 메시지"),
-					fieldWithPath("messageType").description("메시지 타입 (CHAT)"),
-					fieldWithPath("createdAt").description("메시지 생성 시간 (백엔드 자동 생성)")
+					fieldWithPath("messageType").description("메시지 타입"),
+					fieldWithPath("createdAt").description("메시지 생성 시간 (백엔드 자동 생성이므로 해당 필드 생략)")
 				),
 				responseFields(
 					fieldWithPath("httpStatusCode").description("HTTP 상태 코드"),
@@ -106,8 +107,8 @@ class ChatControllerUnitTest {
 				Preprocessors.preprocessResponse(Preprocessors.prettyPrint()),
 				requestFields(
 					fieldWithPath("chatroomId").description("채팅방 ID"),
-					fieldWithPath("lastCreatedAt").description("메시지 생성날짜"),
-					fieldWithPath("lastId").description("메시지 ID"),
+					fieldWithPath("lastCreatedAt").description("마지막으로 응답받은 채팅메시지 생성날짜"),
+					fieldWithPath("lastId").description("마지막으로 응답받은 채팅메시지 ID"),
 					fieldWithPath("limit").description("메시지 조회 개수")
 				),
 				responseFields(
