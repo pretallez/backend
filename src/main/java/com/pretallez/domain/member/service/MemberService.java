@@ -18,4 +18,7 @@ public interface MemberService {
 
     /** 전체 회원을 조회합니다. (페이징 처리) */
     void getMembersWithPaging();
+
+    /** 회원 닉네임을 조회합니다. */
+    String getNickname(Long memberId);
 }

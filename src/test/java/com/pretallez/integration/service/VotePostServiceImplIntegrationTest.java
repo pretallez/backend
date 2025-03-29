@@ -1,28 +1,27 @@
 package com.pretallez.integration.service;
 
-import com.pretallez.common.fixture.FencingClubFixture;
-import com.pretallez.common.fixture.MemberFixture;
-import com.pretallez.common.fixture.VotePostFixture;
-import com.pretallez.common.entity.Board;
-import com.pretallez.common.entity.FencingClub;
-import com.pretallez.common.entity.Member;
-import com.pretallez.common.entity.VotePost;
-import com.pretallez.domain.fencingclub.repository.FencingClubRepository;
-import com.pretallez.domain.member.repository.MemberRepository;
-import com.pretallez.domain.votepost.dto.VotePostCreate;
-import com.pretallez.domain.votepost.repository.VotePostRepository;
-import com.pretallez.domain.votepost.service.VotePostService;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.pretallez.common.entity.Board;
+import com.pretallez.common.entity.FencingClub;
+import com.pretallez.common.entity.Member;
+import com.pretallez.common.entity.VotePost;
+import com.pretallez.common.fixture.TestFixtureFactory;
+import com.pretallez.common.fixture.VotePostFixture;
+import com.pretallez.domain.votepost.dto.VotePostCreate;
+import com.pretallez.domain.votepost.repository.VotePostRepository;
+import com.pretallez.domain.votepost.service.VotePostService;
 
 @SpringBootTest
 @Transactional
+@ActiveProfiles("local")
 @DisplayName("대관 게시글 서비스 통합 테스트")
 public class VotePostServiceImplIntegrationTest {
 
@@ -33,18 +32,15 @@ public class VotePostServiceImplIntegrationTest {
     private VotePostRepository votePostRepository;
 
     @Autowired
-    private FencingClubRepository fencingClubRepository;
-
-    @Autowired
-    private MemberRepository memberRepository;
+    private TestFixtureFactory testFixtureFactory;
 
     private Member savedMember;
     private FencingClub savedFencingClub;
 
     @BeforeEach
     void setUp() {
-        savedMember = memberRepository.save(MemberFixture.member());
-        savedFencingClub = fencingClubRepository.save(FencingClubFixture.fencingClub());
+        savedMember = testFixtureFactory.createMember();
+        savedFencingClub = testFixtureFactory.createFencingClub();
     }
 
     @Test

@@ -53,6 +53,15 @@ dependencies {
 
 	//rest docs
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+	//websocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+	//redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	//rabbitmq
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
 }
 
 tasks.named('test') {

@@ -71,4 +71,22 @@ public class MemberChatroomServiceImpl implements MemberChatroomService {
     public List<ChatroomMembersRead.Response> getChatroomMembers(Long chatroomId) {
         return memberChatroomRepository.findMembersByChatroomId(chatroomId);
     }
+
+    @Override
+    public boolean checkMemberInChatroom(Long memberId, Long chatroomId) {
+        validateInput(memberId, chatroomId);
+
+        boolean exists = memberChatroomRepository.existsMemberInChatroom(memberId, chatroomId);
+        if (!exists) {
+            throw new EntityNotFoundException(
+                String.format("회원[%d]은 채팅방[%d]에 존재하지 않습니다.", memberId, chatroomId));
+        }
+        return true;
+    }
+
+    private void validateInput(Long memberId, Long chatroomId) {
+        if (memberId == null || chatroomId == null) {
+            throw new IllegalArgumentException("Member ID and Chatroom ID cannot be null");
+        }
+    }
 }
