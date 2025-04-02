@@ -30,18 +30,14 @@ public class ChatController {
 
 	private static final String DESTINATION_PREFIX = "/v1/api/chatrooms/";
 
-	private final SimpMessagingTemplate messagingTemplate;
 	private final ChatService chatService;
 
-	@MessageMapping("/chats")
+	@MessageMapping("/v1.api.chats")
 	@PostMapping
 	public CustomApiResponse<Void> addChats(@RequestBody ChatCreate.Request chatCreateRequest) {
 		log.info("채팅 메시지 전송 요청: {}", chatCreateRequest);
+		chatService.addChat(chatCreateRequest);
 
-		messagingTemplate.convertAndSend(
-			DESTINATION_PREFIX + chatCreateRequest.getChatroomId(),
-			chatService.addChat(chatCreateRequest)
-		);
 		return CustomApiResponse.OK(ResSuccessCode.CREATED);
 	}
 
