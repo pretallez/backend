@@ -107,7 +107,6 @@ class ChatControllerUnitTest {
 				Preprocessors.preprocessResponse(Preprocessors.prettyPrint()),
 				requestFields(
 					fieldWithPath("chatroomId").description("채팅방 ID"),
-					fieldWithPath("lastCreatedAt").description("마지막으로 응답받은 채팅메시지 생성날짜"),
 					fieldWithPath("lastId").description("마지막으로 응답받은 채팅메시지 ID"),
 					fieldWithPath("limit").description("메시지 조회 개수")
 				),

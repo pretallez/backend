@@ -39,14 +39,14 @@ class ChatServiceImplIntegrationTest {
 	}
 
 	@Test
-	@DisplayName("채팅 저장 시, RabbitMQ를 통해 배치 처리 후 레디스에 캐싱")
+	@DisplayName("채팅 저장 시, RabbitMQ를 통해 처리 후 레디스에 캐싱")
 	void addChat_Success() throws InterruptedException {
 		// Given
 		ChatCreate.Request request = ChatFixture.chatCreateReqeustWithMemberChatroom(savedMemberChatroom);
 
 		// When
 		chatService.addChat(request);
-		TimeUnit.SECONDS.sleep(6);
+		TimeUnit.SECONDS.sleep(1);
 
 		// Then
 		Assertions.assertFalse(chatRepository.findAll().isEmpty());
