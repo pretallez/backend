@@ -79,7 +79,8 @@ class ChatControllerUnitTest {
 				responseFields(
 					fieldWithPath("httpStatusCode").description("HTTP 상태 코드"),
 					fieldWithPath("code").description("응답 코드"),
-					fieldWithPath("message").description("응답 메시지")
+					fieldWithPath("message").description("응답 메시지"),
+					fieldWithPath("description").description("응답 메시지 설명")
 				)
 			));
 
@@ -114,6 +115,7 @@ class ChatControllerUnitTest {
 					fieldWithPath("httpStatusCode").description("HTTP 상태 코드"),
 					fieldWithPath("code").description("응답 코드"),
 					fieldWithPath("message").description("응답 메시지"),
+					fieldWithPath("description").description("응답 메시지 설명"),
 					fieldWithPath("data").description("응답 데이터 객체"),
 					fieldWithPath("data[].id").description("메시지 ID"),
 					fieldWithPath("data[].chatroomId").description("채팅방 ID"),

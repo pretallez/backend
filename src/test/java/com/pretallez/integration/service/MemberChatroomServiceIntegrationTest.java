@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import com.pretallez.common.entity.Chatroom;
 import com.pretallez.common.entity.Member;
 import com.pretallez.common.entity.MemberChatroom;
-import com.pretallez.common.exception.EntityNotFoundException;
+import com.pretallez.common.exception.EntityException;
 import com.pretallez.common.fixture.MemberChatroomFixture;
 import com.pretallez.common.fixture.TestFixtureFactory;
 import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
@@ -107,7 +107,7 @@ class MemberChatroomServiceIntegrationTest {
         MemberChatroomDelete.Request memberChatroomDeleteRequest = MemberChatroomFixture.memberChatroomDeleteRequest(savedMember1.getId(), savedChatroom1.getId());
 
         // When & Then
-        assertThrows(EntityNotFoundException.class, () -> {
+        assertThrows(EntityException.class, () -> {
             memberChatroomService.removeMemberFromChatroom(memberChatroomDeleteRequest);
         });
     }

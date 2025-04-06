@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pretallez.common.fixture.MemberChatroomFixture;
-import com.pretallez.common.response.ResSuccessCode;
+import com.pretallez.common.response.success.ResSuccessCode;
 import com.pretallez.controller.MemberChatroomController;
 import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
 import com.pretallez.domain.memberchatroom.dto.MemberChatroomCreate;
@@ -107,7 +107,8 @@ class MemberChatroomControllerUnitTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(ResSuccessCode.READ.getCode()))
-                .andExpect(jsonPath("$.message").value("Read Successfully"))
+                .andExpect(jsonPath("$.message").value("READ"))
+                .andExpect(jsonPath("$.description").value("Read Successfully"))
                 .andExpect(jsonPath("$.data").isArray())
                 .andExpect(jsonPath("$.data.length()").value(2))
                 .andExpect(jsonPath("$.data[0].id").value(1))
@@ -135,7 +136,8 @@ class MemberChatroomControllerUnitTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(ResSuccessCode.READ.getCode()))
-                .andExpect(jsonPath("$.message").value("Read Successfully"))
+                .andExpect(jsonPath("$.message").value("READ"))
+                .andExpect(jsonPath("$.description").value("Read Successfully"))
                 .andExpect(jsonPath("$.data").isArray())
                 .andExpect(jsonPath("$.data.length()").value(2))
                 .andExpect(jsonPath("$.data[0].id").value(1))
