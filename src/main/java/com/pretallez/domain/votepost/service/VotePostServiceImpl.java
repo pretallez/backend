@@ -5,7 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pretallez.common.entity.Board;
 import com.pretallez.common.entity.VotePost;
-import com.pretallez.common.exception.EntityNotFoundException;
+import com.pretallez.common.exception.EntityException;
+import com.pretallez.common.response.error.EntityErrorCode;
 import com.pretallez.domain.board.service.BoardService;
 import com.pretallez.domain.votepost.dto.VotePostCreate;
 import com.pretallez.domain.votepost.repository.VotePostRepository;
@@ -22,7 +23,7 @@ public class VotePostServiceImpl implements VotePostService {
     @Override
     public VotePost getVotePost(Long votePostId) {
         return votePostRepository.findById(votePostId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%d]에 해당하는 투표 게시글을 찾을 수 없습니다.", votePostId)));
+                .orElseThrow(() -> new EntityException(EntityErrorCode.VOTEPOST_NOT_FOUND, votePostId));
     }
 
     @Override

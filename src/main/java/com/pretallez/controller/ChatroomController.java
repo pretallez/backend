@@ -1,7 +1,7 @@
 package com.pretallez.controller;
 
 import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.common.response.ResSuccessCode;
+import com.pretallez.common.response.success.ResSuccessCode;
 import com.pretallez.domain.chatroom.dto.ChatroomCreate;
 import com.pretallez.domain.chatroom.service.ChatroomService;
 import jakarta.validation.Valid;
