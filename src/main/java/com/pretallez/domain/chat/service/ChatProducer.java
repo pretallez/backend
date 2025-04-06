@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import com.pretallez.domain.chat.dto.ChatCreate;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j2
+@Slf4j(topic = "ChatProducer")
 @RequiredArgsConstructor
 @Service
 public class ChatProducer {
