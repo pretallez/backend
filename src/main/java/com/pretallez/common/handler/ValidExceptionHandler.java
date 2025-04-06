@@ -1,9 +1,8 @@
-package com.pretallez.common.exception;
+package com.pretallez.common.handler;
 
-import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.common.response.ResErrorCode;
-import jakarta.validation.ConstraintViolationException;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +13,11 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.pretallez.common.response.CustomApiResponse;
+import com.pretallez.common.response.error.ResErrorCode;
+
+import jakarta.validation.ConstraintViolationException;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j(topic = "ValidExceptionHandler")
 @RestControllerAdvice
@@ -34,7 +36,7 @@ public class ValidExceptionHandler {
                 .collect(Collectors.toList());
 
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.BAD_REQUEST.value())
                 .body(CustomApiResponse.ERROR(ResErrorCode.BAD_REQUEST, "Validation failed", errors));
     }
 
@@ -49,7 +51,7 @@ public class ValidExceptionHandler {
                 .collect(Collectors.toList());
 
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.BAD_REQUEST.value())
                 .body(CustomApiResponse.ERROR(ResErrorCode.BAD_REQUEST, "Constraint violation", errors));
     }
 
@@ -65,7 +67,7 @@ public class ValidExceptionHandler {
                 .collect(Collectors.toList());
 
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.BAD_REQUEST.value())
                 .body(CustomApiResponse.ERROR(ResErrorCode.BAD_REQUEST, "Binding failed", errors));
     }
 
@@ -75,7 +77,7 @@ public class ValidExceptionHandler {
         log.error("Malformed JSON request", exception);
 
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.BAD_REQUEST.value())
                 .body(CustomApiResponse.ERROR(ResErrorCode.BAD_REQUEST, "Malformed JSON request", null));
     }
 
@@ -86,7 +88,7 @@ public class ValidExceptionHandler {
         log.error("Missing request parameter: {}", exception.getParameterName(), exception);
 
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.BAD_REQUEST.value())
                 .body(CustomApiResponse.ERROR(
                         ResErrorCode.BAD_REQUEST,
                         "Missing parameter: " + exception.getParameterName(),
