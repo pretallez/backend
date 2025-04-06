@@ -32,7 +32,7 @@ public class ChatConsumer {
 	private final MemberService memberService;
 	private final ObjectMapper objectMapper;
 
-	@RabbitListener(queues = QUEUE_NAME, ackMode = "MANUAL", concurrency = "10")
+	@RabbitListener(queues = QUEUE_NAME, ackMode = "MANUAL", concurrency = "1")
 	@Transactional
 	public void consumeChatMessage(ChatCreate.Request chatCreateRequest, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) {
 		try {
