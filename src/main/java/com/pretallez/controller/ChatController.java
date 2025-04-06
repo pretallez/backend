@@ -3,7 +3,6 @@ package com.pretallez.controller;
 import java.util.List;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.common.response.ResSuccessCode;
+import com.pretallez.common.response.success.ResSuccessCode;
 import com.pretallez.domain.chat.dto.ChatCreate;
 import com.pretallez.domain.chat.dto.ChatQueryRequest;
 import com.pretallez.domain.chat.dto.ChatRead;

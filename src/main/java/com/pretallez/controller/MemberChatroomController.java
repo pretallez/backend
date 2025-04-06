@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.common.response.ResSuccessCode;
+import com.pretallez.common.response.success.ResSuccessCode;
 import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
 import com.pretallez.domain.memberchatroom.dto.MemberChatroomCreate;
 import com.pretallez.domain.memberchatroom.dto.MemberChatroomDelete;
