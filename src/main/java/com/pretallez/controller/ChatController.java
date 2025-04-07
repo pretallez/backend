@@ -3,7 +3,6 @@ package com.pretallez.controller;
 import java.util.List;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.common.response.ResSuccessCode;
+import com.pretallez.common.response.success.ResSuccessCode;
 import com.pretallez.domain.chat.dto.ChatCreate;
 import com.pretallez.domain.chat.dto.ChatQueryRequest;
 import com.pretallez.domain.chat.dto.ChatRead;
@@ -30,18 +29,14 @@ public class ChatController {
 
 	private static final String DESTINATION_PREFIX = "/v1/api/chatrooms/";
 
-	private final SimpMessagingTemplate messagingTemplate;
 	private final ChatService chatService;
 
-	@MessageMapping("/chats")
+	@MessageMapping("/v1.api.chats")
 	@PostMapping
 	public CustomApiResponse<Void> addChats(@RequestBody ChatCreate.Request chatCreateRequest) {
 		log.info("채팅 메시지 전송 요청: {}", chatCreateRequest);
+		chatService.addChat(chatCreateRequest);
 
-		messagingTemplate.convertAndSend(
-			DESTINATION_PREFIX + chatCreateRequest.getChatroomId(),
-			chatService.addChat(chatCreateRequest)
-		);
 		return CustomApiResponse.OK(ResSuccessCode.CREATED);
 	}
 

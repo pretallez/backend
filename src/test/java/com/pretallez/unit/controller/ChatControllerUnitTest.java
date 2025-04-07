@@ -79,7 +79,8 @@ class ChatControllerUnitTest {
 				responseFields(
 					fieldWithPath("httpStatusCode").description("HTTP 상태 코드"),
 					fieldWithPath("code").description("응답 코드"),
-					fieldWithPath("message").description("응답 메시지")
+					fieldWithPath("message").description("응답 메시지"),
+					fieldWithPath("description").description("응답 메시지 설명")
 				)
 			));
 
@@ -107,7 +108,6 @@ class ChatControllerUnitTest {
 				Preprocessors.preprocessResponse(Preprocessors.prettyPrint()),
 				requestFields(
 					fieldWithPath("chatroomId").description("채팅방 ID"),
-					fieldWithPath("lastCreatedAt").description("마지막으로 응답받은 채팅메시지 생성날짜"),
 					fieldWithPath("lastId").description("마지막으로 응답받은 채팅메시지 ID"),
 					fieldWithPath("limit").description("메시지 조회 개수")
 				),
@@ -115,6 +115,7 @@ class ChatControllerUnitTest {
 					fieldWithPath("httpStatusCode").description("HTTP 상태 코드"),
 					fieldWithPath("code").description("응답 코드"),
 					fieldWithPath("message").description("응답 메시지"),
+					fieldWithPath("description").description("응답 메시지 설명"),
 					fieldWithPath("data").description("응답 데이터 객체"),
 					fieldWithPath("data[].id").description("메시지 ID"),
 					fieldWithPath("data[].chatroomId").description("채팅방 ID"),

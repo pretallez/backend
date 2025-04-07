@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pretallez.common.entity.Chatroom;
 import com.pretallez.common.entity.Member;
 import com.pretallez.common.entity.MemberChatroom;
-import com.pretallez.common.exception.EntityNotFoundException;
+import com.pretallez.common.exception.EntityException;
+import com.pretallez.common.response.error.EntityErrorCode;
 import com.pretallez.domain.chatroom.service.ChatroomService;
 import com.pretallez.domain.member.service.MemberService;
 import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
@@ -58,7 +59,7 @@ public class MemberChatroomServiceImpl implements MemberChatroomService {
     @Override
     public MemberChatroom getMemberChatroom(Member member, Chatroom chatroom) {
         return memberChatroomRepository.findByMemberAndChatroom(member, chatroom)
-                .orElseThrow(() -> new EntityNotFoundException( String.format("회원[%d]은 채팅방[%d]에 존재하지 않습니다.", member.getId(), chatroom.getId())));
+                .orElseThrow(() -> new EntityException(EntityErrorCode.MEMBER_CHATROOM_NOT_FOUND, member.getId(), chatroom.getId()));
     }
 
     @Override
@@ -78,8 +79,7 @@ public class MemberChatroomServiceImpl implements MemberChatroomService {
 
         boolean exists = memberChatroomRepository.existsMemberInChatroom(memberId, chatroomId);
         if (!exists) {
-            throw new EntityNotFoundException(
-                String.format("회원[%d]은 채팅방[%d]에 존재하지 않습니다.", memberId, chatroomId));
+            throw new EntityException(EntityErrorCode.MEMBER_CHATROOM_NOT_FOUND, memberId, chatroomId);
         }
         return true;
     }

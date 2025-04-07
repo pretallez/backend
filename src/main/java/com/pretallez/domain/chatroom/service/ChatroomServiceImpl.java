@@ -1,6 +1,7 @@
 package com.pretallez.domain.chatroom.service;
 
-import com.pretallez.common.exception.EntityNotFoundException;
+import com.pretallez.common.exception.EntityException;
+import com.pretallez.common.response.error.EntityErrorCode;
 import com.pretallez.domain.chatroom.dto.ChatroomCreate;
 import com.pretallez.domain.chatroom.repository.ChatroomRepository;
 import com.pretallez.common.entity.Chatroom;
@@ -37,7 +38,7 @@ public class ChatroomServiceImpl implements ChatroomService {
     @Override
     public Chatroom getChatroom(Long chatroomId) {
         return chatroomRepository.findById(chatroomId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%d]에 해당하는 채팅방을 찾을 수 없습니다.", chatroomId)));
+                .orElseThrow(() -> new EntityException(EntityErrorCode.CHATROOM_NOT_FOUND, chatroomId));
     }
 
     @Override

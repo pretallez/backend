@@ -43,7 +43,7 @@ public class ChatFixture {
 	}
 
 	public static ChatQueryRequest chatQueryRequest() {
-		return new ChatQueryRequest(1L, LocalDateTime.now(), 4L, 20);
+		return new ChatQueryRequest(1L, 4L, 20);
 	}
 
 	public static List<ChatRead.Response> chatReadResponses() {

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.pretallez.common.fixture.FencingClubFixture;
 import com.pretallez.common.fixture.VotePostFixture;
 import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.common.response.ResSuccessCode;
+import com.pretallez.common.response.success.ResSuccessCode;
 import com.pretallez.controller.VotePostController;
 import com.pretallez.common.entity.FencingClub;
 import com.pretallez.domain.votepost.dto.VotePostCreate;
@@ -88,6 +88,7 @@ class VotePostControllerUnitTest {
                                 fieldWithPath("httpStatusCode").description("HTTP 상태 코드"),
                                 fieldWithPath("code").description("응답 코드"),
                                 fieldWithPath("message").description("응답 메시지"),
+                                fieldWithPath("description").description("응답 메시지 설명"),
                                 fieldWithPath("data").description("응답 데이터 객체"),
                                 fieldWithPath("data.votePostId").description("게시글 ID")
                         )));

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pretallez.common.entity.Chat;
-import com.pretallez.common.util.ScoreUtil;
 import com.pretallez.domain.chat.dto.ChatCreate;
 import com.pretallez.domain.chat.dto.ChatQueryRequest;
 import com.pretallez.domain.chat.dto.ChatRead;
@@ -67,7 +66,7 @@ public class ChatServiceImpl implements ChatService {
 		String key = "chatroom:" + chatQueryRequest.getChatroomId();
 
 		// Redis에서 메시지 조회
-		Set<String> redisMessages = (chatQueryRequest.getLastCreatedAt() == null || chatQueryRequest.getLastId() == null)
+		Set<String> redisMessages = (chatQueryRequest.getLastId() == null)
 			? fetchRecentMessagesFromRedis(key, chatQueryRequest.getLimit()) // 최근 메시지 조회
 			: fetchMessagesFromRedis(key, chatQueryRequest); // 특정 위치부터 메시지 조회
 
@@ -89,11 +88,10 @@ public class ChatServiceImpl implements ChatService {
 		}
 
 		// 마지막 메시지의 createdAte과 id를 기준으로 DB 조회 준비
-		LocalDateTime dbLastCreatedAt = chats.isEmpty() ? chatQueryRequest.getLastCreatedAt() : chats.getLast().getCreatedAt();
 		Long dbLastId = chats.isEmpty() ? chatQueryRequest.getLastId() : chats.getLast().getId();
 
 		// DB 조회 요청 생성
-		ChatQueryRequest dbRequest = new ChatQueryRequest(chatQueryRequest.getChatroomId(), dbLastCreatedAt, dbLastId, remainingSize);
+		ChatQueryRequest dbRequest = new ChatQueryRequest(chatQueryRequest.getChatroomId(), dbLastId, remainingSize);
 		List<Chat> dbMessages = chatRepository.findNextChats(dbRequest);
 
 		// DB 결과를 DTO로 변환 후 추가
@@ -117,7 +115,7 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	private Set<String> fetchMessagesFromRedis(String key, ChatQueryRequest chatQueryRequest) {
-		double score = ScoreUtil.buildScore(chatQueryRequest.getLastCreatedAt(), chatQueryRequest.getLastId());
+		double score = chatQueryRequest.getLastId();
 		return redisTemplate.opsForZSet()
 			.reverseRangeByScore(key, Double.NEGATIVE_INFINITY, score - 1, 0, chatQueryRequest.getLimit());
 	}

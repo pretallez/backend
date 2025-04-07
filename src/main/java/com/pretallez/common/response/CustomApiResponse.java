@@ -20,7 +20,7 @@ public class CustomApiResponse<T> {
     private T data;
 
     private CustomApiResponse(ResCode resCode, String description, List<String> errorList, T data) {
-        this.httpStatusCode = resCode.getHttpStatusCode();
+        this.httpStatusCode = resCode.getHttpStatusCode().value();
         this.code = resCode.getCode();
         this.message = resCode.getMessage();
         this.description = description;
@@ -30,19 +30,15 @@ public class CustomApiResponse<T> {
 
     // 성공 응답 생성
     public static CustomApiResponse<Void> OK(ResCode resCode) {
-        return new CustomApiResponse<>(resCode, null, null, null);
+        return new CustomApiResponse<>(resCode, resCode.getDescription(), null, null);
     }
 
     public static <T> CustomApiResponse<T> OK(ResCode resCode, T data) {
-        return new CustomApiResponse<>(resCode, null, null, data);
-    }
-
-    public static CustomApiResponse<Void> OK(ResCode resCode, String description) {
-        return new CustomApiResponse<>(resCode, description, null, null);
+        return new CustomApiResponse<>(resCode, resCode.getDescription(), null, data);
     }
 
     public static <T> CustomApiResponse<T> OK(ResCode resCode, T data, String description) {
-        return new CustomApiResponse<>(resCode, description, null, data);
+        return new CustomApiResponse<>(resCode, description,null, data);
     }
 
     // 에러 응답 생성
@@ -53,6 +49,7 @@ public class CustomApiResponse<T> {
     public static CustomApiResponse<Void> ERROR(ResCode resCode, String description) {
         return new CustomApiResponse<>(resCode, description, null, null);
     }
+
 
     public static CustomApiResponse<Void> ERROR(ResCode resCode, List<String> errorList) {
         return new CustomApiResponse<>(resCode, null, errorList, null);

@@ -6,7 +6,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.pretallez.common.entity.Member;
-import com.pretallez.common.exception.EntityNotFoundException;
+import com.pretallez.common.exception.EntityException;
+import com.pretallez.common.response.error.EntityErrorCode;
 import com.pretallez.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member getMember(Long memberId) {
         return memberRepository.findById(memberId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%d]에 해당하는 회원을 찾을 수 없습니다.", memberId)));
+                .orElseThrow(() -> new EntityException(EntityErrorCode.MEMBER_NOT_FOUND, memberId));
     }
 
     @Override
