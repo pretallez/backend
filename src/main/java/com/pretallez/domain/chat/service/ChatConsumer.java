@@ -10,6 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pretallez.common.entity.Chat;
+import com.pretallez.common.exception.ChatProcessException;
+import com.pretallez.common.exception.RedisException;
+import com.pretallez.common.response.error.ChatErrorCode;
+import com.pretallez.common.response.error.RabbitMqErrorCode;
+import com.pretallez.common.response.error.RedisErrorCode;
 import com.pretallez.domain.chat.dto.ChatCreate;
 import com.pretallez.domain.chat.dto.ChatRead;
 import com.pretallez.domain.chat.repository.ChatRepository;
@@ -25,6 +30,8 @@ import lombok.extern.log4j.Log4j2;
 public class ChatConsumer {
 	private static final String QUEUE_NAME = "chat.queue";
 	private static final int MAX_CHAT_HISTORY = 300;
+	private static final String CHATROOM_KEY_PREFIX = "chatroom:";
+	private static final String CHAT_BROADCAST_PREFIX = "/topic/v1.api.chatrooms.";
 
 	private final ChatRepository chatRepository;
 	private final RedisTemplate<String, String> redisTemplate;
@@ -36,65 +43,73 @@ public class ChatConsumer {
 	@Transactional
 	public void consumeChatMessage(ChatCreate.Request chatCreateRequest, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) {
 		try {
-			// log.info("{} 메시지 소비 - 태그: {}, 내용: {}", QUEUE_NAME, tag, chatCreateRequest.getContent());
-
-			// MariaDB에 즉시 저장
 			Chat savedChat = chatRepository.save(ChatCreate.Request.toEntity(chatCreateRequest));
-
-			// Redis 캐싱
 			ChatRead.Response response = updateRedisWithChats(savedChat);
 
-			// STOMP 브로드캐스트
-			String destination = "/topic/v1.api.chatrooms." + savedChat.getChatroomId();
-			messagingTemplate.convertAndSend(destination, response);
-
-			// 메시지 ACK 처리
-			channel.basicAck(tag, false);
-			// log.info("메시지 ACK - 태그: {}", tag);
+			broadcastToChatroom(savedChat.getChatroomId(), response);
+			handleAck(channel, tag);
 		} catch (Exception e) {
-			log.error("{} 메시지 소비 실패 - 태그: {}, 에러: {}", QUEUE_NAME, tag, e.getMessage());
-			try {
-				channel.basicNack(tag, false, true);
-			} catch (Exception nackEx) {
-				log.error("{} 메시지 NACK 실패 - 태그: {}, 에러: {}", QUEUE_NAME, tag, e.getMessage());
-			}
-			// throw new RuntimeException("메시지 소비 처리 실패", e);
+			throw new ChatProcessException(
+				ChatErrorCode.CHAT_PROCESS_FAILED, e, chatCreateRequest.getMemberId(), chatCreateRequest.getChatroomId(), chatCreateRequest.getContent(), tag);
 		}
 	}
 
-	public ChatRead.Response updateRedisWithChats(Chat chat) {
-		// 회원 닉네임 조회
-		String nickname = memberService.getNickname(chat.getMemberId());
-		ChatRead.Response chatReadResponse = ChatRead.Response.from(chat, nickname);
+	private void handleAck(Channel channel, long tag) {
+		try {
+			channel.basicAck(tag, false);
+			log.info("메시지 ACK 처리 성공 - 태그: {}", tag);
+		} catch (Exception e) {
+			throw new ChatProcessException(RabbitMqErrorCode.MESSEAGE_ACK_FAILED, QUEUE_NAME, e, tag);
+		}
 
-		String chatroomKey = "chatroom:" + chat.getChatroomId();
+	}
 
-		// Redis 캐싱
-		redisTemplate.opsForZSet().add(
-			chatroomKey,
-			toJson(chatReadResponse),
-			chat.getId()
-		);
+	private void handleNack(Channel channel, long tag) {
+		try {
+			channel.basicNack(tag, false, false);
+			log.info("메시지 NACK 처리 성공 - 태그: {}", tag);
+		} catch (Exception e) {
+			throw new ChatProcessException(RabbitMqErrorCode.MESSEAGE_NACK_FAILED, QUEUE_NAME, e, tag);
+		}
+	}
 
-		// MAX_CHAT_HISTORY 만큼 유지
-		trimRedisHistory(chatroomKey);
+	private ChatRead.Response updateRedisWithChats(Chat chat) {
+		try {
+			String nickname = memberService.getNickname(chat.getMemberId());
+			ChatRead.Response chatReadResponse = ChatRead.Response.from(chat, nickname);
 
-		return chatReadResponse;
+			String chatroomKey = CHATROOM_KEY_PREFIX + chat.getChatroomId();
+
+			redisTemplate.opsForZSet().add(chatroomKey, toJson(chatReadResponse), chat.getId());
+			trimRedisHistory(chatroomKey);
+
+			return chatReadResponse;
+		} catch (Exception e) {
+			throw new RedisException(RedisErrorCode.REDIS_CACHE_ADD_FAILED, e, chat.getChatroomId(), chat.getMemberId(), chat.getContent());
+		}
 	}
 
 	private void trimRedisHistory(String chatroomKey) {
-		Long size = redisTemplate.opsForZSet().size(chatroomKey);
-
-		if (size != null && size > MAX_CHAT_HISTORY) {
-			redisTemplate.opsForZSet().removeRange(chatroomKey, 0, size - MAX_CHAT_HISTORY - 1);
+		try {
+			Long size = redisTemplate.opsForZSet().size(chatroomKey);
+			if (size != null && size > MAX_CHAT_HISTORY) {
+				redisTemplate.opsForZSet().removeRange(chatroomKey, 0, size - MAX_CHAT_HISTORY - 1);
+			}
+		} catch (Exception e) {
+			throw new RedisException(RedisErrorCode.REDIS_HISTORY_TRIM_FAILED, e, chatroomKey);
 		}
+	}
+
+	private void broadcastToChatroom(Long chatroomId, ChatRead.Response response) {
+		String destination = CHAT_BROADCAST_PREFIX + chatroomId;
+		messagingTemplate.convertAndSend(destination, response);
 	}
 
 	private String toJson(ChatRead.Response chatReadResponse) {
 		try {
 			return objectMapper.writeValueAsString(chatReadResponse);
 		} catch (Exception e) {
-			throw new RuntimeException("채팅 JSON 직렬화에 실패했습니다.", e); // 커스텀 예외 처리 필요
+			throw new RedisException(RedisErrorCode.REDIS_JSON_SERIALIZATION_FAILED, e);
 		}
 	}
 }

@@ -14,4 +14,10 @@ public abstract class BaseException extends RuntimeException {
 		this.resCode = resCode;
 		this.description = getMessage();
 	}
+
+	protected BaseException(ResCode resCode, Throwable cause, Object... args) {
+		super(resCode.getFormattedDescription(args), cause);
+		this.resCode = resCode;
+		this.description = getMessage();
+	}
 }
