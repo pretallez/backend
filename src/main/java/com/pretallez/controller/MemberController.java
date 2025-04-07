@@ -1,7 +1,10 @@
 package com.pretallez.controller;
 
 import com.pretallez.common.response.CustomApiResponse;
+import com.pretallez.common.util.CookieUtil;
+import com.pretallez.common.util.JwtTokenProvider;
 import com.pretallez.domain.member.dto.MemberCreate;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MemberController {
 
+    private final JwtTokenProvider jwtTokenProvider;
+    private CookieUtil cookieUtil;
+
     @PostMapping("/auth/callback")
     public CustomApiResponse<MemberCreate.Response> oauthCallback(@RequestParam String code) {
 
@@ -20,13 +26,15 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public void login() {
+    public void login(HttpServletResponse response) {
+
         //todo : refresh, access token 생성하는 로직
         //todo : access token
     }
 
     @PostMapping("/logout")
     public void logout() {
+
         //todo : refresh token 지우는 로직
     }
 

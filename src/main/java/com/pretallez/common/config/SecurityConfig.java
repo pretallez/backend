@@ -30,7 +30,7 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/v1/api/join", "/v1/api/login").permitAll()
+                        .requestMatchers("/v1/api/join").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex
