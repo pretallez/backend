@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.pretallez.common.entity.Member;
 import com.pretallez.common.exception.EntityException;
+import com.pretallez.common.exception.RedisException;
 import com.pretallez.common.response.error.EntityErrorCode;
+import com.pretallez.common.response.error.RedisErrorCode;
 import com.pretallez.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -30,33 +32,26 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String getNickname(Long memberId) {
         if (memberId == null) {
-            throw new IllegalArgumentException("memberID cannot be null");
+            throw new IllegalArgumentException("memberId는 null일 수 없습니다.");
         }
-
         String nickNameKey = buildRedisNicknameKey(memberId);
         String nickname;
 
         try {
             nickname = redisTemplate.opsForValue().get(nickNameKey);
             if (nickname != null) {
-                log.debug("Cache hit for memberId: {}", memberId);
                 return nickname;
             }
 
-            log.info("Cache miss for memberId: {}", memberId);
-            Member member = getMember(memberId);
-            nickname = member.getNickname();
-
+            nickname = getMember(memberId).getNickname();
             if (nickname == null) {
-                log.warn("Nickname is null for memberId: {}", memberId);
-                nickname = ""; // 기본값 설정 또는 예외 처리 고려
+                nickname = "Unknown";
             }
-
             redisTemplate.opsForValue().set(nickNameKey, nickname, 1, TimeUnit.HOURS);
+
             return nickname;
         } catch (Exception e) {
-            log.error("Failed to retrieve nickname for memberId: {}. Error: {}", memberId, e);
-            throw new RuntimeException("Unable to retrieve nickname", e); // 커스텀 예외로 변경 필요
+            throw new RedisException(RedisErrorCode.REDIS_CACHE_GET_NICKNAME_FAILED, e, memberId);
         }
     }
 
