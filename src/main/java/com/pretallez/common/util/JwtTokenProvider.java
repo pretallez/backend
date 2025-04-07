@@ -1,5 +1,6 @@
 package com.pretallez.common.util;
 
+import com.pretallez.domain.member.service.CustomUserDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -23,12 +23,11 @@ import java.util.List;
 public class JwtTokenProvider {
 
     private final long validityInMilliseconds = 3600000; // 1시간
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
 
     @Value("${jwt.secret}")
     private String secret;
 
-    private final SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
 
     // JWT 토큰 생성
     public String createToken(String username, List<String> roles) {
@@ -37,7 +36,7 @@ public class JwtTokenProvider {
 
         Date now = new Date();
         Date expiry = new Date(now.getTime() + validityInMilliseconds);
-
+        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
@@ -54,6 +53,7 @@ public class JwtTokenProvider {
 
     // JWT 토큰에서 사용자명 추출
     public String getUsername(String token) {
+        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey) // SecretKey 객체 사용
                 .build()
@@ -73,6 +73,7 @@ public class JwtTokenProvider {
 
     // JWT 토큰 유효성 검증
     public boolean validateToken(String token) {
+        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         try {
             Jwts.parserBuilder()
                     .setSigningKey(secretKey) // SecretKey 객체 사용
