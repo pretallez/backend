@@ -18,4 +18,12 @@ public class RabbitMqProperties {
 	private int stompPort;
 	private String destinationPrefix;
 	private String appDestinationPrefix;
+	private Chat chat;
+
+	@Getter @Setter
+	public static class Chat {
+		private String exchange;
+		private String queue;
+		private String routingKey;
+	}
 }
