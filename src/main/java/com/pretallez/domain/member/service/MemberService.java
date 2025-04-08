@@ -7,6 +7,9 @@ public interface MemberService {
     /** Member 엔티티가 존재하면 반환, 존재하지 않으면 예외를 던집니다. */
     Member getMember(Long memberId);
 
+    /** Member 엔티티가 존재하면 반환, 존재하지 않으면 예외를 던집니다. */
+    Member getMemberByEmail(String email);
+
     /** 회원을 저장합니다. */
     void addMember();
 

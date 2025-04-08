@@ -3,8 +3,8 @@ package com.pretallez.domain.auth.service;
 public interface AuthService {
 
     //refresh token redis 에 추가
-    void addRefreshToken();
+    String addRefreshToken(String email);
 
     //access token
-    void addAccessToken();
+    String addAccessToken();
 }
