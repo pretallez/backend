@@ -30,6 +30,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Member getMemberByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityException(EntityErrorCode.MEMBER_NOT_FOUND, email));
+    }
+
+    @Override
     public String getNickname(Long memberId) {
         if (memberId == null) {
             throw new IllegalArgumentException("memberId는 null일 수 없습니다.");
