@@ -14,8 +14,8 @@ public class HeaderUtils {
 	/**
 	 * Basic 인증 헤더와 Content-Type 헤더를 포함한 Map을 반환한다.
 	 *
-	 * @param secretKey 	인증에 사용할 secretKey
-	 * @return 				헤더 Map
+	 * @param secretKey 인증에 사용할 secretKey
+	 * @return          헤더 Map
 	 */
 	public static Map<String, String> basicAuthHeaders(String secretKey) {
 		String credentials = secretKey + BASIC_DELIMITER;
