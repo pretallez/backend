@@ -2,6 +2,7 @@ package com.pretallez.controller;
 
 import com.pretallez.common.response.CustomApiResponse;
 
+import com.pretallez.domain.auth.dto.KakaoOauthLogin;
 import com.pretallez.domain.auth.service.AuthService;
 import com.pretallez.domain.member.dto.MemberCreate;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,8 +20,8 @@ public class MemberController {
     private final AuthService authService;
 
     @PostMapping("/auth/callback")
-    public CustomApiResponse<MemberCreate.Response> oauthCallback(@RequestParam String code) {
-
+    public CustomApiResponse<MemberCreate.Response> oauthCallback(@RequestParam KakaoOauthLogin.Request kakaoOauthLoginRequest) {
+        authService.getAccessToken(kakaoOauthLoginRequest);
         return null;
     }
 

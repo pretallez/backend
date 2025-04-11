@@ -10,7 +10,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/api")
 public class BoardController {
 
-    private final BoardService boardService;
-
 
 }
