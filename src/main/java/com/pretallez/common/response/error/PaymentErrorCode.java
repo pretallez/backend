@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum PaymentErrorCode implements ResCode {
+	PREPARE_PAYMENT_FAIL(HttpStatus.BAD_REQUEST, 10000, "결제 준비에 실패했습니다. 잠시 후 다시 시도해주세요."),
 	ALREADY_PROCESSED_PAYMENT(HttpStatus.BAD_REQUEST, 10000, "이미 처리된 결제 입니다."),
 	PROVIDER_ERROR(HttpStatus.BAD_REQUEST, 10000, "일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요."),
 	EXCEED_MAX_CARD_INSTALLMENT_PLAN(HttpStatus.BAD_REQUEST, 10000, "설정 가능한 최대 할부 개월 수를 초과했습니다."),
