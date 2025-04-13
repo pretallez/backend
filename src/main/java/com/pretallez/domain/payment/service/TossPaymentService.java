@@ -16,7 +16,9 @@ import com.pretallez.common.exception.PaymentConfirmException;
 import com.pretallez.common.response.ResCode;
 import com.pretallez.common.response.error.PaymentErrorCode;
 import com.pretallez.common.util.EnumUtils;
-import com.pretallez.domain.payment.dto.PaymentConfirm;
+import com.pretallez.domain.payment.dto.PaymentConfirmRequest;
+import com.pretallez.domain.payment.dto.PaymentConfirmResponse;
+import com.pretallez.domain.payment.dto.PaymentFailResponse;
 import com.pretallez.domain.payment.dto.PaymentTempData;
 
 import lombok.RequiredArgsConstructor;
@@ -35,7 +37,7 @@ public class TossPaymentService implements PaymentService {
 	private final RedisTemplate<String, Object> redisTemplate;
 
 	@Override
-	public PaymentConfirm.Response confirmPayment(PaymentConfirm.Request confirmRequest) {
+	public PaymentConfirmResponse confirmPayment(PaymentConfirmRequest confirmRequest) {
 		return paymentRestClient.method(HttpMethod.POST)
 			.uri(paymentProperties.getConfirmEndpoint())
 			.body(confirmRequest)
@@ -43,7 +45,7 @@ public class TossPaymentService implements PaymentService {
 			.onStatus(HttpStatusCode::isError, (request, response) -> {
 				throw new PaymentConfirmException(getPaymentConfirmErrorCode(response));
 			})
-			.body(PaymentConfirm.Response.class);
+			.body(PaymentConfirmResponse.class);
 	}
 
 	@Override
@@ -57,6 +59,22 @@ public class TossPaymentService implements PaymentService {
 		}
 	}
 
+	@Override
+	public void validatePaymentAmount(PaymentConfirmRequest paymentConfirmRequest) {
+		String key = PAYMENT_PREFIX + paymentConfirmRequest.orderId();
+
+		PaymentTempData paymentTempData = objectMapper.convertValue(redisTemplate.opsForValue().get(key),
+			PaymentTempData.class);
+
+		if (paymentTempData == null) {
+			throw new PaymentConfirmException(PaymentErrorCode.TEMP_DATA_NOT_FOUND);
+		}
+
+		if (!paymentTempData.getAmount().equals(paymentConfirmRequest.amount())) {
+			throw new PaymentConfirmException(PaymentErrorCode.AMOUNT_MISMATCH);
+		}
+	}
+
 	/**
 	 * Toss 결제 승인 응답에서 실패 코드를 파싱하여 PaymentErrorCode로 변환한다.
 	 *
@@ -64,13 +82,13 @@ public class TossPaymentService implements PaymentService {
 	 * @return             매핑된 PaymentErrorCode
 	 */
 	private PaymentErrorCode getPaymentConfirmErrorCode(ClientHttpResponse response) throws IOException {
-		PaymentConfirm.FailResponse paymentConfirmFailOutput = objectMapper.readValue(
+		PaymentFailResponse paymentFailResponse = objectMapper.readValue(
 			response.getBody(),
-			PaymentConfirm.FailResponse.class
+			PaymentFailResponse.class
 		);
 
 		return toPaymentErrorCode(
-			EnumUtils.findByNameOrThrow(PaymentErrorCode.class, paymentConfirmFailOutput.code())
+			EnumUtils.findByNameOrThrow(PaymentErrorCode.class, paymentFailResponse.code())
 		);
 	}
 
