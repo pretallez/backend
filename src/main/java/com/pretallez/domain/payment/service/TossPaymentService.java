@@ -38,14 +38,24 @@ public class TossPaymentService implements PaymentService {
 
 	@Override
 	public PaymentConfirmResponse confirmPayment(PaymentConfirmRequest confirmRequest) {
-		return paymentRestClient.method(HttpMethod.POST)
+		String rawResponse = paymentRestClient.method(HttpMethod.POST)
 			.uri(paymentProperties.getConfirmEndpoint())
 			.body(confirmRequest)
+			.header("Idempotency-Key", confirmRequest.paymentKey())
 			.retrieve()
 			.onStatus(HttpStatusCode::isError, (request, response) -> {
 				throw new PaymentConfirmException(getPaymentConfirmErrorCode(response));
 			})
-			.body(PaymentConfirmResponse.class);
+			.body(String.class);
+
+		// Todo: 후속 처리 작업 코드 작성 (로깅, DB저장)
+		log.info(rawResponse);
+
+		try {
+			return objectMapper.readValue(rawResponse, PaymentConfirmResponse.class);
+		} catch (Exception e) {
+			throw new PaymentConfirmException(PaymentErrorCode.FAILED_PAYMENT_RESPONSE_DESERIALIZATION, e);
+		}
 	}
 
 	@Override
@@ -55,7 +65,7 @@ public class TossPaymentService implements PaymentService {
 		try {
 			redisTemplate.opsForValue().set(key, paymentTempData, Duration.ofMinutes(PAYMENT_TEMP_DATA_EXPIRE_SECONDS));
 		} catch (Exception e) {
-			throw new PaymentConfirmException(PaymentErrorCode.PREPARE_PAYMENT_FAIL, e);
+			throw new PaymentConfirmException(PaymentErrorCode.FAILED_PAYMENT_PREPARE, e);
 		}
 	}
 
@@ -67,11 +77,11 @@ public class TossPaymentService implements PaymentService {
 			PaymentTempData.class);
 
 		if (paymentTempData == null) {
-			throw new PaymentConfirmException(PaymentErrorCode.TEMP_DATA_NOT_FOUND);
+			throw new PaymentConfirmException(PaymentErrorCode.NOT_FOUND_TEMP_PAYMENT_DATA);
 		}
 
 		if (!paymentTempData.getAmount().equals(paymentConfirmRequest.amount())) {
-			throw new PaymentConfirmException(PaymentErrorCode.AMOUNT_MISMATCH);
+			throw new PaymentConfirmException(PaymentErrorCode.INVALID_AMOUNT);
 		}
 	}
 
