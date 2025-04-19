@@ -10,13 +10,13 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.pretallez.common.entity.Board;
-import com.pretallez.common.entity.Member;
+import com.pretallez.domain.posting.entity.Board;
+import com.pretallez.domain.member.entity.Member;
 import com.pretallez.common.fixture.BoardFixture;
 import com.pretallez.common.fixture.MemberFixture;
-import com.pretallez.domain.board.dto.BoardCreate;
-import com.pretallez.domain.board.repository.BoardRepository;
-import com.pretallez.domain.board.service.BoardServiceImpl;
+import com.pretallez.domain.posting.dto.board.BoardCreate;
+import com.pretallez.domain.posting.repository.BoardRepository;
+import com.pretallez.domain.posting.service.BoardServiceImpl;
 import com.pretallez.domain.member.repository.MemberRepository;
 import com.pretallez.domain.member.service.MemberService;
 

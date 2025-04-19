@@ -1,9 +1,9 @@
 package com.pretallez.common.fixture;
-import com.pretallez.domain.board.dto.BoardCreate;
-import com.pretallez.common.entity.Board;
-import com.pretallez.common.entity.FencingClub;
-import com.pretallez.common.entity.VotePost;
-import com.pretallez.domain.votepost.dto.VotePostCreate;
+import com.pretallez.domain.posting.dto.board.BoardCreate;
+import com.pretallez.domain.posting.entity.Board;
+import com.pretallez.domain.fencingclub.entity.FencingClub;
+import com.pretallez.domain.posting.entity.VotePost;
+import com.pretallez.domain.posting.dto.votepost.VotePostCreate;
 
 import org.springframework.test.util.ReflectionTestUtils;
 

@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.pretallez.common.entity.MemberChatroom;
+import com.pretallez.domain.chatting.entity.MemberChatroom;
 import com.pretallez.common.fixture.ChatFixture;
 import com.pretallez.common.fixture.TestFixtureFactory;
-import com.pretallez.domain.chat.dto.ChatCreate;
-import com.pretallez.domain.chat.repository.ChatRepository;
-import com.pretallez.domain.chat.service.ChatService;
+import com.pretallez.domain.chatting.dto.chat.ChatCreate;
+import com.pretallez.domain.chatting.repository.chat.ChatRepository;
+import com.pretallez.domain.chatting.service.chat.ChatService;
 
 @SpringBootTest
 @ActiveProfiles("local")

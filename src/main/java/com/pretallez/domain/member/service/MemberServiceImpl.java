@@ -5,11 +5,11 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.pretallez.common.entity.Member;
+import com.pretallez.domain.member.entity.Member;
 import com.pretallez.common.exception.EntityException;
 import com.pretallez.common.exception.RedisException;
-import com.pretallez.common.response.error.EntityErrorCode;
-import com.pretallez.common.response.error.RedisErrorCode;
+import com.pretallez.common.enums.error.EntityErrorCode;
+import com.pretallez.common.enums.error.RedisErrorCode;
 import com.pretallez.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;

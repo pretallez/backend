@@ -28,7 +28,6 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String secret;
 
-
     // JWT 토큰 생성
     public String createToken(String username, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(username);

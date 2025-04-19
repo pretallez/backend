@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.common.response.success.ResSuccessCode;
-import com.pretallez.domain.votepost.dto.VotePostCreate;
+import com.pretallez.common.enums.success.ResSuccessCode;
+import com.pretallez.domain.posting.dto.votepost.VotePostCreate;
 import com.pretallez.domain.votepost.service.VotePostService;
 
 import jakarta.validation.Valid;

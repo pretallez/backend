@@ -1,6 +1,7 @@
 package com.pretallez.domain.payment.dto;
 
-import com.pretallez.common.enums.PaymentStatus;
+import com.pretallez.domain.payment.enums.PaymentStatus;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,6 +36,7 @@ public class PaymentConfirmResponse {
 	private boolean isPartialCancelable;
 	private String secret;
 	private String country;
-	private Card card;
-	private EasyPay easyPay;
+//	private Card card;
+//	private EasyPay easyPay;
+
 }

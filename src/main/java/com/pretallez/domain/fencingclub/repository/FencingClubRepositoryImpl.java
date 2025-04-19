@@ -2,7 +2,7 @@ package com.pretallez.domain.fencingclub.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.pretallez.common.entity.FencingClub;
+import com.pretallez.domain.fencingclub.entity.FencingClub;
 
 import lombok.RequiredArgsConstructor;
 

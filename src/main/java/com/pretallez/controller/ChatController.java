@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.common.response.success.ResSuccessCode;
-import com.pretallez.domain.chat.dto.ChatCreate;
-import com.pretallez.domain.chat.dto.ChatQueryRequest;
-import com.pretallez.domain.chat.dto.ChatRead;
-import com.pretallez.domain.chat.service.ChatService;
+import com.pretallez.common.enums.success.ResSuccessCode;
+import com.pretallez.domain.chatting.dto.chat.ChatCreate;
+import com.pretallez.domain.chatting.dto.chat.ChatQueryRequest;
+import com.pretallez.domain.chatting.dto.chat.ChatRead;
+import com.pretallez.domain.chatting.service.chat.ChatService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

@@ -1,9 +1,9 @@
 package com.pretallez.common.fixture;
 
-import com.pretallez.domain.board.dto.BoardCreate;
-import com.pretallez.common.entity.Board;
-import com.pretallez.common.entity.Member;
-import com.pretallez.common.enums.BoardType;
+import com.pretallez.domain.posting.dto.board.BoardCreate;
+import com.pretallez.domain.posting.entity.Board;
+import com.pretallez.domain.member.entity.Member;
+import com.pretallez.domain.posting.enums.BoardType;
 import org.springframework.test.util.ReflectionTestUtils;
 
 public class BoardFixture {

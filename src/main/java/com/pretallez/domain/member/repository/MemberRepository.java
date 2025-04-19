@@ -1,6 +1,6 @@
 package com.pretallez.domain.member.repository;
 
-import com.pretallez.common.entity.Member;
+import com.pretallez.domain.member.entity.Member;
 
 import java.util.Optional;
 

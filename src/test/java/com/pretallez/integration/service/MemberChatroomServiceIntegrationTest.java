@@ -14,18 +14,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.pretallez.common.entity.Chatroom;
-import com.pretallez.common.entity.Member;
-import com.pretallez.common.entity.MemberChatroom;
+import com.pretallez.domain.chatting.entity.Chatroom;
+import com.pretallez.domain.member.entity.Member;
+import com.pretallez.domain.chatting.entity.MemberChatroom;
 import com.pretallez.common.exception.EntityException;
 import com.pretallez.common.fixture.MemberChatroomFixture;
 import com.pretallez.common.fixture.TestFixtureFactory;
-import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
-import com.pretallez.domain.memberchatroom.dto.MemberChatroomCreate;
-import com.pretallez.domain.memberchatroom.dto.MemberChatroomDelete;
-import com.pretallez.domain.memberchatroom.dto.MemberChatroomsRead;
-import com.pretallez.domain.memberchatroom.repository.MemberChatroomRepository;
-import com.pretallez.domain.memberchatroom.service.MemberChatroomService;
+import com.pretallez.domain.chatting.dto.memberchatroom.ChatroomMembersRead;
+import com.pretallez.domain.chatting.dto.memberchatroom.MemberChatroomCreate;
+import com.pretallez.domain.chatting.dto.memberchatroom.MemberChatroomDelete;
+import com.pretallez.domain.chatting.dto.memberchatroom.MemberChatroomsRead;
+import com.pretallez.domain.chatting.repository.memberchatroom.MemberChatroomRepository;
+import com.pretallez.domain.chatting.service.memberchatroom.MemberChatroomService;
 
 @SpringBootTest
 @ActiveProfiles("local")

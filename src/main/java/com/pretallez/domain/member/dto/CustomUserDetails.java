@@ -1,6 +1,6 @@
 package com.pretallez.domain.member.dto;
 
-import com.pretallez.common.entity.Member;
+import com.pretallez.domain.member.entity.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;

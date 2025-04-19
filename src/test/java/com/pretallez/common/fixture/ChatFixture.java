@@ -5,12 +5,12 @@ import java.util.List;
 
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.pretallez.common.entity.Chat;
-import com.pretallez.common.entity.MemberChatroom;
-import com.pretallez.common.enums.MessageType;
-import com.pretallez.domain.chat.dto.ChatCreate;
-import com.pretallez.domain.chat.dto.ChatQueryRequest;
-import com.pretallez.domain.chat.dto.ChatRead;
+import com.pretallez.domain.chatting.entity.Chat;
+import com.pretallez.domain.chatting.entity.MemberChatroom;
+import com.pretallez.domain.chatting.enums.MessageType;
+import com.pretallez.domain.chatting.dto.chat.ChatCreate;
+import com.pretallez.domain.chatting.dto.chat.ChatQueryRequest;
+import com.pretallez.domain.chatting.dto.chat.ChatRead;
 
 public class ChatFixture {
 

@@ -2,17 +2,17 @@ package com.pretallez.common.fixture;
 
 import org.springframework.stereotype.Component;
 
-import com.pretallez.common.entity.Board;
-import com.pretallez.common.entity.Chatroom;
-import com.pretallez.common.entity.FencingClub;
-import com.pretallez.common.entity.Member;
-import com.pretallez.common.entity.MemberChatroom;
-import com.pretallez.common.entity.VotePost;
-import com.pretallez.domain.board.repository.BoardRepository;
-import com.pretallez.domain.chatroom.repository.ChatroomRepository;
+import com.pretallez.domain.posting.entity.Board;
+import com.pretallez.domain.chatting.entity.Chatroom;
+import com.pretallez.domain.fencingclub.entity.FencingClub;
+import com.pretallez.domain.member.entity.Member;
+import com.pretallez.domain.chatting.entity.MemberChatroom;
+import com.pretallez.domain.posting.entity.VotePost;
+import com.pretallez.domain.posting.repository.BoardRepository;
+import com.pretallez.domain.chatting.repository.chatroom.ChatroomRepository;
 import com.pretallez.domain.fencingclub.repository.FencingClubRepository;
 import com.pretallez.domain.member.repository.MemberRepository;
-import com.pretallez.domain.memberchatroom.repository.MemberChatroomRepository;
+import com.pretallez.domain.chatting.repository.memberchatroom.MemberChatroomRepository;
 import com.pretallez.domain.votepost.repository.VotePostRepository;
 
 @Component

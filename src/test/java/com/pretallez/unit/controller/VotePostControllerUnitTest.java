@@ -5,10 +5,10 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.pretallez.common.fixture.FencingClubFixture;
 import com.pretallez.common.fixture.VotePostFixture;
 import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.common.response.success.ResSuccessCode;
+import com.pretallez.common.enums.success.ResSuccessCode;
 import com.pretallez.controller.VotePostController;
-import com.pretallez.common.entity.FencingClub;
-import com.pretallez.domain.votepost.dto.VotePostCreate;
+import com.pretallez.domain.fencingclub.entity.FencingClub;
+import com.pretallez.domain.posting.dto.votepost.VotePostCreate;
 import com.pretallez.domain.votepost.service.VotePostService;
 
 import org.junit.jupiter.api.DisplayName;

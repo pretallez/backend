@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.common.response.success.ResSuccessCode;
+import com.pretallez.common.enums.success.ResSuccessCode;
 import com.pretallez.domain.payment.dto.PaymentConfirmRequest;
 import com.pretallez.domain.payment.dto.PaymentConfirmResponse;
 import com.pretallez.domain.payment.dto.PaymentTempData;

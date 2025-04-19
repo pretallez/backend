@@ -9,13 +9,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pretallez.common.entity.Board;
-import com.pretallez.common.entity.FencingClub;
-import com.pretallez.common.entity.Member;
-import com.pretallez.common.entity.VotePost;
+import com.pretallez.domain.posting.entity.Board;
+import com.pretallez.domain.fencingclub.entity.FencingClub;
+import com.pretallez.domain.member.entity.Member;
+import com.pretallez.domain.posting.entity.VotePost;
 import com.pretallez.common.fixture.TestFixtureFactory;
 import com.pretallez.common.fixture.VotePostFixture;
-import com.pretallez.domain.votepost.dto.VotePostCreate;
+import com.pretallez.domain.posting.dto.votepost.VotePostCreate;
 import com.pretallez.domain.votepost.repository.VotePostRepository;
 import com.pretallez.domain.votepost.service.VotePostService;
 

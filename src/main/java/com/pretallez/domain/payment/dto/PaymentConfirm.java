@@ -1,6 +1,7 @@
 package com.pretallez.domain.payment.dto;
 
-import com.pretallez.common.enums.PaymentStatus;
+
+import com.pretallez.domain.payment.enums.PaymentStatus;
 
 public class PaymentConfirm {
 
