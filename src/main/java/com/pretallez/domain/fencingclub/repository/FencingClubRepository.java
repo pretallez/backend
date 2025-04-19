@@ -1,6 +1,6 @@
 package com.pretallez.domain.fencingclub.repository;
 
-import com.pretallez.common.entity.FencingClub;
+import com.pretallez.domain.fencingclub.entity.FencingClub;
 
 public interface FencingClubRepository {
 

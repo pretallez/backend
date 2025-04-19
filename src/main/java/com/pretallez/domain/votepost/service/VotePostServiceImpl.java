@@ -3,12 +3,12 @@ package com.pretallez.domain.votepost.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pretallez.common.entity.Board;
-import com.pretallez.common.entity.VotePost;
+import com.pretallez.domain.posting.entity.Board;
+import com.pretallez.domain.posting.entity.VotePost;
 import com.pretallez.common.exception.EntityException;
-import com.pretallez.common.response.error.EntityErrorCode;
-import com.pretallez.domain.board.service.BoardService;
-import com.pretallez.domain.votepost.dto.VotePostCreate;
+import com.pretallez.common.enums.error.EntityErrorCode;
+import com.pretallez.domain.posting.service.BoardService;
+import com.pretallez.domain.posting.dto.votepost.VotePostCreate;
 import com.pretallez.domain.votepost.repository.VotePostRepository;
 
 import lombok.RequiredArgsConstructor;

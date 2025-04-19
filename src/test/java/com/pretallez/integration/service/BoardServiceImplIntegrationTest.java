@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.pretallez.common.entity.Board;
-import com.pretallez.common.entity.Member;
+import com.pretallez.domain.posting.entity.Board;
+import com.pretallez.domain.member.entity.Member;
 import com.pretallez.common.fixture.BoardFixture;
 import com.pretallez.common.fixture.TestFixtureFactory;
-import com.pretallez.domain.board.dto.BoardCreate;
-import com.pretallez.domain.board.service.BoardService;
+import com.pretallez.domain.posting.dto.board.BoardCreate;
+import com.pretallez.domain.posting.service.BoardService;
 
 @SpringBootTest
 @ActiveProfiles("local")

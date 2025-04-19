@@ -1,6 +1,6 @@
 package com.pretallez.domain.member.service;
 
-import com.pretallez.common.entity.Member;
+import com.pretallez.domain.member.entity.Member;
 
 public interface MemberService {
 

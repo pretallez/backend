@@ -1,6 +1,6 @@
 package com.pretallez.domain.votepost.repository;
 
-import com.pretallez.common.entity.VotePost;
+import com.pretallez.domain.posting.entity.VotePost;
 
 import java.util.Optional;
 

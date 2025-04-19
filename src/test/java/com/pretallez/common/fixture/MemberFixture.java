@@ -1,7 +1,7 @@
 package com.pretallez.common.fixture;
 
-import com.pretallez.common.entity.Member;
-import com.pretallez.common.enums.MannerLevel;
+import com.pretallez.domain.member.entity.Member;
+import com.pretallez.domain.member.enums.MannerLevel;
 import org.springframework.test.util.ReflectionTestUtils;
 
 public class MemberFixture {

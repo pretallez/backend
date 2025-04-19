@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import com.pretallez.common.entity.VotePost;
+import com.pretallez.domain.posting.entity.VotePost;
 
 import lombok.RequiredArgsConstructor;
 

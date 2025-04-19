@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.common.response.error.ResErrorCode;
+import com.pretallez.common.enums.error.ResErrorCode;
 
 import lombok.extern.slf4j.Slf4j;
 

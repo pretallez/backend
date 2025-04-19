@@ -3,7 +3,6 @@ package com.pretallez.unit.controller;
 import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.snippet.Attributes.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -27,10 +26,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.pretallez.common.fixture.ChatFixture;
 import com.pretallez.controller.ChatController;
-import com.pretallez.domain.chat.dto.ChatCreate;
-import com.pretallez.domain.chat.dto.ChatQueryRequest;
-import com.pretallez.domain.chat.dto.ChatRead;
-import com.pretallez.domain.chat.service.ChatService;
+import com.pretallez.domain.chatting.dto.chat.ChatCreate;
+import com.pretallez.domain.chatting.dto.chat.ChatQueryRequest;
+import com.pretallez.domain.chatting.dto.chat.ChatRead;
+import com.pretallez.domain.chatting.service.chat.ChatService;
 
 @WebMvcTest(ChatController.class)
 @ExtendWith(RestDocumentationExtension.class)

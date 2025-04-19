@@ -11,11 +11,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.pretallez.common.fixture.ChatFixture;
-import com.pretallez.domain.chat.dto.ChatCreate;
-import com.pretallez.domain.chat.service.ChatProducer;
-import com.pretallez.domain.chat.service.ChatServiceImpl;
+import com.pretallez.domain.chatting.dto.chat.ChatCreate;
+import com.pretallez.domain.chatting.service.chat.ChatProducer;
+import com.pretallez.domain.chatting.service.chat.ChatServiceImpl;
 import com.pretallez.domain.member.service.MemberService;
-import com.pretallez.domain.memberchatroom.service.MemberChatroomService;
+import com.pretallez.domain.chatting.service.memberchatroom.MemberChatroomService;
 
 @DisplayName("채팅 서비스 단위 테스트")
 class ChatServiceImplUnitTest {

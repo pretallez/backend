@@ -1,9 +1,9 @@
 package com.pretallez.controller;
 
 import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.common.response.success.ResSuccessCode;
-import com.pretallez.domain.chatroom.dto.ChatroomCreate;
-import com.pretallez.domain.chatroom.service.ChatroomService;
+import com.pretallez.common.enums.success.ResSuccessCode;
+import com.pretallez.domain.chatting.dto.chatroom.ChatroomCreate;
+import com.pretallez.domain.chatting.service.chatroom.ChatroomService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

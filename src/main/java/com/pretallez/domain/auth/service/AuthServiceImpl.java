@@ -1,8 +1,8 @@
 package com.pretallez.domain.auth.service;
 
-import com.pretallez.common.entity.Member;
-import com.pretallez.common.entity.Role;
-import com.pretallez.common.enums.MemberRole;
+import com.pretallez.domain.member.entity.Member;
+import com.pretallez.domain.auth.entity.Role;
+import com.pretallez.domain.auth.enums.MemberRole;
 import com.pretallez.common.util.JwtCookieUtil;
 import com.pretallez.common.util.JwtTokenProvider;
 import com.pretallez.domain.auth.dto.KakaoOauthLogin;

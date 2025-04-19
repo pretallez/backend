@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pretallez.common.config.properties.PaymentProperties;
-import com.pretallez.common.exception.PaymentConfirmException;
+import com.pretallez.domain.payment.config.PaymentProperties;
+import com.pretallez.domain.payment.exception.PaymentConfirmException;
 import com.pretallez.common.response.ResCode;
-import com.pretallez.common.response.error.PaymentErrorCode;
+import com.pretallez.domain.payment.enums.PaymentErrorCode;
 import com.pretallez.common.util.EnumUtils;
 import com.pretallez.domain.payment.dto.PaymentConfirmRequest;
 import com.pretallez.domain.payment.dto.PaymentConfirmResponse;

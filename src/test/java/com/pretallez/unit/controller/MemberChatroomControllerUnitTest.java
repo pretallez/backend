@@ -21,13 +21,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pretallez.common.fixture.MemberChatroomFixture;
-import com.pretallez.common.response.success.ResSuccessCode;
+import com.pretallez.common.enums.success.ResSuccessCode;
 import com.pretallez.controller.MemberChatroomController;
-import com.pretallez.domain.memberchatroom.dto.ChatroomMembersRead;
-import com.pretallez.domain.memberchatroom.dto.MemberChatroomCreate;
-import com.pretallez.domain.memberchatroom.dto.MemberChatroomDelete;
-import com.pretallez.domain.memberchatroom.dto.MemberChatroomsRead;
-import com.pretallez.domain.memberchatroom.service.MemberChatroomService;
+import com.pretallez.domain.chatting.dto.memberchatroom.ChatroomMembersRead;
+import com.pretallez.domain.chatting.dto.memberchatroom.MemberChatroomCreate;
+import com.pretallez.domain.chatting.dto.memberchatroom.MemberChatroomDelete;
+import com.pretallez.domain.chatting.dto.memberchatroom.MemberChatroomsRead;
+import com.pretallez.domain.chatting.service.memberchatroom.MemberChatroomService;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("회원 채팅방 컨트롤러 단위 테스트")

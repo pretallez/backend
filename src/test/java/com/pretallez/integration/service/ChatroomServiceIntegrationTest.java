@@ -11,11 +11,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.pretallez.common.entity.VotePost;
+import com.pretallez.domain.posting.entity.VotePost;
 import com.pretallez.common.fixture.ChatroomFixture;
 import com.pretallez.common.fixture.TestFixtureFactory;
-import com.pretallez.domain.chatroom.dto.ChatroomCreate;
-import com.pretallez.domain.chatroom.service.ChatroomServiceImpl;
+import com.pretallez.domain.chatting.dto.chatroom.ChatroomCreate;
+import com.pretallez.domain.chatting.service.chatroom.ChatroomServiceImpl;
 
 @SpringBootTest
 @ActiveProfiles("local")
