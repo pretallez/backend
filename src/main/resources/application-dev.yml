@@ -18,3 +18,19 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+  rabbitmq:
+    chat:
+      queue: chat-queue
+
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USER}
+    password: ${RABBITMQ_PASSWORD}
+
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+
+jwt:
+  secret: s
