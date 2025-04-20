@@ -69,18 +69,25 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public KakaoOauthToken.Response getAccessToken(KakaoOauthLogin.Request kakaoOauthLoginRequest) {
+    public KakaoOauthToken.Response getAccessToken(String code) {
         RestClient restClient = RestClient.builder()
                 .baseUrl("https://kauth.kakao.com")
                 .build();
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
-        body.add("client_id", "YOUR_CLIENT_ID");
-        body.add("redirect_uri", "YOUR_REDIRECT_URI");
-        body.add("code", kakaoOauthLoginRequest.getCode());
+        body.add("client_id", "c44a0c82645a80913ae47dff90012632");
+        body.add("redirect_uri", "http://localhost:8080/v1/api/auth/callback");
+        body.add("code", code);
         // body.add("client_secret", "YOUR_CLIENT_SECRET"); // 보안 설정 ON 시 필요
 
+        /*
+        * {"access_token":"_FP_GxZMZmWOm7bQc9LrlLpPKeXT3jZyAAAAAQoNFZsAAAGWUqEhUFv0-avl6D9k",
+        * "token_type":"bearer",
+        * "refresh_token":"-NHAbBWfB7LcR7sNnCrhf1CskoSfXXS5AAAAAgoNFZsAAAGWUqEhR1v0-avl6D9k",
+        * "expires_in":21599,
+        * "refresh_token_expires_in":5183999}
+        * */
         KakaoOauthToken.Response response1 = restClient.post()
                 .uri("/oauth/token")
                 .header("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
@@ -88,11 +95,9 @@ public class AuthServiceImpl implements AuthService {
                 .retrieve()
                 .body(KakaoOauthToken.Response.class);
 
-
-
         KakaoOauthToken.Response response = restClient.post()
                 .uri("/v2/user/me")
-                .header("Authorization: Bearer "+ response1.getAccessToken())
+                .header("Authorization: Bearer "+ response1)
                 .header("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
                 .body(body)
                 .retrieve()

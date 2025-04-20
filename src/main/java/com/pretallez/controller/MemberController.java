@@ -7,10 +7,7 @@ import com.pretallez.domain.auth.service.AuthService;
 import com.pretallez.domain.member.dto.MemberCreate;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/v1/api")
 @RequiredArgsConstructor
@@ -19,9 +16,9 @@ public class MemberController {
 
     private final AuthService authService;
 
-    @PostMapping("/auth/callback")
-    public CustomApiResponse<MemberCreate.Response> oauthCallback(@RequestParam KakaoOauthLogin.Request kakaoOauthLoginRequest) {
-        authService.getAccessToken(kakaoOauthLoginRequest);
+    @GetMapping("/auth/callback")
+    public CustomApiResponse<MemberCreate.Response> oauthCallback(@RequestParam("code") String code) {
+        authService.getAccessToken(code);
         return null;
     }
 
