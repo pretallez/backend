@@ -2,6 +2,7 @@ package com.pretallez.domain.payment.dto;
 
 import com.pretallez.domain.payment.enums.PaymentStatus;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,4 +38,5 @@ public class PaymentConfirmResponse {
 	private String country;
 //	private Card card;
 //	private EasyPay easyPay;
+
 }
