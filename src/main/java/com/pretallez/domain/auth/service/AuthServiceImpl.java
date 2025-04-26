@@ -9,8 +9,10 @@ import com.pretallez.domain.auth.dto.KakaoOauthLogin;
 import com.pretallez.domain.auth.dto.KakaoOauthToken;
 import com.pretallez.domain.member.repository.MemberRepository;
 import com.pretallez.domain.member.service.MemberService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -21,11 +23,13 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
+import static java.rmi.server.LogStream.log;
+
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    private final RestClient restClient = RestClient.create();
 
     private final RedisTemplate<String, Object> redisTemplate;
     private final JwtTokenProvider jwtTokenProvider;
@@ -69,15 +73,14 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public KakaoOauthToken.Response getAccessToken(String code) {
+    public String getAccessToken(String code) {
         RestClient restClient = RestClient.builder()
-                .baseUrl("https://kauth.kakao.com")
                 .build();
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "c44a0c82645a80913ae47dff90012632");
-        body.add("redirect_uri", "http://localhost:8080/v1/api/auth/callback");
+        body.add("redirect_uri", "http://192.168.0.9:5173/auth");
         body.add("code", code);
         // body.add("client_secret", "YOUR_CLIENT_SECRET"); // 보안 설정 ON 시 필요
 
@@ -89,21 +92,23 @@ public class AuthServiceImpl implements AuthService {
         * "refresh_token_expires_in":5183999}
         * */
         KakaoOauthToken.Response response1 = restClient.post()
-                .uri("/oauth/token")
+                .uri("https://kauth.kakao.com/oauth/token")
                 .header("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
                 .body(body)
                 .retrieve()
                 .body(KakaoOauthToken.Response.class);
 
-        KakaoOauthToken.Response response = restClient.post()
-                .uri("/v2/user/me")
-                .header("Authorization: Bearer "+ response1)
-                .header("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
-                .body(body)
-                .retrieve()
-                .body(KakaoOauthToken.Response.class);
+        System.out.println("Authorization: Bearer "+ response1.getAccessToken());
+        log.info(response1.getAccessToken());
 
-        return response;
+        String response = restClient.post()
+                .uri("https://kapi.kakao.com/v2/user/me")
+                .header("Authorization","Bearer " + response1.getAccessToken())
+                .header("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
+                .retrieve()
+                .body(String.class);
+
+        return response1.getAccessToken();
 
     }
 }

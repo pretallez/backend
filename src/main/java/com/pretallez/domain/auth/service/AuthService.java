@@ -16,5 +16,5 @@ public interface AuthService {
 
     void deleteAccessToken(String email);
 
-    KakaoOauthToken.Response getAccessToken(String code);
+    String getAccessToken(String code);
 }

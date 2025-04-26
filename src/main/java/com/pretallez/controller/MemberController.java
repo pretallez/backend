@@ -1,7 +1,9 @@
 package com.pretallez.controller;
 
+import com.pretallez.common.enums.success.ResSuccessCode;
 import com.pretallez.common.response.CustomApiResponse;
 
+import com.pretallez.common.util.JwtCookieUtil;
 import com.pretallez.domain.auth.dto.KakaoOauthLogin;
 import com.pretallez.domain.auth.service.AuthService;
 import com.pretallez.domain.member.dto.MemberCreate;
@@ -15,11 +17,14 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final AuthService authService;
+    private final JwtCookieUtil jwtCookieUtil;
 
     @GetMapping("/auth/callback")
-    public CustomApiResponse<MemberCreate.Response> oauthCallback(@RequestParam("code") String code) {
-        authService.getAccessToken(code);
-        return null;
+    public CustomApiResponse<String> oauthCallback(HttpServletResponse response, @RequestParam("code") String code) {
+        String foo = authService.getAccessToken(code);
+        System.out.println(foo);
+        jwtCookieUtil.addJwtCookie(response,foo);
+        return CustomApiResponse.OK(ResSuccessCode.SUCCESS,foo);
     }
 
     @PostMapping("/login")

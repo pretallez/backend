@@ -19,10 +19,11 @@ public class JwtCookieUtil {
      */
     public void addJwtCookie(HttpServletResponse response, String token) {
         Cookie cookie = new Cookie(COOKIE_NAME, token);
-        cookie.setHttpOnly(true); // JS 접근 차단
-//        cookie.setSecure(true);   // HTTPS에서만 전송
-        cookie.setPath("/");
+        cookie.setHttpOnly(true);         // JS 접근 차단
+//        cookie.setSecure(true);            // HTTPS에서만 전송 (운영에서는 꼭)
+        cookie.setPath("/");               // 경로는 /로 설정
         cookie.setMaxAge((int) EXPIRY.getSeconds());
+        cookie.setDomain("192.168.0.9");   // IP를 도메인으로 명시 (optional, 필요 시)
 
         response.addCookie(cookie);
     }
