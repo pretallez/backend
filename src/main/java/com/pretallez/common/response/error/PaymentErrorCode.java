@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum PaymentErrorCode implements ResCode {
+	MISSING_PAYMENT_KEY(HttpStatus.BAD_REQUEST, 10000, "결제 금액 정보가 일치하지 않습니다."),
+	PAYMENT_PROCESSING(HttpStatus.BAD_REQUEST, 10000, "결제 금액 정보가 일치하지 않습니다."),
 	INVALID_AMOUNT(HttpStatus.BAD_REQUEST, 10000, "결제 금액 정보가 일치하지 않습니다."),
 	NOT_FOUND_TEMP_PAYMENT_DATA(HttpStatus.BAD_REQUEST, 10000, "결제 임시 데이터가 존재하지 않습니다."),
 	FAILED_PAYMENT_PREPARE(HttpStatus.BAD_REQUEST, 10000, "결제 준비에 실패했습니다. 잠시 후 다시 시도해주세요."),
