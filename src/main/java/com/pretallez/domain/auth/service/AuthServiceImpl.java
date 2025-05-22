@@ -24,8 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    private static final String accessTokenKey = "accessToken:";
-    private static final String refreshTokenKey = "refreshToken:";
+    private static final String REFRESH_TOKEN_KEY = "refreshToken:";
     private final RedisTemplate<String, Object> redisTemplate;
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
@@ -38,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
 //        memberService.getMemberByEmail(email);
         var roles = List.of("ROLE_USER");
         String jwtToken = jwtTokenProvider.createToken(email, roles);
-        redisTemplate.opsForValue().set(refreshTokenKey + email, jwtToken, Duration.ofDays(7));
+        redisTemplate.opsForValue().set(REFRESH_TOKEN_KEY + email, jwtToken, Duration.ofDays(7));
         return jwtToken;
     }
 
@@ -58,12 +57,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void deleteRefreshToken(String email) {
-
+        redisTemplate.delete(REFRESH_TOKEN_KEY + email);
     }
 
     @Override
-    public void deleteAccessToken(String email) {
-
+    public void deleteAccessToken(HttpServletResponse response,String email) {
+        jwtCookieUtil.deleteJwtCookie(response);
     }
 
     @Override

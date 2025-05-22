@@ -2,13 +2,13 @@ package com.pretallez.controller;
 
 import com.pretallez.common.enums.success.ResSuccessCode;
 import com.pretallez.common.response.CustomApiResponse;
-
 import com.pretallez.common.util.JwtCookieUtil;
-import com.pretallez.domain.auth.dto.KakaoOauthLogin;
 import com.pretallez.domain.auth.service.AuthService;
 import com.pretallez.domain.member.dto.MemberCreate;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/v1/api")
@@ -28,19 +28,18 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public void login(HttpServletResponse response, MemberCreate memberCreate) {
+    public CustomApiResponse<Void> login(HttpServletResponse response, MemberCreate memberCreate) {
         String email = "chzhqk98@naver.com";
-        String refreshToken = authService.addRefreshToken(email);
         authService.addAccessToken(response, email);
-
-        //todo : refresh, access token 생성하는 로직
-        //todo : access token
+        authService.addRefreshToken(email);
+        return CustomApiResponse.OK(ResSuccessCode.SUCCESS);
     }
 
     @PostMapping("/logout")
-    public void logout() {
-
-        //todo : refresh token 지우는 로직
+    public CustomApiResponse<Void> logout(@AuthenticationPrincipal UserDetails userDetails, HttpServletResponse response) {
+        authService.deleteRefreshToken(userDetails.getUsername());
+        authService.deleteAccessToken(response, userDetails.getUsername());
+        return CustomApiResponse.OK(ResSuccessCode.SUCCESS);
     }
 
 
