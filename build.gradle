@@ -65,9 +65,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 	//rabbitmq
-	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+//	implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
-	implementation 'io.projectreactor.netty:reactor-netty:1.1.11'
+//	implementation 'io.projectreactor.netty:reactor-netty:1.1.11'
 
 	// JWT (JJWT - io.jsonwebtoken)
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
