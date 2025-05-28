@@ -1,4 +1,4 @@
-package com.pretallez.common.config;
+package com.pretallez.infrastructure.websocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-	private final RabbitMqProperties rabbitMqProperties;
-
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		registry
@@ -24,14 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		registry.enableStompBrokerRelay(rabbitMqProperties.getDestinationPrefix())
-			.setRelayHost(rabbitMqProperties.getHost())
-			.setRelayPort(rabbitMqProperties.getStompPort())
-			.setClientLogin(rabbitMqProperties.getUsername())
-			.setClientPasscode(rabbitMqProperties.getUsername())
-			.setSystemLogin(rabbitMqProperties.getUsername())
-			.setSystemPasscode(rabbitMqProperties.getPassword());
-
-		registry.setApplicationDestinationPrefixes(rabbitMqProperties.getAppDestinationPrefix());
+		registry.enableSimpleBroker("/sub");
+		registry.setApplicationDestinationPrefixes("/pub");
 	}
 }
