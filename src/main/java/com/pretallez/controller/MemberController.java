@@ -20,11 +20,10 @@ public class MemberController {
     private final JwtCookieUtil jwtCookieUtil;
 
     @GetMapping("/auth/callback")
-    public CustomApiResponse<String> oauthCallback(HttpServletResponse response, @RequestParam("code") String code) {
-        String foo = authService.getAccessToken(code);
-        System.out.println(foo);
-        jwtCookieUtil.addJwtCookie(response,foo);
-        return CustomApiResponse.OK(ResSuccessCode.SUCCESS,foo);
+    public CustomApiResponse<Void> oauthCallback(HttpServletResponse response, @RequestParam("code") String code) {
+        String accessToken = authService.getAccessToken(code);
+        jwtCookieUtil.addJwtCookie(response,accessToken);
+        return CustomApiResponse.OK(ResSuccessCode.SUCCESS);
     }
 
     @PostMapping("/login")
