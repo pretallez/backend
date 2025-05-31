@@ -1,15 +1,11 @@
-package com.pretallez.unit.controller;
+package com.pretallez.unit.votepost.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.pretallez.common.fixture.FencingClubFixture;
-import com.pretallez.common.fixture.VotePostFixture;
-import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.common.enums.success.ResSuccessCode;
-import com.pretallez.controller.VotePostController;
-import com.pretallez.domain.fencingclub.entity.FencingClub;
-import com.pretallez.domain.posting.dto.votepost.VotePostCreate;
-import com.pretallez.domain.votepost.service.VotePostService;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.*;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,21 +13,39 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.pretallez.common.enums.success.ResSuccessCode;
+import com.pretallez.common.fixture.FencingClubFixture;
+import com.pretallez.common.fixture.VotePostFixture;
+import com.pretallez.common.response.CustomApiResponse;
+import com.pretallez.controller.VotePostController;
+import com.pretallez.domain.auth.filter.JwtAuthenticationFilter;
+import com.pretallez.domain.fencingclub.entity.FencingClub;
+import com.pretallez.domain.payment.config.PaymentInterceptorConfig;
+import com.pretallez.domain.payment.interceptor.IdempotencyInterceptor;
+import com.pretallez.domain.posting.dto.votepost.VotePostCreate;
+import com.pretallez.domain.votepost.service.VotePostService;
 
-@WebMvcTest(VotePostController.class)
+@WebMvcTest(
+    controllers = VotePostController.class,
+    excludeAutoConfiguration = {
+        org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class
+    },
+    excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {
+            JwtAuthenticationFilter.class, IdempotencyInterceptor.class, PaymentInterceptorConfig.class
+        })
+    }
+)
 @ExtendWith(RestDocumentationExtension.class)
 @AutoConfigureRestDocs(uriScheme = "https", uriHost = "docs.api.com")
 @DisplayName("대관 게시글 컨트롤러 단위 테스트")
