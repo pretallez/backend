@@ -5,6 +5,7 @@
 version: '3.8'
 
 services:
+
   mariadb:
     image: mariadb:latest
     container_name: mariadb
@@ -27,21 +28,6 @@ services:
       - redis_data:/data
     command: ["redis-server", "--appendonly", "no"]
 
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
-    restart: always
-    environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: admin
-    ports:
-      - "5672:5672"
-      - "61613:61613"
-      - "15672:15672"
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-
 volumes:
   mariadb_data:
   redis_data:
-  rabbitmq_data:
