@@ -31,12 +31,12 @@ public class ChatMessageService implements ChatMessageUseCase {
 
 	@Transactional
 	@Override
-	public void sendMessage(ChatMessageRequest chatMessageDTO) {
-		Long senderId = chatMessageDTO.senderId();
-		Long chatRoomId = chatMessageDTO.chatRoomId();
+	public void sendMessage(ChatMessageRequest request) {
+		Long senderId = request.senderId();
+		Long chatRoomId = request.chatRoomId();
 
 		participantPolicy.assertParticipating(senderId, chatRoomId);
-		ChatMessage message = chatMessageRepository.save(toEntity(chatMessageDTO));
+		ChatMessage message = chatMessageRepository.save(toEntity(request));
 
 		String nickname = nicknameProvider
 			.getNicknames(Set.of(message.getSenderId()))
@@ -69,23 +69,23 @@ public class ChatMessageService implements ChatMessageUseCase {
 			.collect(toList());
 	}
 
-	private ChatMessageResponse toResponse(ChatMessage msg, Map<Long, String> nicknameMap) {
+	private ChatMessageResponse toResponse(ChatMessage message, Map<Long, String> nicknameMap) {
 		return new ChatMessageResponse(
-			msg.getId(),
-			msg.getChatRoomId(),
-			msg.getSenderId(),
-			nicknameMap.get(msg.getSenderId()),
-			msg.getContent(),
-			msg.getCreatedAt()
+			message.getId(),
+			message.getChatRoomId(),
+			message.getSenderId(),
+			nicknameMap.get(message.getSenderId()),
+			message.getContent(),
+			message.getCreatedAt()
 		);
 	}
 
-	private ChatMessage toEntity(ChatMessageRequest dto) {
+	private ChatMessage toEntity(ChatMessageRequest request) {
 		return ChatMessage.createMessage(
-			dto.senderId(),
-			dto.chatRoomId(),
-			dto.content(),
-			dto.messageType()
+			request.senderId(),
+			request.chatRoomId(),
+			request.content(),
+			request.messageType()
 		);
 	}
 }

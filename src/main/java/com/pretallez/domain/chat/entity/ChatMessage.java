@@ -2,6 +2,8 @@ package com.pretallez.domain.chat.entity;
 
 import java.time.LocalDateTime;
 
+import com.pretallez.domain.chat.exception.ChatErrorCode;
+import com.pretallez.domain.chat.exception.ChatException;
 import com.pretallez.domain.chat.vo.MessageType;
 
 import jakarta.persistence.Entity;
@@ -43,7 +45,7 @@ public class ChatMessage {
 
 	public static ChatMessage createMessage(Long senderId, Long chatRoomId, String content, MessageType messageType) {
 		if (content.length() > 500) {
-			throw new IllegalArgumentException("메시지는 500자 이하로 제한됩니다.");
+			throw new ChatException(ChatErrorCode.MESSAGE_LENGTH_EXCEEDED);
 		}
 		return new ChatMessage(senderId, chatRoomId, content, messageType);
 	}

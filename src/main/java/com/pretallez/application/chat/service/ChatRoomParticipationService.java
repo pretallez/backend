@@ -39,8 +39,8 @@ public class ChatRoomParticipationService implements ChatRoomParticipationUseCas
 	public void join(Long memberId, Long chatRoomId) {
 		participationPolicy.assertNotParticipating(memberId, chatRoomId);
 
-		Member member = findMember(memberId);
-		ChatRoom chatRoom = findChatRoom(chatRoomId);
+		Member member = getMember(memberId);
+		ChatRoom chatRoom = getChatRoom(chatRoomId);
 
 		Participation participant = Participation.join(member, chatRoom);
 		participationRepository.save(participant);
@@ -51,7 +51,7 @@ public class ChatRoomParticipationService implements ChatRoomParticipationUseCas
 	@Override
 	@Transactional
 	public void leave(Long memberId, Long chatRoomId) {
-		participationRepository.delete(findParticipation(memberId, chatRoomId));
+		participationRepository.delete(getParticipation(memberId, chatRoomId));
 	}
 
 	@Override
@@ -64,17 +64,17 @@ public class ChatRoomParticipationService implements ChatRoomParticipationUseCas
 		return participationRepository.findByMemberId(memberId);
 	}
 
-	private ChatRoom findChatRoom(Long chatRoomId) {
+	private ChatRoom getChatRoom(Long chatRoomId) {
 		return chatRoomRepository.findById(chatRoomId)
 			.orElseThrow(() -> new ChatException(ChatErrorCode.CHATROOM_NOT_FOUND, chatRoomId));
 	}
 
-	private Participation findParticipation(Long memberId, Long chatRoomId) {
+	private Participation getParticipation(Long memberId, Long chatRoomId) {
 		return participationRepository.findByMemberIdAndChatRoomId(memberId, chatRoomId)
 			.orElseThrow(() -> new ChatException(ChatErrorCode.NOT_PARTICIPATING, memberId, chatRoomId));
 	}
 
-	private Member findMember(Long memberId) {
+	private Member getMember(Long memberId) {
 		return memberRepository.findById(memberId)
 			.orElseThrow(() -> new ChatException(ChatErrorCode.MEMBER_NOT_FOUND, memberId));
 	}

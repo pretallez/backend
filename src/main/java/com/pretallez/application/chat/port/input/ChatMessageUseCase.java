@@ -7,7 +7,7 @@ import com.pretallez.application.chat.dto.ChatMessageRequest;
 
 public interface ChatMessageUseCase {
 	// Command
-	void sendMessage(ChatMessageRequest chatMessageDTO);
+	void sendMessage(ChatMessageRequest request);
 
 	// Query
 	List<ChatMessageResponse> getRecentMessages(Long chatRoomId, Long lastMessageId, int size);

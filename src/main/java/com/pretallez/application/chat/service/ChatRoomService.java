@@ -21,7 +21,7 @@ public class ChatRoomService implements ChatRoomUseCase {
 
 	@Override
 	public void openChatRoomForVotePost(Long votePostId) {
-		VotePost foundVotePost = findVotePost(votePostId);
+		VotePost foundVotePost = getVotePost(votePostId);
 		ChatRoom chatRoom = ChatRoom.createFromVotePost(foundVotePost);
 
 		chatRoomRepository.save(chatRoom);
@@ -29,17 +29,17 @@ public class ChatRoomService implements ChatRoomUseCase {
 
 	@Override
 	public void closeChatRoom(Long chatRoomId) {
-		ChatRoom foundChatRoom = findChatRoom(chatRoomId);
+		ChatRoom foundChatRoom = getChatRoom(chatRoomId);
 
 		chatRoomRepository.delete(foundChatRoom);
 	}
 
-	private ChatRoom findChatRoom(Long chatRoomId) {
+	private ChatRoom getChatRoom(Long chatRoomId) {
 		return chatRoomRepository.findById(chatRoomId)
 			.orElseThrow(() -> new ChatException(ChatErrorCode.CHATROOM_NOT_FOUND, chatRoomId));
 	}
 
-	private VotePost findVotePost(Long votePostId) {
+	private VotePost getVotePost(Long votePostId) {
 		return votePostRepository.findById(votePostId)
 			.orElseThrow(() -> new ChatException(ChatErrorCode.VOTEPOST_NOT_FOUND, votePostId));
 	}
