@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pretallez.common.enums.success.ResSuccessCode;
-import com.pretallez.common.response.CustomApiResponse;
 import com.pretallez.application.chat.dto.ChatMessageRequest;
 import com.pretallez.application.chat.dto.ChatMessageResponse;
 import com.pretallez.application.chat.port.input.ChatMessageUseCase;
+import com.pretallez.common.enums.success.ResSuccessCode;
+import com.pretallez.common.response.CustomApiResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,13 +26,6 @@ import lombok.RequiredArgsConstructor;
 public class ChatRestController {
 
 	private final ChatMessageUseCase messageUseCase;
-
-	@MessageMapping("/v1/api/chats")
-	@PostMapping
-	public CustomApiResponse<Void> sendMessage(@RequestBody ChatMessageRequest chatMessageDTO) {
-		messageUseCase.sendMessage(chatMessageDTO);
-		return CustomApiResponse.OK(ResSuccessCode.CREATED);
-	}
 
 	@GetMapping
 	public CustomApiResponse<List<ChatMessageResponse>> getRecentMessages(
@@ -47,5 +40,12 @@ public class ChatRestController {
 		);
 
 		return CustomApiResponse.OK(ResSuccessCode.READ, recentMessages);
+	}
+
+	// 테스트를 위한 API
+	@PostMapping
+	public CustomApiResponse<Void> sendMessage(@RequestBody ChatMessageRequest chatMessageDTO) {
+		messageUseCase.sendMessage(chatMessageDTO);
+		return CustomApiResponse.OK(ResSuccessCode.CREATED);
 	}
 }
