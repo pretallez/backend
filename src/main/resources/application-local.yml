@@ -1,31 +1,38 @@
 server:
-  port: 3000
+  port: ${SERVER_PORT}
+
+payment:
+  secret-key: ${SECRET_KEY}
+  base-url: ${BASE_URL}
+  confirm-endpoint: ${CONFIRM_ENDPOINT}
+  connect-timeout: 1000
+  read-timeout: 30000
 
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MYSQL
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  logging:
-    level:
-      org.hibernate.SQL: DEBUG
-      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    driver-class-name: ${DRIVER_CLASS_NAME}
+    url: ${URL}
+    username: ${USERNAME}
+    password: ${PASSWORD}
+
+  redis:
+    host: ${HOST}
+    port: ${PORT}
+    commandTimeout: 60000
+    shutdownTimeout: 2000
+
+  # data.sql 실행을 위한 설정
+  sql:
+    init:
+      mode: always
   jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: false
-    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    database-platform: ${DATABASE_PLATFORM}
     hibernate:
       ddl-auto: create-drop
-      naming:
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: true
 
-
-
+jwt:
+  secret: ${JWT_SECRET_KEY}
