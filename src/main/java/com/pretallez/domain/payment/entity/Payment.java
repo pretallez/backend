@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.pretallez.domain.member.entity.Member;
 import com.pretallez.domain.payment.enums.PaymentStatus;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -30,8 +31,10 @@ public class Payment {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    @Column(unique = true)
     private String paymentKey;
 
+    @Column(unique = true)
     private String orderId;
 
     private String method;

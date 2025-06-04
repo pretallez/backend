@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PaymentController {
 	private final PaymentUseCase paymentUseCase;
 
-	@PostMapping("/initiate")
+	@PostMapping("/prepare")
 	public CustomApiResponse<Void> preparePayment(@RequestBody PrepareRequest request) {
 		paymentUseCase.preparePayment(request);
 		return CustomApiResponse.OK(ResSuccessCode.SUCCESS);

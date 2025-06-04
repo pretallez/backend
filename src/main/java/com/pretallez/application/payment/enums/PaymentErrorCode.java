@@ -16,6 +16,7 @@ public enum PaymentErrorCode implements ResCode {
 	PREPARE_DATA_NOT_FOUND(HttpStatus.NOT_FOUND, 10000, "결제 요청 데이터가 존재하지 않습니다."),
 	PREPARE_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, 10000, "결제 준비에 실패했습니다. 잠시 후 다시 시도해주세요."),
 	APPROVAL_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, 10000, "결제 승인에 실패했습니다. 잠시 후 다시 시도해주세요."),
+	DUPLICATE_ORDER_ID(HttpStatus.CONFLICT, 10000, "해당 주문 번호에 대한 결제 승인이 이미 처리되었습니다."),
 
 	CONFIRM_MISMATCH_INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 10000, "결제 과정에서 서버 에러가 발생했습니다. 관리자에게 문의해주세요.");
 

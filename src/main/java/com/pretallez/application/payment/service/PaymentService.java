@@ -3,6 +3,7 @@ package com.pretallez.application.payment.service;
 import static com.pretallez.application.payment.enums.PaymentErrorCode.*;
 import static com.pretallez.common.enums.error.EntityErrorCode.*;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,8 +11,9 @@ import com.pretallez.application.payment.dto.request.ApproveRequest;
 import com.pretallez.application.payment.dto.request.PrepareRequest;
 import com.pretallez.application.payment.exception.PaymentException;
 import com.pretallez.application.payment.port.input.PaymentUseCase;
-import com.pretallez.application.payment.port.output.PaymentCacheStore;
+import com.pretallez.application.payment.port.output.PaymentPrepareStore;
 import com.pretallez.application.payment.port.output.PaymentClient;
+import com.pretallez.application.payment.port.output.PaymentIdempotencyStore;
 import com.pretallez.domain.common.event.DomainEventPublisher;
 import com.pretallez.domain.member.entity.Member;
 import com.pretallez.domain.member.repository.MemberRepository;
@@ -30,7 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class PaymentService implements PaymentUseCase {
 	private final PaymentClient paymentClient;
-	private final PaymentCacheStore cacheStore;
+	private final PaymentPrepareStore cacheStore;
+	private final PaymentIdempotencyStore idempotencyStore;
 
 	private final PaymentRepository paymentRepository;
 	private final MemberRepository memberRepository;
@@ -39,14 +42,29 @@ public class PaymentService implements PaymentUseCase {
 
 	@Override
 	public void preparePayment(PrepareRequest request) {
-		cacheStore.save(request);
+		cacheStore.savePrepareRequest(request);
 	}
 
 	@Override
-	@Transactional
 	public ApproveSuccessResponse approvePayment(ApproveRequest request) {
+		ApproveSuccessResponse existingResponse = idempotencyStore.findApprovedResponse(request.orderId());
+		if (existingResponse != null) {
+			return existingResponse;
+		}
+
 		validateAmount(request);
 
+		ApproveSuccessResponse response = executePaymentAndSave(request);
+
+		PaymentCompletedEvent paymentCompletedEvent = new PaymentCompletedEvent(request.memberId(), request.amount());
+		eventPublisher.publish(paymentCompletedEvent);
+
+		idempotencyStore.saveApprovedResponse(request.orderId(), response);
+		return response;
+	}
+
+	@Transactional
+	private ApproveSuccessResponse executePaymentAndSave(ApproveRequest request) {
 		ApproveSuccessResponse response = paymentClient.approvePayment(request);
 
 		Member foundMember = getMember(request.memberId());
@@ -61,16 +79,16 @@ public class PaymentService implements PaymentUseCase {
 			response.receipt().url()
 		);
 
-		paymentRepository.save(payment);
-
-		PaymentCompletedEvent paymentCompletedEvent = new PaymentCompletedEvent(foundMember.getId(), request.amount());
-		eventPublisher.publish(paymentCompletedEvent);
-
-		return response;
+		try {
+			paymentRepository.save(payment);
+			return response;
+		} catch (DataIntegrityViolationException e) {
+			throw new PaymentException(DUPLICATE_ORDER_ID);
+		}
 	}
 
 	private void validateAmount(ApproveRequest request) {
-		CachedPrepareResponse cachedResponse = cacheStore.findByOrderId(request.orderId());
+		CachedPrepareResponse cachedResponse = cacheStore.findPreparedRequest(request.orderId());
 
 		if (cachedResponse == null || cachedResponse.amount() == null) {
 			throw new PaymentException(PREPARE_DATA_NOT_FOUND);
