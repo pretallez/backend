@@ -1,4 +1,4 @@
-package com.pretallez.domain.payment.config;
+package com.pretallez.infrastructure.payment.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
