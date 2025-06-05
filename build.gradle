@@ -42,6 +42,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	testImplementation 'org.springframework.security:spring-security-test'
 
+	//logback
+	implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
+
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -63,11 +66,6 @@ dependencies {
 
 	//redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
-	//rabbitmq
-	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-
-	implementation 'io.projectreactor.netty:reactor-netty:1.1.11'
 
 	// JWT (JJWT - io.jsonwebtoken)
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'

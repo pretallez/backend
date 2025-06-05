@@ -1,51 +1,38 @@
 server:
-  port: 3000
+  port: ${SERVER_PORT}
+
+payment:
+  secret-key: ${SECRET_KEY}
+  base-url: ${BASE_URL}
+  confirm-endpoint: ${CONFIRM_ENDPOINT}
+  connect-timeout: 1000
+  read-timeout: 30000
 
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3307/pretallez
-    driver-class-name: org.mariadb.jdbc.Driver
-    username: root
-    password: root
-  logging:
-    level:
-      org.hibernate.SQL: DEBUG
-      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: false
-    database-platform: org.hibernate.dialect.MariaDBDialect
-    hibernate:
-      ddl-auto: update
-      naming:
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: admin
-    password: admin
-    stompPort: 61613  # 예시 포트 (STOMP over TCP의 기본값은 61613)
-    destinationPrefix: /topic
-    appDestinationPrefix: /app
-    chat:
-      exchange: chat.exchange
-      queue: chat.queue
-      routingKey: chat.key
+    driver-class-name: ${DRIVER_CLASS_NAME}
+    url: ${URL}
+    username: ${USERNAME}
+    password: ${PASSWORD}
 
   redis:
-    host: 127.0.0.1
-    port: 6379
+    host: ${HOST}
+    port: ${PORT}
+    commandTimeout: 60000
+    shutdownTimeout: 2000
 
-oauth:
-  kakao:
-    redirect-url: http://localhost:8080
-    clientId:
+  # data.sql 실행을 위한 설정
+  sql:
+    init:
+      mode: always
+  jpa:
+    defer-datasource-initialization: true
+    database-platform: ${DATABASE_PLATFORM}
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
 
 jwt:
-  secret: asdsafmsdajkgnjaksdngjkasdngkjdsangkdnsakgndsakjgdsagsdag
-
-
+  secret: ${JWT_SECRET_KEY}
