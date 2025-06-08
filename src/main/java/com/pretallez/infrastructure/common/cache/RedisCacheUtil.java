@@ -1,12 +1,13 @@
 package com.pretallez.infrastructure.common.cache;
 
+import static com.pretallez.common.enums.error.RedisErrorCode.*;
+
 import java.time.Duration;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pretallez.common.enums.error.RedisErrorCode;
 import com.pretallez.common.exception.RedisException;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class RedisCacheUtil {
 		try {
 			redisTemplate.opsForValue().set(key, value, ttl);
 		} catch (Exception e) {
-			throw new RedisException(RedisErrorCode.REDIS_SAVE_FAILED);
+			throw new RedisException(REDIS_SAVE_FAILED);
 		}
 	}
 
@@ -31,7 +32,15 @@ public class RedisCacheUtil {
 			Object raw = redisTemplate.opsForValue().get(key);
 			return objectMapper.convertValue(raw, type);
 		} catch (Exception e) {
-			throw new RedisException(RedisErrorCode.REDIS_FIND_FAILED);
+			throw new RedisException(REDIS_FIND_FAILED);
+		}
+	}
+
+	public void delete(String key) {
+		try {
+			redisTemplate.delete(key);
+		} catch (Exception e) {
+			throw new RedisException(REDIS_DELETE_FAILED, e);
 		}
 	}
 }
