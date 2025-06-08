@@ -29,3 +29,18 @@ include::build/generated-snippets/chats/read/http-request.adoc[]
 include::build/generated-snippets/chats/read/request-fields.adoc[]
 include::build/generated-snippets/chats/read/http-response.adoc[]
 include::build/generated-snippets/chats/read/response-fields.adoc[]
+
+== 결제 API
+
+=== 결제 준비 (`POST /payments`)
+
+include::build/generated-snippets/payments/prepare/http-request.adoc[]
+include::build/generated-snippets/payments/prepare/request-fields.adoc[]
+include::build/generated-snippets/payments/prepare/http-response.adoc[]
+include::build/generated-snippets/payments/prepare/response-fields.adoc[]
+
+=== 결제 승인 (`GET /chats`)
+
+include::build/generated-snippets/payments/approve/http-request.adoc[]
+include::build/generated-snippets/payments/approve/http-response.adoc[]
+include::build/generated-snippets/payments/approve/response-fields.adoc[]

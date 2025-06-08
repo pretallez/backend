@@ -1,4 +1,4 @@
-package com.pretallez.domain.payment.policy;
+package com.pretallez.unit.payment.domain.policy;
 
 import static com.pretallez.application.payment.enums.PaymentErrorCode.*;
 import static org.assertj.core.api.Assertions.*;
@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import com.pretallez.application.payment.exception.PaymentException;
+import com.pretallez.domain.payment.policy.PaymentPolicy;
 
 class PaymentPolicyTest {
 

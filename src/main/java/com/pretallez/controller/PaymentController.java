@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pretallez.application.payment.dto.request.ApproveRequest;
-import com.pretallez.application.payment.dto.request.PrepareRequest;
+import com.pretallez.application.payment.dto.request.PendingRequest;
 import com.pretallez.application.payment.port.input.PaymentUseCase;
 import com.pretallez.common.enums.success.ResSuccessCode;
 import com.pretallez.common.response.CustomApiResponse;
-import com.pretallez.infrastructure.payment.dto.ApproveSuccessResponse;
+import com.pretallez.application.payment.dto.response.ApproveSuccessResponse;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class PaymentController {
 	private final PaymentUseCase paymentUseCase;
 
 	@PostMapping("/prepare")
-	public CustomApiResponse<Void> preparePayment(@RequestBody PrepareRequest request) {
+	public CustomApiResponse<Void> preparePayment(@RequestBody PendingRequest request) {
 		paymentUseCase.preparePayment(request);
 		return CustomApiResponse.OK(ResSuccessCode.SUCCESS);
 	}
