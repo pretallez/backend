@@ -1,4 +1,4 @@
-package com.pretallez.infrastructure.payment.dto;
+package com.pretallez.application.payment.dto.response;
 
 import java.time.OffsetDateTime;
 

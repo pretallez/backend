@@ -1,4 +1,4 @@
-package com.pretallez.infrastructure.payment.enums;
+package com.pretallez.application.payment.enums;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

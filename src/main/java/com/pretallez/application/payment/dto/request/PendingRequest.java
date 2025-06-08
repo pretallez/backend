@@ -1,6 +1,6 @@
 package com.pretallez.application.payment.dto.request;
 
-public record PrepareRequest(
+public record PendingRequest(
 	String orderId,
 	Integer amount
 ) { }

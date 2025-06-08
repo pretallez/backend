@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 
 import com.pretallez.common.util.HeaderUtils;
-import com.pretallez.infrastructure.config.web.RestClientFactory;
+import com.pretallez.infrastructure.common.client.RestClientFactory;
 
 import lombok.RequiredArgsConstructor;
 

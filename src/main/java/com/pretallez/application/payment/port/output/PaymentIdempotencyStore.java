@@ -1,8 +1,10 @@
 package com.pretallez.application.payment.port.output;
 
-import com.pretallez.infrastructure.payment.dto.ApproveSuccessResponse;
+import java.util.Optional;
+
+import com.pretallez.application.payment.dto.response.ApproveSuccessResponse;
 
 public interface PaymentIdempotencyStore {
 	void saveApprovedResponse(String orderId, ApproveSuccessResponse response);
-	ApproveSuccessResponse findApprovedResponse(String orderId);
+	Optional<ApproveSuccessResponse> findApprovedResponse(String orderId);
 }

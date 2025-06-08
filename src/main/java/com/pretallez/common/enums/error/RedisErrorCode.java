@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 public enum RedisErrorCode implements ResCode {
 	REDIS_SAVE_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, 50000, "레디스 저장에 실패했습니다."),
 	REDIS_FIND_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, 50000, "레디스 조회에 실패했습니다."),
+	REDIS_DELETE_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, 50000, "레디스 삭제에 실패했습니다."),
 	REDIS_JSON_DESERIALIZATION_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, 50000, "레디스 역직렬화에 실패했습니다.");
 
 	private final HttpStatusCode httpStatusCode;

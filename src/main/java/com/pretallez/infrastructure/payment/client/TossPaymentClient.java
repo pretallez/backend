@@ -1,6 +1,6 @@
 package com.pretallez.infrastructure.payment.client;
 
-import static com.pretallez.infrastructure.payment.enums.TossErrorCode.*;
+import static com.pretallez.application.payment.enums.TossErrorCode.*;
 
 import java.io.IOException;
 
@@ -20,9 +20,9 @@ import com.pretallez.common.exception.RedisException;
 import com.pretallez.common.response.ResCode;
 import com.pretallez.common.util.EnumUtils;
 import com.pretallez.infrastructure.payment.config.PaymentProperties;
-import com.pretallez.infrastructure.payment.dto.ApproveFailResponse;
-import com.pretallez.infrastructure.payment.dto.ApproveSuccessResponse;
-import com.pretallez.infrastructure.payment.enums.TossErrorCode;
+import com.pretallez.application.payment.dto.response.ApproveFailResponse;
+import com.pretallez.application.payment.dto.response.ApproveSuccessResponse;
+import com.pretallez.application.payment.enums.TossErrorCode;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package com.pretallez.infrastructure.config.web;
+package com.pretallez.infrastructure.common.client;
 
 import java.util.Map;
 

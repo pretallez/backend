@@ -1,7 +1,7 @@
 package com.pretallez.application.payment.port.output;
 
 import com.pretallez.application.payment.dto.request.ApproveRequest;
-import com.pretallez.infrastructure.payment.dto.ApproveSuccessResponse;
+import com.pretallez.application.payment.dto.response.ApproveSuccessResponse;
 
 public interface PaymentClient {
 
