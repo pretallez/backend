@@ -2,7 +2,6 @@ package com.pretallez.controller;
 
 import java.util.List;
 
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/v1/api/chats")
 @CrossOrigin(origins = "*")
-public class ChatRestController {
+public class ChatController {
 
 	private final ChatMessageUseCase messageUseCase;
 

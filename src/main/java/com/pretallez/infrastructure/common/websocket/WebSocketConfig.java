@@ -1,4 +1,4 @@
-package com.pretallez.infrastructure.websocket;
+package com.pretallez.infrastructure.common.websocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

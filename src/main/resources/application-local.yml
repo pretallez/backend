@@ -1,38 +1,38 @@
 server:
-  port: ${SERVER_PORT}
+  port: 8080
 
 payment:
-  secret-key: ${SECRET_KEY}
-  base-url: ${BASE_URL}
-  confirm-endpoint: ${CONFIRM_ENDPOINT}
+  secret-key: test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6
+  base-url: https://api.tosspayments.com/v1/payments
+  confirm-endpoint: /confirm
   connect-timeout: 1000
   read-timeout: 30000
 
 spring:
   datasource:
-    driver-class-name: ${DRIVER_CLASS_NAME}
-    url: ${URL}
-    username: ${USERNAME}
-    password: ${PASSWORD}
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3307/pretallez
+    username: root
+    password: root
 
   redis:
-    host: ${HOST}
-    port: ${PORT}
+    host: localhost
+    port: 6379
     commandTimeout: 60000
     shutdownTimeout: 2000
 
-  # data.sql 실행을 위한 설정
+  # data.sql 실행 옵션
   sql:
     init:
       mode: always
   jpa:
-    defer-datasource-initialization: true
-    database-platform: ${DATABASE_PLATFORM}
+    database-platform: org.hibernate.dialect.MariaDBDialect
     hibernate:
       ddl-auto: create-drop
+    defer-datasource-initialization: true
     properties:
       hibernate:
         format_sql: true
 
 jwt:
-  secret: ${JWT_SECRET_KEY}
+  secret: odjoaiwdjawodjaiowjdioawjdioawjdiowajdoajdoiwj
