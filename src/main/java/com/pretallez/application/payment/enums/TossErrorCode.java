@@ -1,4 +1,4 @@
-package com.pretallez.domain.payment.enums;
+package com.pretallez.application.payment.enums;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -10,14 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum PaymentErrorCode implements ResCode {
-	MISSING_PAYMENT_KEY(HttpStatus.BAD_REQUEST, 10000, "paymentKey 파라미터는 필수 값입니다."),
-	PAYMENT_PROCESSING(HttpStatus.BAD_REQUEST, 10000, "결제 승인 처리 중입니다."),
-	INVALID_AMOUNT(HttpStatus.BAD_REQUEST, 10000, "결제 금액 정보가 일치하지 않습니다."),
-	NOT_FOUND_TEMP_PAYMENT_DATA(HttpStatus.BAD_REQUEST, 10000, "결제 임시 데이터가 존재하지 않습니다."),
-	FAILED_PAYMENT_PREPARE(HttpStatus.BAD_REQUEST, 10000, "결제 준비에 실패했습니다. 잠시 후 다시 시도해주세요."),
-	FAILED_PAYMENT_RESPONSE_DESERIALIZATION(HttpStatus.BAD_REQUEST, 10000, "결제 응답 역직렬화에 실패했습니다."),
-
+public enum TossErrorCode implements ResCode {
 	ALREADY_PROCESSED_PAYMENT(HttpStatus.BAD_REQUEST, 10000, "이미 처리된 결제 입니다."),
 	PROVIDER_ERROR(HttpStatus.BAD_REQUEST, 10000, "일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요."),
 	EXCEED_MAX_CARD_INSTALLMENT_PLAN(HttpStatus.BAD_REQUEST, 10000, "설정 가능한 최대 할부 개월 수를 초과했습니다."),
@@ -64,9 +57,7 @@ public enum PaymentErrorCode implements ResCode {
 	NOT_FOUND_PAYMENT_SESSION(HttpStatus.NOT_FOUND, 10000, "결제 시간이 만료되어 결제 진행 데이터가 존재하지 않습니다."),
 	FAILED_PAYMENT_INTERNAL_SYSTEM_PROCESSING(HttpStatus.INTERNAL_SERVER_ERROR, 10000, "결제가 완료되지 않았어요. 다시 시도해주세요."),
 	FAILED_INTERNAL_SYSTEM_PROCESSING(HttpStatus.INTERNAL_SERVER_ERROR, 10000, "내부 시스템 처리 작업이 실패했습니다. 잠시 후 다시 시도해주세요."),
-	UNKNOWN_PAYMENT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 10000, "결제에 실패했어요. 같은 문제가 반복된다면 은행이나 카드사로 문의해주세요."),
-
-	PAYMENT_CONFIRM_ERROR_MISMATCH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 10000, "결제 과정에서 서버 에러가 발생했습니다. 관리자에게 문의해주세요.");
+	UNKNOWN_PAYMENT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 10000, "결제에 실패했어요. 같은 문제가 반복된다면 은행이나 카드사로 문의해주세요.");
 
 	private final HttpStatusCode httpStatusCode;
 	private final Integer code;
