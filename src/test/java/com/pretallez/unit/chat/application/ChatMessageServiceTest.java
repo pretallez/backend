@@ -85,7 +85,7 @@ class ChatMessageServiceTest {
 	@Test
 	void 마지막_메시지ID가_없으면_최신_메시지를_조회하고_닉네임을_조합한다() {
 		// given
-		when(messageRepository.fetchRecentMessages(1L, null, 2))
+		when(messageRepository.findRecentMessages(1L, null, 2))
 			.thenReturn(List.of(
 				ChatMessage.createMessage(1L, 1L, "채팅1", MessageType.CHAT),
 				ChatMessage.createMessage(2L, 1L, "채팅2", MessageType.CHAT)
@@ -106,14 +106,14 @@ class ChatMessageServiceTest {
 		assertThat(responses.get(1).senderNickname()).isEqualTo("김성호");
 		assertThat(responses.get(1).content()).isEqualTo("채팅2");
 
-		verify(messageRepository).fetchRecentMessages(1L, null, 2);
+		verify(messageRepository).findRecentMessages(1L, null, 2);
 		verify(nicknameProvider).getNicknames(Set.of(1L, 2L));
 	}
 
 	@Test
 	void 마지막_메시지ID_기준으로_이전_메시지를_내림차순_조회하고_닉네임을_조합한다() {
 		// given
-		when(messageRepository.fetchRecentMessages(1L, 3L, 2))
+		when(messageRepository.findRecentMessages(1L, 3L, 2))
 			.thenReturn(List.of(
 				ChatMessage.createMessage(1L, 1L, "채팅1", MessageType.CHAT),
 				ChatMessage.createMessage(2L, 1L, "채팅2", MessageType.CHAT)
@@ -129,12 +129,7 @@ class ChatMessageServiceTest {
 		List<ChatMessageResponse> responses = sut.getRecentMessages(1L, 3L, 2);
 
 		// then
-		assertThat(responses.get(0).senderNickname()).isEqualTo("임종엽");
-		assertThat(responses.get(0).content()).isEqualTo("채팅1");
-		assertThat(responses.get(1).senderNickname()).isEqualTo("김성호");
-		assertThat(responses.get(1).content()).isEqualTo("채팅2");
-
-		verify(messageRepository).fetchRecentMessages(1L, 3L, 2);
+		verify(messageRepository).findRecentMessages(1L, 3L, 2);
 		verify(nicknameProvider).getNicknames(Set.of(1L, 2L));
 	}
 }

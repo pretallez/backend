@@ -18,7 +18,7 @@ class ChatMessageTest {
 	@Test
 	void 메시지가_500자_이하이면_정상적으로_생성된다() {
 		// given
-		String message = "안녕하세요";
+		String message = "a".repeat(500);
 
 		// when
 		ChatMessage sut = ChatMessage.createMessage(memberId, chatRoomId, message, MessageType.CHAT);

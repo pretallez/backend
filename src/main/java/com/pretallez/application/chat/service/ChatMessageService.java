@@ -56,7 +56,7 @@ public class ChatMessageService implements ChatMessageUseCase {
 
 	@Override
 	public List<ChatMessageResponse> getRecentMessages(Long chatRoomId, Long lastMessageId, int size) {
-		List<ChatMessage> messages = chatMessageRepository.fetchRecentMessages(chatRoomId, lastMessageId, size);
+		List<ChatMessage> messages = chatMessageRepository.findRecentMessages(chatRoomId, lastMessageId, size);
 
 		Map<Long, String> nicknameMap = nicknameProvider.getNicknames(
 			messages.stream()

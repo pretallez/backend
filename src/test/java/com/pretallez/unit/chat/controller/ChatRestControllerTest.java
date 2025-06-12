@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pretallez.application.chat.dto.ChatMessageRequest;
 import com.pretallez.application.chat.dto.ChatMessageResponse;
 import com.pretallez.application.chat.port.input.ChatMessageUseCase;
-import com.pretallez.controller.ChatRestController;
+import com.pretallez.controller.ChatController;
 import com.pretallez.domain.chat.vo.MessageType;
 
 @ExtendWith(RestDocumentationExtension.class)
@@ -39,7 +39,7 @@ class ChatControllerUnitTest {
 		chatMessageUseCase = mock(ChatMessageUseCase.class);
 		objectMapper = new ObjectMapper();
 
-		ChatRestController sut = new ChatRestController(chatMessageUseCase);
+		ChatController sut = new ChatController(chatMessageUseCase);
 		mockMvc = MockMvcBuilders.standaloneSetup(sut)
 			.apply(documentationConfiguration(restDocumentation))
 			.build();

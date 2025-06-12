@@ -9,5 +9,5 @@ public interface ChatMessageRepository {
 	ChatMessage save(ChatMessage chatMessage);
 
 	// Query
-	List<ChatMessage> fetchRecentMessages(Long chatRoomId, Long lastMessageId, int size);
+	List<ChatMessage> findRecentMessages(Long chatRoomId, Long lastMessageId, int size);
 }
