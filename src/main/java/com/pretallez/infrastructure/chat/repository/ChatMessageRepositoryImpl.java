@@ -26,7 +26,7 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepository {
 	}
 
 	@Override
-	public List<ChatMessage> fetchRecentMessages(Long chatRoomId, Long lastSeenId, int pageSize) {
+	public List<ChatMessage> findRecentMessages(Long chatRoomId, Long lastSeenId, int pageSize) {
 		return queryFactory
 			.selectFrom(chatMessage)
 			.where(

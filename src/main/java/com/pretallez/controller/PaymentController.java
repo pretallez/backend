@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pretallez.common.response.CustomApiResponse;
+import com.pretallez.application.payment.dto.request.ApproveRequest;
+import com.pretallez.application.payment.dto.request.PendingRequest;
+import com.pretallez.application.payment.port.input.PaymentUseCase;
 import com.pretallez.common.enums.success.ResSuccessCode;
-import com.pretallez.domain.payment.dto.PaymentConfirmRequest;
-import com.pretallez.domain.payment.dto.PaymentConfirmResponse;
-import com.pretallez.domain.payment.dto.PaymentTempData;
-import com.pretallez.domain.payment.service.TossPaymentService;
+import com.pretallez.common.response.CustomApiResponse;
+import com.pretallez.application.payment.dto.response.ApproveSuccessResponse;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,28 +24,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @CrossOrigin(origins = "*")
 public class PaymentController {
-	private final TossPaymentService paymentService;
+	private final PaymentUseCase paymentUseCase;
 
 	@PostMapping("/prepare")
-	public CustomApiResponse<Void> preparePayment(@RequestBody PaymentTempData paymentTempData) {
-		log.info("[Payment][Prepare] orderId={}, amount={}",
-			paymentTempData.getOrderId(),
-			paymentTempData.getAmount());
-
-		paymentService.savePaymentTempData(paymentTempData);
-
+	public CustomApiResponse<Void> preparePayment(@RequestBody PendingRequest request) {
+		paymentUseCase.preparePayment(request);
 		return CustomApiResponse.OK(ResSuccessCode.SUCCESS);
 	}
 
-	@GetMapping("/confirm")
-	public CustomApiResponse<PaymentConfirmResponse> confirmPayment(@ModelAttribute PaymentConfirmRequest request) {
-		log.info("[Payment][Confirm] orderId={}, amount={}, paymentKey={}",
-			request.orderId(),
-			request.amount(),
-			request.paymentKey());
-
-		paymentService.validatePaymentAmount(request);
-
-		return CustomApiResponse.OK(ResSuccessCode.SUCCESS, paymentService.confirmPayment(request));
+	@GetMapping("/approve")
+	public CustomApiResponse<ApproveSuccessResponse> approvePayment(@ModelAttribute ApproveRequest request) {
+		return CustomApiResponse.OK(
+			ResSuccessCode.SUCCESS,
+			paymentUseCase.approvePayment(request)
+		);
 	}
 }

@@ -1,0 +1,50 @@
+package com.pretallez.controller;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.pretallez.application.chat.dto.ChatMessageRequest;
+import com.pretallez.application.chat.dto.ChatMessageResponse;
+import com.pretallez.application.chat.port.input.ChatMessageUseCase;
+import com.pretallez.common.enums.success.ResSuccessCode;
+import com.pretallez.common.response.CustomApiResponse;
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/v1/api/chats")
+@CrossOrigin(origins = "*")
+public class ChatController {
+
+	private final ChatMessageUseCase messageUseCase;
+
+	@GetMapping
+	public CustomApiResponse<List<ChatMessageResponse>> getRecentMessages(
+		@RequestParam(name = "chatRoomId") Long chatRoomId,
+		@RequestParam(name = "lastMessageId", required = false) Long lastMessageId,
+		@RequestParam(name = "size") Integer size
+	) {
+		List<ChatMessageResponse> recentMessages = messageUseCase.getRecentMessages(
+			chatRoomId,
+			lastMessageId,
+			size
+		);
+
+		return CustomApiResponse.OK(ResSuccessCode.READ, recentMessages);
+	}
+
+	// 테스트를 위한 API
+	@PostMapping
+	public CustomApiResponse<Void> sendMessage(@RequestBody ChatMessageRequest chatMessageDTO) {
+		messageUseCase.sendMessage(chatMessageDTO);
+		return CustomApiResponse.OK(ResSuccessCode.CREATED);
+	}
+}
