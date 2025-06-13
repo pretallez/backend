@@ -1,5 +1,6 @@
 package com.pretallez.domain.auth.service;
 
+import com.pretallez.application.member.dto.kakaoAccount;
 import jakarta.servlet.http.HttpServletResponse;
 
 public interface AuthService {
@@ -14,5 +15,5 @@ public interface AuthService {
 
     void deleteAccessToken(HttpServletResponse response,String email);
 
-    String getAccessToken(String code);
+    kakaoAccount getAccessToken(String code);
 }

@@ -1,5 +1,6 @@
 package com.pretallez.controller;
 
+import com.pretallez.application.member.dto.kakaoAccount;
 import com.pretallez.common.enums.success.ResSuccessCode;
 import com.pretallez.common.response.CustomApiResponse;
 import com.pretallez.common.util.JwtCookieUtil;
@@ -21,8 +22,8 @@ public class MemberController {
 
     @GetMapping("/auth/callback")
     public CustomApiResponse<Void> oauthCallback(HttpServletResponse response, @RequestParam("code") String code) {
-        String accessToken = authService.getAccessToken(code);
-        jwtCookieUtil.addJwtCookie(response,accessToken);
+        kakaoAccount accessToken = authService.getAccessToken(code);
+        jwtCookieUtil.addJwtCookie(response,accessToken.getNickname());
         return CustomApiResponse.OK(ResSuccessCode.SUCCESS);
     }
 

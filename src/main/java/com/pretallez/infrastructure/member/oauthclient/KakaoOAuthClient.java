@@ -1,5 +1,6 @@
-package com.pretallez.infrastructure.member;
+package com.pretallez.infrastructure.member.oauthclient;
 
+import com.pretallez.application.member.dto.kakaoAccount;
 import com.pretallez.domain.auth.dto.KakaoOauthToken;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -17,19 +18,20 @@ public class KakaoOAuthClient implements OAuthClient {
     private static final String BEARER_PREFIX = "Bearer ";
 
     private final RestClient restClient = RestClient.create();
-    @Value("${oauth.kakao.client-id}")
-    private String clientId;
-    @Value("${oauth.kakao.redirect-url}")
-    private String redirectUrl;
+
+    @Value("${KAKAO_CLIENT_ID}")
+    private String CLIENT_ID;
+    @Value("${KAKAO_REDIRECT_URL}")
+    private String REDIRECT_URL;
 
     @Override
-    public String fetchMemberDetails(String accessToken) {
-        String response = restClient.post()
+    public kakaoAccount fetchMemberDetails(String accessToken) {
+        kakaoAccount response = restClient.post()
                 .uri(USER_INFO_URL)
                 .header("Authorization", BEARER_PREFIX + accessToken)
                 .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .retrieve()
-                .body(String.class);
+                .body(kakaoAccount.class);
         return response;
     }
 
@@ -37,8 +39,8 @@ public class KakaoOAuthClient implements OAuthClient {
     public KakaoOauthToken.Response fetchAccessToken(String code) {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", GRANT_TYPE);
-        body.add("client_id", clientId);
-        body.add("redirect_uri", redirectUrl);
+        body.add("client_id", CLIENT_ID);
+        body.add("redirect_uri", REDIRECT_URL);
         body.add("code", code);
 
         KakaoOauthToken.Response response = restClient.post()

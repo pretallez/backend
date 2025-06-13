@@ -1,5 +1,6 @@
 package com.pretallez.domain.auth.service;
 
+import com.pretallez.application.member.dto.kakaoAccount;
 import com.pretallez.common.util.JwtCookieUtil;
 import com.pretallez.common.util.JwtTokenProvider;
 import com.pretallez.domain.auth.dto.KakaoOauthToken;
@@ -8,7 +9,7 @@ import com.pretallez.domain.auth.enums.MemberRole;
 import com.pretallez.domain.member.entity.Member;
 import com.pretallez.domain.member.repository.MemberRepository;
 import com.pretallez.domain.member.service.MemberService;
-import com.pretallez.infrastructure.member.OAuthClient;
+import com.pretallez.infrastructure.member.oauthclient.OAuthClient;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +67,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String getAccessToken(String code) {
+    public kakaoAccount getAccessToken(String code) {
         KakaoOauthToken.Response response = oAuthClient.fetchAccessToken(code);
         return oAuthClient.fetchMemberDetails(response.getAccessToken());
 
