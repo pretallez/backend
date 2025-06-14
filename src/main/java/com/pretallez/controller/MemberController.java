@@ -1,16 +1,19 @@
 package com.pretallez.controller;
 
-import com.pretallez.application.member.dto.kakaoAccount;
 import com.pretallez.common.enums.success.ResSuccessCode;
 import com.pretallez.common.response.CustomApiResponse;
 import com.pretallez.common.util.JwtCookieUtil;
+import com.pretallez.common.util.JwtTokenProvider;
 import com.pretallez.domain.auth.service.AuthService;
 import com.pretallez.domain.member.dto.MemberCreate;
+import com.pretallez.infrastructure.member.dto.kakao.KakaoUserResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/v1/api")
 @RequiredArgsConstructor
@@ -19,11 +22,14 @@ public class MemberController {
 
     private final AuthService authService;
     private final JwtCookieUtil jwtCookieUtil;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/auth/callback")
     public CustomApiResponse<Void> oauthCallback(HttpServletResponse response, @RequestParam("code") String code) {
-        kakaoAccount accessToken = authService.getAccessToken(code);
-        jwtCookieUtil.addJwtCookie(response,accessToken.getNickname());
+        KakaoUserResponse userResponse = authService.getAccessToken(code);
+        String userEmail = userResponse.kakaoAccount().email();
+        String userInfo = jwtTokenProvider.createToken(userEmail, List.of("ROLE_USER"));
+        jwtCookieUtil.addJwtCookie(response,userInfo);
         return CustomApiResponse.OK(ResSuccessCode.SUCCESS);
     }
 

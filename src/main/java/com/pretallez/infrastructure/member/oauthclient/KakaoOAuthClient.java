@@ -1,7 +1,8 @@
 package com.pretallez.infrastructure.member.oauthclient;
 
-import com.pretallez.application.member.dto.kakaoAccount;
+import com.pretallez.application.member.OAuthClient;
 import com.pretallez.domain.auth.dto.KakaoOauthToken;
+import com.pretallez.infrastructure.member.dto.kakao.KakaoUserResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class KakaoOAuthClient implements OAuthClient {
 
     private static final String GRANT_TYPE = "authorization_code";
     private static final String TOKEN_URL = "https://kauth.kakao.com/oauth/token";
-    private static final String USER_INFO_URL = "https://kauth.kakao.com/userinfo";
+    private static final String USER_INFO_URL = "https://kapi.kakao.com/v2/user/me";
     private static final String BEARER_PREFIX = "Bearer ";
 
     private final RestClient restClient = RestClient.create();
@@ -25,13 +26,13 @@ public class KakaoOAuthClient implements OAuthClient {
     private String REDIRECT_URL;
 
     @Override
-    public kakaoAccount fetchMemberDetails(String accessToken) {
-        kakaoAccount response = restClient.post()
+    public KakaoUserResponse fetchMemberDetails(String accessToken) {
+        KakaoUserResponse response = restClient.post()
                 .uri(USER_INFO_URL)
                 .header("Authorization", BEARER_PREFIX + accessToken)
                 .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .retrieve()
-                .body(kakaoAccount.class);
+                .body(KakaoUserResponse.class);
         return response;
     }
 
