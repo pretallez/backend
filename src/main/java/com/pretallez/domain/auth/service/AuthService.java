@@ -1,7 +1,6 @@
 package com.pretallez.domain.auth.service;
 
-import com.pretallez.domain.auth.dto.KakaoOauthLogin;
-import com.pretallez.domain.auth.dto.KakaoOauthToken;
+import com.pretallez.infrastructure.member.dto.kakao.KakaoUserResponse;
 import jakarta.servlet.http.HttpServletResponse;
 
 public interface AuthService {
@@ -14,7 +13,7 @@ public interface AuthService {
 
     void deleteRefreshToken(String email);
 
-    void deleteAccessToken(String email);
+    void deleteAccessToken(HttpServletResponse response,String email);
 
-    KakaoOauthToken.Response getAccessToken(KakaoOauthLogin.Request kakaoOauthLogin);
+    KakaoUserResponse getAccessToken(String code);
 }

@@ -1,5 +1,6 @@
 package com.pretallez.domain.auth.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,12 +22,14 @@ public class KakaoOauthToken {
     @AllArgsConstructor
     @Getter
     public static class Response{
-        private String tokenType;
+
+        @JsonProperty("access_token")
         private String accessToken;
-        private String idToken;
-        private Integer expiresIn;
+
+        @JsonProperty("refresh_token")
         private String refreshToken;
-        private Integer refreshTokenExpiresIn;
+
+        @JsonProperty("scope")
         private String scope;
     }
 }
