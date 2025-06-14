@@ -7,6 +7,7 @@ import com.pretallez.common.util.JwtTokenProvider;
 import com.pretallez.domain.auth.service.AuthService;
 import com.pretallez.domain.member.dto.MemberCreate;
 import com.pretallez.infrastructure.member.dto.kakao.KakaoUserResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +30,7 @@ public class MemberController {
         KakaoUserResponse userResponse = authService.getAccessToken(code);
         String userEmail = userResponse.kakaoAccount().email();
         String userInfo = jwtTokenProvider.createToken(userEmail, List.of("ROLE_USER"));
-        jwtCookieUtil.addJwtCookie(response,userInfo);
+        jwtCookieUtil.addJwtCookie(response, userInfo);
         return CustomApiResponse.OK(ResSuccessCode.SUCCESS);
     }
 
@@ -46,6 +47,20 @@ public class MemberController {
         authService.deleteRefreshToken(userDetails.getUsername());
         authService.deleteAccessToken(response, userDetails.getUsername());
         return CustomApiResponse.OK(ResSuccessCode.SUCCESS);
+    }
+
+    @GetMapping("/auth/info")
+    public CustomApiResponse<AuthInfoResponse> getAuthInfo(HttpServletRequest request) {
+        String userToken = jwtTokenProvider.resolveToken(request);
+        String username = jwtTokenProvider.getUsername(userToken);
+        AuthInfoResponse authInfoResponse = new AuthInfoResponse(username, List.of("ROLE_USER"));
+        return CustomApiResponse.OK(ResSuccessCode.SUCCESS, authInfoResponse);
+    }
+
+    public record AuthInfoResponse(
+            String email,
+            List<String> role
+    ) {
     }
 
 
