@@ -1,4 +1,4 @@
-package com.pretallez.domain.auth.service;
+package com.pretallez.application.auth.service;
 
 import com.pretallez.application.member.OAuthClient;
 import com.pretallez.common.util.JwtCookieUtil;
@@ -6,9 +6,9 @@ import com.pretallez.common.util.JwtTokenProvider;
 import com.pretallez.domain.auth.dto.KakaoOauthToken;
 import com.pretallez.domain.auth.entity.Role;
 import com.pretallez.domain.auth.enums.MemberRole;
+import com.pretallez.domain.auth.service.AuthUseCase;
 import com.pretallez.domain.member.entity.Member;
 import com.pretallez.domain.member.repository.MemberRepository;
-import com.pretallez.domain.member.service.MemberService;
 import com.pretallez.infrastructure.member.dto.kakao.KakaoUserResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +23,11 @@ import java.util.Optional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService {
+public class AuthService implements AuthUseCase {
 
     private static final String REFRESH_TOKEN_KEY = "refreshToken:";
     private final RedisTemplate<String, Object> redisTemplate;
     private final JwtTokenProvider jwtTokenProvider;
-    private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final OAuthClient oAuthClient;
     private final JwtCookieUtil jwtCookieUtil;

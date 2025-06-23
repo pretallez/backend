@@ -1,7 +1,8 @@
-package com.pretallez.domain.member.service;
+package com.pretallez.application.member.service;
 
 import java.util.concurrent.TimeUnit;
 
+import com.pretallez.domain.member.service.MemberService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 

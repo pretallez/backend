@@ -4,8 +4,7 @@ import com.pretallez.common.enums.success.ResSuccessCode;
 import com.pretallez.common.response.CustomApiResponse;
 import com.pretallez.common.util.JwtCookieUtil;
 import com.pretallez.common.util.JwtTokenProvider;
-import com.pretallez.domain.auth.service.AuthService;
-import com.pretallez.domain.member.dto.MemberCreate;
+import com.pretallez.domain.auth.service.AuthUseCase;
 import com.pretallez.infrastructure.member.dto.kakao.KakaoUserResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,31 +20,31 @@ import java.util.List;
 @RestController
 public class MemberController {
 
-    private final AuthService authService;
+    private final AuthUseCase authUseCase;
     private final JwtCookieUtil jwtCookieUtil;
     private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/auth/callback")
     public CustomApiResponse<Void> oauthCallback(HttpServletResponse response, @RequestParam("code") String code) {
-        KakaoUserResponse userResponse = authService.getAccessToken(code);
+        KakaoUserResponse userResponse = authUseCase.getAccessToken(code);
         String userEmail = userResponse.kakaoAccount().email();
-        String userInfo = jwtTokenProvider.createToken(userEmail, List.of("ROLE_USER"));
-        jwtCookieUtil.addJwtCookie(response, userInfo);
+        String accessToken = jwtTokenProvider.createToken(userEmail, List.of("ROLE_USER"));
+        jwtCookieUtil.addJwtCookie(response, accessToken);
         return CustomApiResponse.OK(ResSuccessCode.SUCCESS);
     }
 
     @PostMapping("/login")
-    public CustomApiResponse<Void> login(HttpServletResponse response, MemberCreate memberCreate) {
+    public CustomApiResponse<Void> login(HttpServletResponse response) {
         String email = "chzhqk98@naver.com";
-        authService.addAccessToken(response, email);
-        authService.addRefreshToken(email);
+        authUseCase.addAccessToken(response, email);
+        authUseCase.addRefreshToken(email);
         return CustomApiResponse.OK(ResSuccessCode.SUCCESS);
     }
 
     @PostMapping("/logout")
     public CustomApiResponse<Void> logout(@AuthenticationPrincipal UserDetails userDetails, HttpServletResponse response) {
-        authService.deleteRefreshToken(userDetails.getUsername());
-        authService.deleteAccessToken(response, userDetails.getUsername());
+        authUseCase.deleteRefreshToken(userDetails.getUsername());
+        authUseCase.deleteAccessToken(response, userDetails.getUsername());
         return CustomApiResponse.OK(ResSuccessCode.SUCCESS);
     }
 
@@ -62,6 +61,5 @@ public class MemberController {
             List<String> role
     ) {
     }
-
 
 }

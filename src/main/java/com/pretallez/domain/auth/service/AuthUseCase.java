@@ -3,7 +3,7 @@ package com.pretallez.domain.auth.service;
 import com.pretallez.infrastructure.member.dto.kakao.KakaoUserResponse;
 import jakarta.servlet.http.HttpServletResponse;
 
-public interface AuthService {
+public interface AuthUseCase {
 
     //refresh token redis 에 추가
     String addRefreshToken(String email);
